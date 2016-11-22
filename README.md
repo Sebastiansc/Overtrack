@@ -4,9 +4,7 @@
 
 Overwatch users have very limited in-game statistics access to other player's details. This Single-Page Web Application will allow users to have access to not only their own game statistics, but also to all other players around the world. The stats will be shown in a much more readable and engaging format than that provided by the game itself.
 
-test
 ## Technology Stack
-
 
 - This site will utilize the next technologies:
 - `D3.js` for displaying statistics
