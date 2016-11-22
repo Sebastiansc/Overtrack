@@ -6,6 +6,8 @@ Overwatch users have very limited in-game statistics access to other player's de
 
 ## Technology Stack
 
+
+
 - This site will utilize the next technologies:
 - `D3.js` for displaying statistics
 - `React-Redux` for frontend page structure
