@@ -20,6 +20,10 @@ gem 'json'
 gem 'whenever'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+gem 'redis'
+gem 'capistrano-rails', group: :development
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -40,6 +44,10 @@ group :development do
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'pry-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'annotate'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
