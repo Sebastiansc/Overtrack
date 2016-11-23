@@ -10,7 +10,7 @@ Rails.application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
 
-  config.serve_static_files = true
+  config.public_file_server.enabled = true
 # ...
 
   # Full error reports are disabled and caching is turned on.
