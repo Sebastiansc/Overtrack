@@ -1,7 +1,7 @@
 require 'httparty'
 #Class to modulize methods shared by Rake fetcher:update and Players Controller
 class OverwatchCall
-  def self.fetch(info)
+  def self.create_player(info)
     profile = HTTParty.get(
       "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/profile"
     )
@@ -36,7 +36,7 @@ class OverwatchCall
   end
 
   def self.all_heroes(info, game_type)
-    return HTTParty.get(
+    HTTParty.get(
       "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/allHeroes/"
     )
   end
@@ -52,11 +52,51 @@ class OverwatchCall
     end
   end
 
-  def fetch_heroes(info, game_type)
-    hero = HTTParty.get(
-      "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/heroes"
+  #Fetches heroes overall and stats data. Uses a hash to be able to update both quick and competitive fields at the same time(hero creation would be much more complicated otherwise, due to null: false constraint on all fields)
+  def run_heroes(player_info, game_type)
+    quick = fetch_heroes("quick")
+    competitive = fetch_heroes("competitive")
+    quick.each do |name, info|
+      quick_stats = fetch_stats(info, "quick", name)
+      competitive_stats = fetch_stats(info, "competitive", name)
+      hero = Hero.new({
+        name: name,
+        image: info["image"],
+        percentage: info["percentage"],
+        player_id: Player.find_by(player_tag: player_info[2]).id
+      })
+      hero.quick = quick_stats
+      hero.quick[:playtime] = quick[name]["playtime"]
+      hero.competitive = competitive_stats
+      hero.competitive[:playtime] = competitive[name]["playtime"]
+      save_or_update(hero)
+    end
+  end
+
+  def self.save_or_update(hero)
+    rails_hero = Hero.find_by(
+      name: hero[:name], player_id: hero[:player_id]
     )
+    if hero
+      rails_hero.update_attributes(hero_info)
+    else
+      hero.save!
+    end
+  end
 
+  #Heroes are returned in an array of hashes. Each gametype contains specific information. Must run both to get all data sets. Returns a hash for ease of access
+  def fetch_heroes(info, game_type)
+      heroes = HTTParty.get(
+        "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/heroes"
+      )
+      heroes_hash = {}
+      heroes.each{ |hero| heroes_hash[hero["name"]] = hero }
+      heroes_hash
+  end
 
+  def fetch_stats(info, game_type, name)
+    HTTParty.get(
+      "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/hero/#{name}/"
+    )
   end
 end
