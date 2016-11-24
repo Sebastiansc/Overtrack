@@ -27,6 +27,6 @@ namespace :fetcher do
     end
 
     #OverwatchCall handles player creation and deletion
-    players_info[0..2].each{ |info| player = OverwatchCall.create_player(info) }
+    players_info[0..2].each{ |info| OverwatchCall.create_player(info) }
   end
 end
