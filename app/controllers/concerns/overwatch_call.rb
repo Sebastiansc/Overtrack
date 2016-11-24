@@ -36,4 +36,8 @@ class OverwatchCall
     }
     return player
   end
+
+  def fetch_heroes(info)
+    
+  end
 end
