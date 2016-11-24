@@ -10,8 +10,9 @@ require_relative '../../app/controllers/concerns/overwatch_call'
 
 namespace :fetcher do
   desc "Rake task to get leadboard data"
+  #Task code must live inside this do - end block. Otherwise it doesn't have access to Rails models
   task :update => :environment do
-    # leaderboard datascraping from www.masteroverwatch.
+    #Leaderboard datascraping from www.masteroverwatch.
     players_info = []
     (0..48).step(50) do |num|
       doc = Nokogiri::HTML(
@@ -25,14 +26,7 @@ namespace :fetcher do
       end
     end
 
-    players = []
-    players_info[0..2].each do |info|
-      player = OverwatchCall.fetch(info)
-      players.push(player)
-    end
-
-    players.each do |player|
-      Player.create!(player)
-    end
+    #OverwatchCall handles player creation and deletion
+    players_info[0..2].each{ |info| player = OverwatchCall.fetch(info) }
   end
 end
