@@ -1,4 +1,4 @@
 class Player < ApplicationRecord
-  store :quick, accessors: [ :melee, :attack ], coder: JSON
-  store :competitive, accessors: [ :melee, :attack ], coder: JSON
+  store :quick, coder: JSON
+  store :competitive, coder: JSON
 end

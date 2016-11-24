@@ -6,6 +6,7 @@ require 'open-uri'
 require 'byebug'
 require 'json'
 require 'httparty'
+require_relative '../../app/controllers/concerns/overwatch_call'
 
 namespace :fetcher do
   desc "Rake task to get leadboard data"
@@ -25,47 +26,13 @@ namespace :fetcher do
     end
 
     players = []
-    byebug
-
     players_info[0..2].each do |info|
-      profile = HTTParty.get(
-        "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/profile"
-      )
-      quick_stas = HTTParty.get(
-        "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/quickplay/allHeroes/"
-      )
-      competitive_stats = HTTParty.get(
-        "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/competitive/allHeroes/"
-      )
-      data = profile["data"]
-      byebug if !data
-      player = {
-        username: data["username"],
-        level: data["level"],
-        avatar: data["avatar"],
-        level_frame: data["levelFrame"],
-        star: data["star"],
-        quick: {
-          wins: data["games"]["quick"]["wins"],
-          playtime: data["playtime"]["quick"],
-          stats: quick_stas.to_h
-        },
-        competitive: {
-          wins: data["games"]["competitive"]["wins"],
-          lost: data["games"]["competitive"]["lost"],
-          played: data["games"]["competitive"]["played"],
-          playtime: data["playtime"]["competitive"],
-          rank: data["competitive"]["rank"],
-          rank_image: data["competitive"]["rank_img"],
-          stats: competitive_stats.to_h
-        }
-      }
+      player = OverwatchCall.fetch(info)
       players.push(player)
     end
 
     players.each do |player|
       Player.create!(player)
     end
-
   end
 end
