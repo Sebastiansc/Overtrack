@@ -3,7 +3,7 @@ require 'open-uri'
 require 'byebug'
 require 'json'
 
-# leaderboard datascraping from www.masteroverwatch.com
+# leaderboard datascraping from www.masteroverwatch.
 player_tags = []
 (0..50).step(50) do |num|
   doc = Nokogiri::HTML(open("http://masteroverwatch.com/leaderboards/pc/global/mode/ranked/category/skillrating/hero/overall/role/overall/data?offset=#{num}"))
