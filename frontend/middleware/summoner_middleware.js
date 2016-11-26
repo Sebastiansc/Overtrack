@@ -3,9 +3,9 @@ import {
   UPDATE_PLAYER,
   fetchPlayer,
   updatePlayer
- } from '../actions/player_actions';
+} from '../actions/summoner_actions';
 
-import { getPlayer } from '../util/player_api_util';
+import { getPlayer } from '../util/summoner_api_util';
 
 export default ({getState, dispatch}) => next => action => {
   let fetchPlayerSuccess = (region, platform, player) =>
@@ -13,7 +13,12 @@ export default ({getState, dispatch}) => next => action => {
 
   switch (action.type) {
     case FETCH_PLAYER:
-      getPlayer(action.region, action.platform, action.player, fetchPlayerSuccess);
+      getPlayer(
+        action.region,
+        action.platform,
+        action.player,
+        fetchPlayerSuccess
+      );
       return next(action);
     default:
       return next(action);
