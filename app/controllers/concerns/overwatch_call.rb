@@ -105,16 +105,6 @@ class OverwatchCall
   # Each gametype contains specific information.
   # Must run both to get all data sets. Returns a hash for ease of access
   def self.fetch_heroes(info, game_type)
-<<<<<<< HEAD
-    heroes = JSON.parse(
-      HTTParty.get(
-        "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/heroes"
-      )
-    )
-    heroes_hash = {}
-    heroes.each { |hero| heroes_hash[hero["name"]] = hero }
-    heroes_hash
-=======
       heroes = HTTParty.get(
         "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/heroes"
       )
@@ -123,7 +113,6 @@ class OverwatchCall
       heroes_hash = {}
       heroes.each{ |hero| heroes_hash[hero["name"]] = hero }
       heroes_hash
->>>>>>> 307b61282e69e68a66cfb1362005b8a76b6ac344
   end
 
   def self.fetch_stats(info, game_type, name)
