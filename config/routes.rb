@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   end
 
   get '/api/matches/:summoner_id', to: 'matches#fetch_or_create'
+  root to: 'static_pages#root'
 end
