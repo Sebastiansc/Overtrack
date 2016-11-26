@@ -10,33 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161124092301) do
+ActiveRecord::Schema.define(version: 20161126031820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "heroes", force: :cascade do |t|
-    t.string  "name",        null: false
-    t.text    "image",       null: false
-    t.integer "percentage",  null: false
-    t.text    "quick",       null: false
-    t.text    "competitive", null: false
-    t.integer "player_id",   null: false
-    t.index ["name", "player_id"], name: "index_heroes_on_name_and_player_id", unique: true, using: :btree
-  end
-
-  create_table "players", force: :cascade do |t|
-    t.string   "username",    null: false
-    t.integer  "level",       null: false
-    t.text     "avatar",      null: false
-    t.text     "level_frame", null: false
-    t.text     "star",        null: false
-    t.text     "quick",       null: false
-    t.text     "competitive", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "player_tag",  null: false
-    t.index ["player_tag"], name: "index_players_on_player_tag", using: :btree
-  end
 
 end
