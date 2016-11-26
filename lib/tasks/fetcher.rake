@@ -13,6 +13,7 @@ namespace :fetcher do
   #Task code must live inside this do - end block. Otherwise it doesn't have access to Rails models
   task :update => :environment do
     #Leaderboard datascraping from www.masteroverwatch.
+  
     players_info = []
     (0..50).step(50) do |num|
       doc = Nokogiri::HTML(
