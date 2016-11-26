@@ -1,0 +1,3 @@
+class Summoner < ApplicationRecord
+  
+end
