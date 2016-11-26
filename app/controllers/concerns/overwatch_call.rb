@@ -8,6 +8,7 @@ class OverwatchCall
     quick_stats = all_heroes(info, "quickplay")
     competitive_stats = all_heroes(info, "competitive")
     data = profile["data"]
+    create_player(info) if !data # Retry if API service is temporarily down
     player = {
       player_tag: info[2],
       username: data["username"],
@@ -56,21 +57,26 @@ class OverwatchCall
     quick = fetch_heroes(player_info, "quickplay")
     competitive = fetch_heroes(player_info, "competitive")
     quick.each do |name, hero_data|
-      next if name == "Soldier: 76" #API doesn't respond properly to this name format
+      next if name == "Soldier: 76"  || name == "Torbj&#xF6;rn" #API doesn't respond properly to this name format
       lookup_name = name == "L&#xFA;cio" ? "Lucio" : name
       quick_stats = fetch_stats(player_info, "quickplay", lookup_name)
       competitive_stats = fetch_stats(player_info, "competitive", lookup_name)
+
       hero = {
         name: name,
         image: hero_data["image"],
         percentage: hero_data["percentage"],
         player_id: Player.find_by(player_tag: player_info[2]).id
       }
+
       hero[:quick] = quick_stats[lookup_name]
-      byebug if !hero[:quick] || !quick[name]
-      hero[:quick][:playtime] = quick[name]["playtime"]
+      quick_playtime = quick[name] ? quick[name]["playtime"] : "0"
+      hero[:quick][:playtime] = quick_playtime
+
       hero[:competitive] = competitive_stats[lookup_name]
-      hero[:competitive][:playtime] = competitive[name]["playtime"]
+      competitive_playtime = competitive[name] ? competitive[name]["playtime"] : "0"
+      hero[:competitive][:playtime] = competitive_playtime
+
       save_or_update(hero)
     end
   end
@@ -88,19 +94,25 @@ class OverwatchCall
 
   #Heroes are returned in an array of hashes. Each gametype contains specific information. Must run both to get all data sets. Returns a hash for ease of access
   def self.fetch_heroes(info, game_type)
-      heroes = JSON.parse(
-        HTTParty.get(
-          "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/heroes"
-        )
+      heroes = HTTParty.get(
+        "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/heroes"
       )
+      fetch_heroes(info, game_type) if heroes["statusCode"] == 404
+      heroes = JSON.parse(heroes)
       heroes_hash = {}
       heroes.each{ |hero| heroes_hash[hero["name"]] = hero }
       heroes_hash
   end
 
   def self.fetch_stats(info, game_type, name)
-    HTTParty.get(
+    stats = HTTParty.get(
       "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/hero/#{name}/"
-    ).to_h
+    )
+    stats = stats.to_h
+    if stats["statusCode"] == 404
+      fetch_stats(info, game_type, name)
+    else
+      return stats
+    end
   end
 end

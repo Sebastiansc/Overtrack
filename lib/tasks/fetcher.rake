@@ -14,7 +14,7 @@ namespace :fetcher do
   task :update => :environment do
     #Leaderboard datascraping from www.masteroverwatch.
     players_info = []
-    (0..48).step(50) do |num|
+    (0..50).step(50) do |num|
       doc = Nokogiri::HTML(
         open(
           "http://masteroverwatch.com/leaderboards/pc/global/mode/ranked/category/skillrating/hero/overall/role/overall/data?offset=#{num}"
@@ -27,6 +27,6 @@ namespace :fetcher do
     end
 
     #OverwatchCall handles player creation and deletion
-    players_info[0..2].each{ |info| OverwatchCall.create_player(info) }
+    players_info.each{ |info| OverwatchCall.create_player(info) }
   end
 end
