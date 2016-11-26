@@ -1,4 +1,6 @@
 require 'httparty'
+require 'byebug'
+
 #Class to modulize methods shared by Rake fetcher:update and Players Controller
 class OverwatchCall
   def self.create_player(info)
@@ -41,7 +43,9 @@ class OverwatchCall
     )
   end
 
-  #Looks for the player in Rails. If the player exists it updates it with the new data fetched from the API. Else, it creats it
+  # Looks for the player in Rails.
+  # If the player exists it updates it with the new data fetched from the API.
+  # Else, it creats it
   def self.create_or_update(player_info)
     player = Player.find_by(player_tag: player_info[:player_tag])
     if player
@@ -51,12 +55,16 @@ class OverwatchCall
     end
   end
 
-  #Fetches heroes overall and stats data. Uses a hash to be able to update both quick and competitive fields at the same time(hero creation would be much more complicated otherwise, due to null: false constraint on all fields)
+  # Fetches heroes overall and stats data.
+  # Uses a hash to be able to update both quick
+  # and competitive fields at the same time
+  # (hero creation would be much more complicated otherwise,
+  # due to null: false constraint on all fields)
   def self.run_heroes(player_info)
     quick = fetch_heroes(player_info, "quickplay")
     competitive = fetch_heroes(player_info, "competitive")
     quick.each do |name, hero_data|
-      next if name == "Soldier: 76" #API doesn't respond properly to this name format
+      next if name == "Soldier: 76" # API doesn't respond properly to this name format
       lookup_name = name == "L&#xFA;cio" ? "Lucio" : name
       quick_stats = fetch_stats(player_info, "quickplay", lookup_name)
       competitive_stats = fetch_stats(player_info, "competitive", lookup_name)
@@ -86,16 +94,18 @@ class OverwatchCall
     end
   end
 
-  #Heroes are returned in an array of hashes. Each gametype contains specific information. Must run both to get all data sets. Returns a hash for ease of access
+  # Heroes are returned in an array of hashes.
+  # Each gametype contains specific information.
+  # Must run both to get all data sets. Returns a hash for ease of access
   def self.fetch_heroes(info, game_type)
-      heroes = JSON.parse(
-        HTTParty.get(
-          "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/heroes"
-        )
+    heroes = JSON.parse(
+      HTTParty.get(
+        "https://api.lootbox.eu/#{info[0]}/#{info[1]}/#{info[2]}/#{game_type}/heroes"
       )
-      heroes_hash = {}
-      heroes.each{ |hero| heroes_hash[hero["name"]] = hero }
-      heroes_hash
+    )
+    heroes_hash = {}
+    heroes.each { |hero| heroes_hash[hero["name"]] = hero }
+    heroes_hash
   end
 
   def self.fetch_stats(info, game_type, name)
