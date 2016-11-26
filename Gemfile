@@ -24,7 +24,8 @@ gem 'json'
 gem 'whenever'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
+gem 'encoding-codepage'
+gem 'unidecoder'
 gem 'redis'
 gem 'capistrano-rails', group: :development
 

@@ -9,6 +9,7 @@ class Summoner < ApplicationRecord
   extend ApiHelper
 
   def self.create_summoner(summoner_name, region = "na")
+    summoner_name = summoner_name.unpack("U*").map{|ch| ch.chr}.join
     profile = HTTParty.get(
       "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{api_key}"
     )
