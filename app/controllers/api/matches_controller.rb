@@ -3,8 +3,7 @@ class Api::MatchesController < ApplicationController
     @match = Match.new(match_params)
     if @match.valid?
       @match.save!
-      render :show
-    else
+     else
       render json: @match.error.full_messages, status: 422
     end
   end
