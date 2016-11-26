@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126070928) do
+ActiveRecord::Schema.define(version: 20161126171556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20161126070928) do
     t.hstore   "participants",   null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "match_duration", null: false
     t.index ["participants"], name: "index_matches_on_participants", using: :gist
   end
 
