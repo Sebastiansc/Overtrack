@@ -1,5 +1,5 @@
-import UPDATE_PLAYER from 'UPDATE_PLAYER';
-import FETCH_PLAYER from 'FETCH_PLAYER';
+export const UPDATE_PLAYER = 'UPDATE_PLAYER';
+export const FETCH_PLAYER = 'FETCH_PLAYER';
 
 
 export const updatePlayer = (platform, region, player) => ({

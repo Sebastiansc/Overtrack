@@ -1,4 +1,4 @@
-import { RECEIVE_MATCHES } from './actions/match_actions';
+import { RECEIVE_MATCHES } from '../actions/match_actions';
 import merge from 'lodash/merge';
 
 export default (state = {}, action) => {
