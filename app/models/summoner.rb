@@ -9,10 +9,15 @@ class Summoner < ApplicationRecord
   extend ApiHelper
 
   def self.create_summoner(summoner_name, region = "na")
-    summoner_name = summoner_name.unpack("U*").map{|ch| ch.chr}.join
-    profile = HTTParty.get(
-      "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{api_key}"
+    summoner_name = summoner_name.unpack("U*").map(&:chr).join
+    summoner_name = summoner_name.downcase.split(" ").join("")
+    encoded_uri = URI.parse(
+      URI.encode(
+        "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{api_key}"
+      )
     )
+    byebug
+    profile = HTTParty.get(encoded_uri)
     return false if profile["statusCode"] == 404
     profile = profile.to_h[summoner_name]
     profile_entry = summoner_entry(profile["id"], region).to_h[profile["id"].to_s]
@@ -28,9 +33,12 @@ class Summoner < ApplicationRecord
   end
 
   def self.summoner_entry(summoner_id, region)
-    HTTParty.get(
-      "https://#{region}.api.pvp.net/api/lol/#{region}/v2.5/league/by-summoner/#{summoner_id}/entry?api_key=#{api_key}"
+    encoded_uri = URI.parse(
+      URI.encode(
+        "https://#{region}.api.pvp.net/api/lol/#{region}/v2.5/league/by-summoner/#{summoner_id}/entry?api_key=#{api_key}"
+      )
     )
+    HTTParty.get(encoded_uri)
   end
 
   def self.solo_rank(profile_entry)
