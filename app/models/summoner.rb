@@ -3,7 +3,11 @@ class Summoner < ApplicationRecord
    :league_points, :division, :league_name, presence: true
   validates :name, :summoner_id, uniqueness: true
 
+  has_many :matchings
+  has_many :matches, through: :matchings, souce: :match
+
   extend ApiHelper
+
   def self.create_summoner(summoner_name, region = "na")
     profile = HTTParty.get(
       "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{api_key}"
