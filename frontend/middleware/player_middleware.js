@@ -13,7 +13,12 @@ export default ({getState, dispatch}) => next => action => {
 
   switch (action.type) {
     case FETCH_PLAYER:
-      getPlayer(action.region, action.platform, action.player, fetchPlayerSuccess);
+      getPlayer(
+        action.region,
+        action.platform,
+        action.player,
+        fetchPlayerSuccess
+      );
       return next(action);
     default:
       return next(action);
