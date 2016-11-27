@@ -28,6 +28,7 @@ class Summoner < ApplicationRecord
     @summoner = Summoner.new(profile_info)
     solo_rank(profile_entry)
     @summoner.save!
+    @summoner
   end
 
   def self.summoner_entry(summoner_id, region)
