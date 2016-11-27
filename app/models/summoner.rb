@@ -3,7 +3,8 @@ class Summoner < ApplicationRecord
     :league_name, presence: true
   validates :name, :summoner_id, uniqueness: true
 
-  has_many :matchings
+  #Primary key must be set so Rails doesn't default to id
+  has_many :matchings, primary_key: :summoner_id
   has_many :matches, through: :matchings, source: :match
 
   extend ApiHelper

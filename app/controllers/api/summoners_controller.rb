@@ -7,7 +7,7 @@ class Api::SummonersController < ApplicationController
       @summoner = Summoner.create_summoner(params[:name])
       Match.fetch_matches(@summoner)
     end
-    @matches = Match.get(summoner.summoner_id, 0, 20)
+    @matches = Match.get(@summoner.summoner_id, 0, 20)
     render :show
   end
 end
