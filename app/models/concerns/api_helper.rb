@@ -12,4 +12,8 @@ module ApiHelper
     summoner_name = name.unpack("U*").map(&:chr).join
     summoner_name.downcase.split(" ").join("")
   end
+
+  def begin_time
+    (DateTime.now - 30).strftime("%Q")
+  end
 end

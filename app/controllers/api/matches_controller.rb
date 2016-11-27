@@ -1,26 +1,7 @@
 class Api::MatchesController < ApplicationController
-  def create
-    @match = Match.new(match_params)
-    if @match.valid?
-      @match.save!
-     else
-      render json: @match.error.full_messages, status: 422
-    end
-  end
-
+  #Hit upon requesting `show more` on profile page
   def next_batch
     @matches = Matches.get(params[:id], params[:limit], params[:offset])
     render :index
-  end
-
-  private
-  def match_params
-    params.require(:match).permit(
-      :region,
-      :match_type,
-      :match_id,
-      :match_creation,
-      :participants
-    )
   end
 end
