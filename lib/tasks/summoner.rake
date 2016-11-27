@@ -1,39 +1,38 @@
-extends Apihelper
+require 'task_helpers/summoner_helper'
 
 namespace :fetcher do
   namespace :summoner do
     desc "fetch and update static summoner data"
     task static: :environment do
-      @summoners = Summoner.all
+      queue = Summoner.all.to_a
+      create_update_summoner(queue)
+    end
 
-      queue = Array.new();
-      @summoners.each do |summoner|
-        queue.push(summoner)
-      end
-
-      return [] if queue.length == 0
-
-      summoner = queue.shift
-      summoner_name = to_ascii(summoner)
-
+    def create_update_summoner(queue)
+      return if queue.empty?
+      summoner = queue.first
+      summoner_name = SummonerApiHelper.to_ascii(summoner)
       encoded_uri = URI.parse(
-      URI.encode(
-      "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{api_key}"
-      )
+        URI.encode(
+          "https://#{SummonerApiHelper.region}.api.pvp.net/api/lol/#{SummonerApiHelper.region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{SummonerApiHelper.api_key}"
+        )
       )
       profile = HTTParty.get(encoded_uri)
       return false if profile["statusCode"] == 404
-      profile = profile.to_h[summoner_name]
-      profile_entry = summoner_entry(profile["id"], region).to_h[profile["id"].to_s]
-      profile_info = {
-        summoner_id: profile["id"],
-        level: profile["summonerLevel"],
-        name: profile["name"],
-        profile_icon: profile["profileIconId"]
-      }
-    end
 
-    def queue()
+      if profile["statusCode"] == 429
+        sleep 1
+      else
+        profile = profile.to_h[summoner_name]
+        profile_info = {
+          level: profile["summonerLevel"],
+          name: profile["name"],
+          profile_icon: profile["profileIconId"]
+        }
+        summoner.update_attributes(profile_info)
+        queue.shift
+      end
+      create_update_summoner(queue)
     end
   end
 end
