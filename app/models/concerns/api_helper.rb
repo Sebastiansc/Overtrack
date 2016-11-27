@@ -8,8 +8,8 @@ module ApiHelper
   end
 
   # string from UTF-8 to ASCII because HTTParty takes ASCII format
-  def to_ascii(summoner)
-    summoner_name = summoner["name"].unpack("U*").map(&:chr).join
+  def to_ascii(name)
+    summoner_name = name.unpack("U*").map(&:chr).join
     summoner_name.downcase.split(" ").join("")
   end
 end

@@ -8,6 +8,11 @@ class Api::MatchesController < ApplicationController
     end
   end
 
+  def fetch
+    @matches = Matches.get(params[:id], params[:limit], params[:offset])
+    render :index
+  end
+
   private
   def match_params
     params.require(:match).permit(

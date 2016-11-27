@@ -7,14 +7,7 @@ export default ({getState, dispatch}) => next => action => {
   // Fetches each match details from API.
   // Uses selectors to shape them in compliance with DB schema.
   // Gathers all matches into a single array to reduce the overhead of dispatching one action for each match.
-  let matchListSuccess = matches => {
-    let allMatches = [];
-    const success = match => allMatches.push(shapeMatch(match));
-    matches.matches.forEach(match => {
-      setTimeout(() => fetchMatch(match.matchId, success), 600);
-    });
-    dispatch(receiveMatches(allMatches));
-  };
+  let matchListSuccess = matches => dispatch(receiveMatches(matches));
 
   switch (action.type) {
     case FETCH_MATCH_LIST:

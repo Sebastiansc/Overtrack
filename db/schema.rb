@@ -10,22 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126171556) do
+ActiveRecord::Schema.define(version: 20161127064418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
 
   create_table "matches", force: :cascade do |t|
-    t.string   "region",         null: false
-    t.string   "match_type",     null: false
-    t.bigint   "match_id",       null: false
-    t.bigint   "match_creation", null: false
-    t.hstore   "participants",   null: false
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "match_duration", null: false
-    t.index ["participants"], name: "index_matches_on_participants", using: :gist
+    t.string   "region",                        null: false
+    t.string   "match_type",                    null: false
+    t.bigint   "match_id",                      null: false
+    t.bigint   "match_creation",                null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "match_duration",                null: false
+    t.jsonb    "participants",   default: "{}"
+    t.index ["participants"], name: "index_matches_on_participants", using: :gin
   end
 
   create_table "matchings", force: :cascade do |t|
