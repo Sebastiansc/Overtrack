@@ -9,6 +9,7 @@ export const shapeMatch = (match) => {
     match_duration: match.matchDuration,
     participants: shapeParticipants(match)
   };
+  return shapedMatch;
 };
 
 const shapeParticipants = match => {
