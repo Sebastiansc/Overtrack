@@ -16,4 +16,12 @@ module ApiHelper
   def begin_time
     (DateTime.now - 30).strftime("%Q")
   end
+
+  def end_time
+    DateTime.now.strftime("%Q")
+  end
+
+  def ranks
+    "TEAM_BUILDER_RANKED_SOLO,TEAM_BUILDER_DRAFT_RANKED_5x5,RANKED_SOLO_5x5,RANKED_FLEX_SR"
+  end
 end

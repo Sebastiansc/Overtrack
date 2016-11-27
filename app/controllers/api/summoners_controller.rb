@@ -7,9 +7,7 @@ class Api::SummonersController < ApplicationController
     if !@summoner
       @summoner = Summoner.create_summoner(params[:name])
       render :show
-      end_time = DateTime.now.strftime("%Q")
       Match.fetch_matches(@summoner, {
-          end_time: end_time,
           offset: 0,
           limit: 20
         })

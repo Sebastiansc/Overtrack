@@ -10,15 +10,14 @@ class Match < ApplicationRecord
   extend ApiHelper
 
   #Fetches summoner matches from DB, ordered by most recently played.
-  #Signals #fetch_matches to get more matches if requested offset + limit surpasses # of stored matches in DB.
+  #Signals #fetch_matches to get more matches if requested limit surpasses # of stored matches in DB.
   #Recommended: 20 at a time.
   def self.get(summoner_id, offset, limit)
     byebug
     summoner = Summoner.find_by(summoner_id: summoner_id)
 
-    if summoner.matches.length < (offset + limit)
+    if summoner.matches.length < limit
       fetch_matches(summoner, {
-          end_time: oldest_match_time(summoner),
           offset: offset,
           limit: limit
         })
@@ -31,26 +30,20 @@ class Match < ApplicationRecord
     limit(limit)
   end
 
-  #Finds oldest match, timewise, for the summoner. Adds 1 to exclude that match from next batch fetch
-  def self.oldest_match_time(summoner)
-    summoner.matches.
-      order('matches.match_creation').
-      limit(1).match_creation + 1
-  end
-
   #Fetches and creates matches, played within last month, in batches of 20 from API. **IGNORES matches already stored in DB.
   #Arguments: options => hash. Sets look up and index offset and limits.
   def self.fetch_matches(summoner, options)
     @summoner_id = summoner.summoner_id
 
     match_list = HTTParty.get(
-      "https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/#{@summoner_id}?seasons=SEASON2016&beginTime=#{begin_time}&endTime=#{options[:end_time]}&beginIndex=#{options[:offset]}&endIndex=#{options[:limit]}&api_key=#{api_key}"
+      "https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/#{@summoner_id}?rankedQueues=#{ranks}&seasons=SEASON2016&beginTime=#{begin_time}&endTime=#{end_time}&beginIndex=#{options[:offset]}&endIndex=#{options[:limit]}&api_key=#{api_key}"
     )
 
     if match_list.response.code == "429"
       sleep 1
       fetch_matches(summoner)
     end
+    byebug
     create_matches(match_list["matches"])
   end
 
