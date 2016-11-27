@@ -5,10 +5,12 @@ import App from './app';
 
 const Root = ({ store }) => {
   return (
-    <Provider>
-      <Router>
-
+    <Provider store={store}>
+      <Router history={hashHistory}>
+        <Route path="/" component={App}>
+          <IndexRoute />
+        </Route>
       </Router>
     </Provider>
   );
-};             
+};
