@@ -1,6 +1,6 @@
 class Summoner < ApplicationRecord
-  validates :name, :level, :summoner_id, :profile_icon, :tier, :wins,
-   :league_points, :division, :league_name, presence: true
+  validates :summoner_id, :tier, :wins, :league_points, :division,
+    :league_name, presence: true
   validates :name, :summoner_id, uniqueness: true
 
   has_many :matchings
@@ -17,7 +17,6 @@ class Summoner < ApplicationRecord
         "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{api_key}"
       )
     )
-    byebug
     profile = HTTParty.get(encoded_uri)
     return false if profile["statusCode"] == 404
     profile = profile.to_h[summoner_name]
