@@ -24,7 +24,6 @@ gem 'json'
 gem 'whenever'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
 gem 'redis'
 gem 'capistrano-rails', group: :development
 

@@ -9,7 +9,7 @@ class Summoner < ApplicationRecord
   extend ApiHelper
 
   def self.create_summoner(summoner_name, region = "na")
-    # string from UTF-8 to ASCII because HTTParty takes ASCII format
+    # string from UTF-8 to ASCII
     summoner_name = summoner_name.unpack("U*").map(&:chr).join
     summoner_name = summoner_name.downcase.split(" ").join("")
     encoded_uri = URI.parse(
