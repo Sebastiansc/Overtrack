@@ -9,9 +9,7 @@ class Summoner < ApplicationRecord
   extend ApiHelper
 
   def self.create_summoner(summoner_name, region = "na")
-    # string from UTF-8 to ASCII because HTTParty takes ASCII format
-    summoner_name = summoner_name.unpack("U*").map(&:chr).join
-    summoner_name = summoner_name.downcase.split(" ").join("")
+    summoner_name = to_ascii(summoner_name)
     encoded_uri = URI.parse(
       URI.encode(
         "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{api_key}"
