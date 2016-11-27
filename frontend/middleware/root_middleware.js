@@ -1,11 +1,13 @@
 import { applyMiddleware } from 'redux';
 import SummonerMiddleware from './summoner_middleware';
-import createLogger from 'react-logger';
+import MatchMiddleware from './match_middleware';
+import createLogger from 'redux-logger';
 
 const logger = createLogger();
 
 const RootMiddleware = applyMiddleware(
   SummonerMiddleware,
+  MatchMiddleware,
   logger
 );
 
