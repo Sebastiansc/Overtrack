@@ -9,7 +9,7 @@ class Api::MatchesController < ApplicationController
   end
 
   def fetch
-    @matches = Matches.get(limit, offset)
+    @matches = Matches.get(params[:id], params[:limit], params[:offset])
     render :index
   end
 

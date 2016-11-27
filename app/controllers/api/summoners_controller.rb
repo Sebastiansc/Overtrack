@@ -1,11 +1,13 @@
 class Api::SummonersController < ApplicationController
-  def show
+  #This method is hit upon entering profile page.
+  #Attempt to find summoner in local DB. If none found, fetch and create from API. Also fetch and create matches for this player
+  def find_or_create
     @summoner = Summoner.find(params[:name])
-    if @summoner
-      render :show
-    else
+    if !@summoner
       @summoner = Summoner.create_summoner(params[:name])
       Match.fetchMatches(@summoner)
     end
+    @matches = Match.get(summoner.summoner_id, 0, 20)
+    render :show
   end
 end
