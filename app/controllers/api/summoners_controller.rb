@@ -1,10 +1,12 @@
 class Api::SummonersController < ApplicationController
   #This method is hit upon entering profile page.
-  #Attempt to find summoner in local DB. If none found, fetch and create from API. Also fetch and create most recent (< 20) matches for this player
+  #Attempt to find summoner in local DB. If none found, fetch and create from API.
+  #Creates most recent (< 20) matches for this player.
   def find_or_create
     @summoner = Summoner.find_by(name: params[:name])
     if !@summoner
       @summoner = Summoner.create_summoner(params[:name])
+      render :show
       end_time = DateTime.now.strftime("%Q")
       Match.fetch_matches(@summoner, {
           end_time: end_time,
@@ -12,7 +14,5 @@ class Api::SummonersController < ApplicationController
           limit: 20
         })
     end
-    @matches = Match.get(@summoner.summoner_id, 0, 20)
-    render :show
   end
 end

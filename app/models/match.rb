@@ -12,7 +12,7 @@ class Match < ApplicationRecord
   #Fetches summoner matches from DB, ordered by most recently played.
   #Signals #fetch_matches to get more matches if requested offset + limit surpasses # of stored matches in DB.
   #Recommended: 20 at a time.
-  def self.get(summoner_id, limit, offset)
+  def self.get(summoner_id, offset, limit)
     byebug
     summoner = Summoner.find_by(summoner_id: summoner_id)
 
@@ -24,7 +24,7 @@ class Match < ApplicationRecord
         })
     end
 
-    Matches.joins(:matchings).
+    Match.joins(:matchings).
     where('matchings.summoner_id = ?', summoner_id).
     order('matches.match_creation DESC').
     offset(offset).

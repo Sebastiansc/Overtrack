@@ -3,6 +3,6 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
   end
   get 'api/summoners/:name', to: 'api/summoners#find_or_create'
-  get 'api/matches/:limit/:offset', to: 'api/matches#next_batch'
+  get 'api/matches/:id/:offset/:limit', to: 'api/matches#next_batch'
   root to: 'static_pages#root'
 end
