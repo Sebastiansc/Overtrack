@@ -1,6 +1,6 @@
 class Summoner < ApplicationRecord
-  validates :name, :level, :summoner_id, :profile_icon, :tier, :wins,
-   :league_points, :division, :league_name, presence: true
+  validates :summoner_id, :tier, :wins, :league_points, :division,
+    :league_name, presence: true
   validates :name, :summoner_id, uniqueness: true
 
   has_many :matchings
