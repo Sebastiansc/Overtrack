@@ -9,4 +9,8 @@ class Match < ApplicationRecord
     summoner = Summoner.find(id)
     Matches.where(offset(offset).limit(limit)
   end
+
+  def self.fetchMatches(summoner)
+    match_list 
+  end
 end
