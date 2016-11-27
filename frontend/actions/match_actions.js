@@ -1,8 +1,8 @@
-export const FETCH_MATCH_LIST = "FETCH_MATCH_LIST";
+export const FETCH_MATCHES = "FETCH_MATCHES";
 export const RECEIVE_MATCHES = "RECEIVE_MATCHES";
 
-export const fetchMatchList = (summonerId, offset, limit) => ({
-  type: FETCH_MATCH_LIST,
+export const fetchMatches = (summonerId, offset, limit) => ({
+  type: FETCH_MATCHES,
   summonerId,
   offset,
   limit
