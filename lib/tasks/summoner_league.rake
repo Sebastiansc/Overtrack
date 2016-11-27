@@ -4,6 +4,9 @@ namespace :fetcher do
     task league: :environment do
       @summoners = Summoner.all.to_a
 
+      @summoners.select do |summoner|
+        leagues.has_key?()
+      end
     end
 
     # save league names in a hash
