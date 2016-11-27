@@ -17,7 +17,6 @@ class Summoner < ApplicationRecord
         "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{api_key}"
       )
     )
-    byebug
     profile = HTTParty.get(encoded_uri)
     return false if profile["statusCode"] == 404
     profile = profile.to_h[summoner_name]

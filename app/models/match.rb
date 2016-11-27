@@ -4,4 +4,9 @@ class Match < ApplicationRecord
 
   has_many :matchings
   has_many :summoners, through: :matchings, source: :summoner
+
+  def self.get(id, limit, offset)
+    summoner = Summoner.find(id)
+    Matches.where(offset(offset).limit(limit)
+  end
 end
