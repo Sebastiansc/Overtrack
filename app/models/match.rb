@@ -17,9 +17,10 @@ class Match < ApplicationRecord
   end
 
   #Fetches all matches within the past month for a player and saved them to the DB
-  def self.fetch_matches(summoner)
-    begin_time = (DateTime.now - 30).strftime("%Q")
-    end_time = DateTime.now.strftime("%Q")
+  def self.fetch_matches(summoner, options)
+    begin_time = options[:begin_time]
+    end_time = options[:end_time]
+
     @summoner_id = summoner.summoner_id
 
     match_list = HTTParty.get(
