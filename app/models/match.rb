@@ -5,7 +5,7 @@ class Match < ApplicationRecord
   store_accessor :participants
 
   #Primary key must be set so Rails doesn't default to id
-  has_many :matchings, primary_key: :match_id
+  has_many :matchings, primary_key: :match_id, dependent: :destroy
   has_many :summoners, through: :matchings, source: :summoner
   extend ApiHelper
 
@@ -13,7 +13,8 @@ class Match < ApplicationRecord
   #Signals #fetch_matches to get more matches if requested offset + limit surpasses # of stored matches in DB.
   #Recommended: 20 at a time.
   def self.get(summoner_id, limit, offset)
-    summoner = Summoner.find(summoner_id)
+    byebug
+    summoner = Summoner.find_by(summoner_id: summoner_id)
 
     if summoner.matches.length < (offset + limit)
       fetch_matches(summoner, {
@@ -24,7 +25,7 @@ class Match < ApplicationRecord
     end
 
     Matches.joins(:matchings).
-    where('matchings.summoner_id = ?' summoner_id).
+    where('matchings.summoner_id = ?', summoner_id).
     order('matches.match_creation DESC').
     offset(offset).
     limit(limit)

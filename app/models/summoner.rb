@@ -8,18 +8,20 @@ class Summoner < ApplicationRecord
   has_many :matches, through: :matchings, source: :match
 
   extend ApiHelper
-
+  #Fetches and creates summoner from API.
+  #Uses URI encoding to account for foreign characters in summoner names.
   def self.create_summoner(summoner_name, region = "na")
     summoner_name = to_ascii(summoner_name)
+
     encoded_uri = URI.parse(
       URI.encode(
         "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{api_key}"
       )
     )
+
     profile = HTTParty.get(encoded_uri)
     return false if profile["statusCode"] == 404
     profile = profile.to_h[summoner_name]
-    profile_entry = summoner_entry(profile["id"], region).to_h[profile["id"].to_s]
     profile_info = {
       summoner_id: profile["id"],
       level: profile["summonerLevel"],
@@ -27,11 +29,18 @@ class Summoner < ApplicationRecord
       profile_icon: profile["profileIconId"]
     }
     @summoner = Summoner.new(profile_info)
+
+    #What is this doing????
+    profile_entry = summoner_entry(
+    profile["id"],
+    region).to_h[profile["id"].to_s]
     solo_rank(profile_entry)
+
     @summoner.save!
     @summoner
   end
 
+  #Fetches league related info for player.
   def self.summoner_entry(summoner_id, region)
     encoded_uri = URI.parse(
       URI.encode(
@@ -40,6 +49,7 @@ class Summoner < ApplicationRecord
     )
     HTTParty.get(encoded_uri)
   end
+
 
   def self.solo_rank(profile_entry)
     profile_entry.each do |profile|
