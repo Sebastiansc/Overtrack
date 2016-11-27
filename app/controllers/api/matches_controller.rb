@@ -8,7 +8,7 @@ class Api::MatchesController < ApplicationController
     end
   end
 
-  def fetch
+  def next_batch
     @matches = Matches.get(params[:id], params[:limit], params[:offset])
     render :index
   end

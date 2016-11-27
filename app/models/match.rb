@@ -9,22 +9,24 @@ class Match < ApplicationRecord
   has_many :summoners, through: :matchings, source: :summoner
   extend ApiHelper
 
-  #Fetches matches for a specific summoner.
-  #Recommended 20 at a time.
-  def self.get(id, limit, offset)
+  #Fetches summoner matches from DB, ordered by most recently played
+  #Recommended: 20 at a time.
+  def self.get(summoner_id, limit, offset)
     summoner = Summoner.find(id)
-    Matches.where(summoner_id: id).offset(offset).limit(limit)
+    Matches.joins(:matchings).
+      where('matchings.summoner_id = ?' summoner_id).
+      order('matches.match_creation DESC').
+      offset(offset).
+      limit(limit)
   end
 
-  #Fetches all matches within the past month for a player and saved them to the DB
+  #Fetches and creates matches, played within last month, in batches of 20 from API.
+  #Arguments: options => hash. Sets look up and index offset and limits.
   def self.fetch_matches(summoner, options)
-    begin_time = options[:begin_time]
-    end_time = options[:end_time]
-
     @summoner_id = summoner.summoner_id
 
     match_list = HTTParty.get(
-      "https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/#{@summoner_id}?seasons=SEASON2016&beginTime=#{begin_time}&endTime=#{end_time}&api_key=#{api_key}"
+      "https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/#{@summoner_id}?seasons=SEASON2016&beginTime=#{options[:begin_time}&endTime=#{options[:end_time]}&beginIndex=#{options[:offset]}&endIndex=#{options[:limit]}&api_key=#{api_key}"
     )
 
     if match_list.response.code == "429"
@@ -74,11 +76,12 @@ class Match < ApplicationRecord
     })
   end
 
-  #Configures the shape of the participants hash.
-  #Sets it to a hash where each key is a summoner_id and each value their match related stats.
+  #Configures the shape of the participant's hash.
+  #Sets it to a hash where each key is a summoner_id and each value is their match related stats.
   def self.shapeParticipants(match)
     participants = {}
     identities = shapeIdentities(match)
+
     match["participants"].each do |participant|
       shapedParticipant = {
         champion_id: participant["championId"],
@@ -90,6 +93,7 @@ class Match < ApplicationRecord
       }
       participants[shapedParticipant[:summoner]["summonerId"]] = shapedParticipant
     end
+
     participants;
   end
 
