@@ -6,11 +6,8 @@ class Api::SummonersController < ApplicationController
     @summoner = Summoner.find_by(name: params[:name])
     if !@summoner
       @summoner = Summoner.create_summoner(params[:name])
-      render :show
-      Match.fetch_matches(@summoner, {
-          offset: 0,
-          limit: 20
-        })
+      MatchFetch.perform_async(@summoner)
     end
+    render :show
   end
 end

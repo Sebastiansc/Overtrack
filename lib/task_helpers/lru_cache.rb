@@ -10,7 +10,7 @@ class LRUCache
   end
 
   #If key already exists it updates is position in the list to be the MRU.
-  #Else it created both a pointer in the hash and a Link.
+  #Else it creates both a pointer in the hash and a Link.
   def add(key, value)
     if @cache[key]
       @list.freshen(@cache[key], value)
@@ -35,8 +35,3 @@ class LRUCache
     @list.pop
   end
 end
-
-cache = LRUCache.new
-byebug
-1000.times{ |i| cache.add(i, "summoner#{i}") }
-byebug
