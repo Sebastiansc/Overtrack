@@ -6,7 +6,7 @@ const App = ({ children }) => (
   <div className="app">
     <Header />
       {children}
-    <Footer/>
+    <Footer />
   </div>
 );
 
