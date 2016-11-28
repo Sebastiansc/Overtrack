@@ -17,6 +17,11 @@ gem 'uglifier', '>= 1.3.0'
 gem 'httparty'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
+#Use to communicate to Redis server
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
+gem 'redis-rack-cache'
 
 gem 'virtus'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -26,7 +31,6 @@ gem 'json'
 gem 'whenever'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-gem 'redis'
 gem 'capistrano-rails', group: :development
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
