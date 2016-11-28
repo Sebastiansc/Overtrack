@@ -8,7 +8,7 @@ class Spell < ApplicationRecord
     spell_names = spells.to_h["data"].keys
     spell_names.each do |spell|
       spell_params = spells.to_h["data"][spell]
-      Spell.create!(
+      Spell.create(
         spell_id: spell_params["id"],
         image_name: spell_params["image"]["full"],
         name: spell_params["name"],

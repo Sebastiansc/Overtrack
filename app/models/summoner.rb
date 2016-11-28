@@ -10,16 +10,9 @@ class Summoner < ApplicationRecord
   extend ApiHelper
   #Fetches and creates summoner from API.
   #Uses URI encoding to account for foreign characters in summoner names.
-  def self.create_summoner(summoner_name, region = "na")
+  def self.create_summoner(summoner_name)
     summoner_name = to_ascii(summoner_name)
-
-    encoded_uri = URI.parse(
-      URI.encode(
-        "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{api_key}"
-      )
-    )
-
-    profile = HTTParty.get(encoded_uri)
+    profile = static_data(summoner_name)
     return false if profile["statusCode"] == 404
     profile = profile.to_h[summoner_name]
     profile_info = {
@@ -28,38 +21,44 @@ class Summoner < ApplicationRecord
       name: profile["name"],
       profile_icon: profile["profileIconId"]
     }
-    @summoner = Summoner.new(profile_info)
 
-    #What is this doing????
-    profile_entry = summoner_entry(
-    profile["id"],
-    region).to_h[profile["id"].to_s]
-    solo_rank(profile_entry)
-
-    @summoner.save!
-    @summoner
+    summoner = Summoner.new(profile_info)
+    solo_rank(summoner)
+    summoner.save!
+    summoner
   end
 
-  #Fetches league related info for player.
-  def self.summoner_entry(summoner_id, region)
+  #Fetches slow updating summoner
+  def self.static_data(name)
     encoded_uri = URI.parse(
       URI.encode(
-        "https://#{region}.api.pvp.net/api/lol/#{region}/v2.5/league/by-summoner/#{summoner_id}/entry?api_key=#{api_key}"
+        "https://#{region}.api.pvp.net/api/lol/#{region}/v1.4/summoner/by-name/#{name}?api_key=#{api_key}"
       )
     )
     HTTParty.get(encoded_uri)
   end
 
+  #Fetches league related info for player.
+  def self.league_entries(summoner)
+    id = summoner.summoner_id
+    encoded_uri = URI.parse(
+      URI.encode(
+        "https://#{region}.api.pvp.net/api/lol/#{region}/v2.5/league/by-summoner/#{id}/entry?api_key=#{api_key}"
+      )
+    )
+    HTTParty.get(encoded_uri).to_h[id]
+  end
 
-  def self.solo_rank(profile_entry)
-    profile_entry.each do |profile|
+
+  def self.solo_rank(summoner)
+    league_entries(summoner).each do |profile|
       next unless profile["queue"] == "RANKED_SOLO_5x5"
-      @summoner.tier = profile["tier"]
-      @summoner.league_name = profile["name"]
-      @summoner.wins = profile["entries"].first["wins"]
-      @summoner.losses = profile["entries"].first["losses"]
-      @summoner.division = profile["entries"].first["division"]
-      @summoner.league_points = profile["entries"].first["leaguePoints"]
+      summoner.tier = profile["tier"]
+      summoner.league_name = profile["name"]
+      summoner.wins = profile["entries"].first["wins"]
+      summoner.losses = profile["entries"].first["losses"]
+      summoner.division = profile["entries"].first["division"]
+      summoner.league_points = profile["entries"].first["leaguePoints"]
     end
   end
 

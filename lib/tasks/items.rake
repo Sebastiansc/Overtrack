@@ -8,7 +8,7 @@ namespace :items do
     )
     items["data"].each do |key, info|
       next if !info["name"] || !info["description"]
-      Item.create!({
+      Item.create({
         name: info["name"],
         item_id: info["id"],
         description: info["description"]
