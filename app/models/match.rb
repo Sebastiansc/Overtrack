@@ -40,8 +40,11 @@ class Match < ApplicationRecord
 
     if match_list.response.code == "429"
       sleep 1
-      fetch_matches(summoner)
+      fetch_matches(summoner, options)
+    elsif match_list["totalGames"] == 0
+      return
     end
+
     create_matches(not_stored_matches(match_list["matches"]))
   end
 
