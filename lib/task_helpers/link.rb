@@ -19,5 +19,4 @@ class Link
     self.prev = nil
     self
   end
-
 end
