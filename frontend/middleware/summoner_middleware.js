@@ -1,23 +1,23 @@
 import {
-  FETCH_PLAYER,
-  UPDATE_PLAYER,
-  fetchPlayer,
-  updatePlayer
+  FETCH_SUMMONER,
+  UPDATE_SUMMONER,
+  fetchSummoner,
+  updateSummoner
 } from '../actions/summoner_actions';
 
-import { getPlayer } from '../util/summoner_api_util';
+import { getSummoner } from '../util/summoner_api_util';
 
 export default ({getState, dispatch}) => next => action => {
-  let fetchPlayerSuccess = (region, platform, player) =>
-    dispatch(fetchPlayer(region, platform, player));
+  let fetchSummonerSuccess = (region, platform, summoner) =>
+    dispatch(fetchSummoner(region, platform, summoner));
 
   switch (action.type) {
-    case FETCH_PLAYER:
-      getPlayer(
+    case FETCH_SUMMONER:
+      getSummoner(
         action.region,
         action.platform,
-        action.player,
-        fetchPlayerSuccess
+        action.summoner,
+        fetchSummonerSuccess
       );
       return next(action);
     default:
