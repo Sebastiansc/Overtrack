@@ -9,8 +9,28 @@ class LinkList
     @tail.prev = @head
   end
 
+  #Sets link to be the MRU item. Reconnects links connected to it to point to one another. Attaches link to tail
+  def freshen(link, value)
+    link.prev.next = link.next
+    link.next.prev = link.prev
+    attach_to_tail(link)
+    link.val = value
+    link
+  end
+
+  #Deletes link next to head. This is the LRU item
+  def pop
+    first.next.prev = @head
+    @head.next = first.next
+  end
+
   def append(key, val)
     link = Link.new(key, val)
+    attach_to_tail(link)
+    link
+  end
+
+  def attach_to_tail(link)
     @tail.prev.next = link
     link.prev = @tail.prev
     @tail.prev = link
