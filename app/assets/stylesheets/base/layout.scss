@@ -1,10 +1,9 @@
 html {
-	position: relative;
 	min-height: 80vh;
 }
 
 body {
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	font-size: 12px;
 	display: block;
 	min-height: 80vh;
@@ -78,64 +77,4 @@ small {
 	font-size: 9px;
 	color: $gray;
 	font-family: $sans-serif;
-}
-
-/*
-	Header Rules
-*/
-
-hr {
-	border: 0;
-	height: 1px;
-	background-color: $light-gray;
-}
-
-.hr-top, .hr-bottom {
-	width: 100%;
-	margin: 0;
-}
-
-.hr-top {
-	height: 2px;
-	margin-bottom: 1px;
-}
-
-/*
-	Images
-*/
-
-.thumbnail {
-	height: 100px;
-}
-
-.thumbnail img {
-	object-fit: cover;
-}
-
-/*
-	Inputs
-*/
-
-.input-wrapper {
-	display: flex;
-	margin: 5px 0;
-}
-
-.input-wrapper input {
-	flex: 1;
-	font-family: $sans-serif;
-	padding: 0 10px;
-	border: 1px solid $gray;
-	border-right: none;
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
-}
-
-.input-wrapper button {
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
-}
-
-input[type="search"] {
-	padding: 5px;
 }
