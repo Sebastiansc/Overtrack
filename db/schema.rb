@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161128053244) do
+ActiveRecord::Schema.define(version: 20161128193403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20161128053244) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "losses",        null: false
+    t.bigint   "last_viewed"
     t.index ["name"], name: "index_summoners_on_name", unique: true, using: :btree
     t.index ["summoner_id"], name: "index_summoners_on_summoner_id", unique: true, using: :btree
   end

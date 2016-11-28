@@ -3,14 +3,12 @@ class Api::SummonersController < ApplicationController
   #Attempt to find summoner in local DB. If none found, fetch and create from API.
   #Asynchronously creates most recent (< 20) matches for this player.
   def find_or_create
-    test = $redis
-    byebug
-
     @summoner = Summoner.find_by(name: params[:name])
     if !@summoner
       @summoner = Summoner.create_summoner(params[:name])
       MatchFetch.perform_async(@summoner)
     end
+    @summoner.last_viewed = DateTime.now.strftime("%Q").to_i
     render :show
   end
 end
