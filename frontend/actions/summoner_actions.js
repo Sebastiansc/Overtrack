@@ -1,17 +1,17 @@
-export const UPDATE_PLAYER = 'UPDATE_PLAYER';
-export const FETCH_PLAYER = 'FETCH_PLAYER';
+export const UPDATE_SUMMONER = 'UPDATE_SUMMONER';
+export const FETCH_SUMMONER = 'FETCH_SUMMONER';
 
 
-export const updatePlayer = (platform, region, player) => ({
-  type: UPDATE_PLAYER,
+export const updateSummoner = (platform, region, summoner) => ({
+  type: UPDATE_SUMMONER,
   region,
   platform,
-  player
+  summoner
 });
 
-export const fetchPlayer = (region, platform, player) => ({
-  type: FETCH_PLAYER,
+export const fetchPlayer = (region, platform, summoner) => ({
+  type: FETCH_SUMMONER,
   region,
   platform,
-  player
+  summoner
 });
