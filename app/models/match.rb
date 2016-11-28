@@ -13,7 +13,6 @@ class Match < ApplicationRecord
   #Signals #fetch_matches to get more matches if requested limit surpasses # of stored matches in DB.
   #Recommended: 20 at a time.
   def self.get(summoner_id, offset, limit)
-    byebug
     summoner = Summoner.find_by(summoner_id: summoner_id)
 
     if summoner.matches.length < limit
@@ -43,32 +42,31 @@ class Match < ApplicationRecord
       sleep 1
       fetch_matches(summoner)
     end
-    byebug
-    create_matches(match_list["matches"])
+    create_matches(not_stored_matches(match_list["matches"]))
+  end
+
+  #Reduces number of DB queries by computing all match ids that are not already stored. **MIGHT NEED FURTHER OPTIMIZATION
+  def self.not_stored_matches(match_list)
+    api_match_ids = match_list.map{ |match| match["matchId"] }
+    db_match_ids = Match.where(match_id: api_match_ids).map(&:match_id)
+    to_fetch_ids = api_match_ids - db_match_ids
   end
 
   #Iterates recursively through a queue of matches to only move forward once the response is succesfull
-  def self.create_matches(match_list)
-    return if match_list.empty?
-    currentMatch = match_list.first
-
-    #Check if match is in DB. Many players may share matches
-    if Match.find_by(match_id: currentMatch["matchId"])
-      match_list.shift
-      create_matches(match_list)
-    end
+  def self.create_matches(match_ids)
+    return if match_ids.empty?
 
     match_info = HTTParty.get(
-      "https://na.api.pvp.net/api/lol/na/v2.2/match/#{currentMatch["matchId"]}?api_key=#{api_key}"
+      "https://na.api.pvp.net/api/lol/na/v2.2/match/#{match_ids.first}?api_key=#{api_key}"
     )
 
     if match_info.response.code == "429"
       sleep 1
-      create_matches(match_list)
+      create_matches(match_ids)
     else
       create_match(match_info)
-      match_list.shift
-      create_matches(match_list)
+      match_ids.shift
+      create_matches(match_ids)
     end
   end
 
