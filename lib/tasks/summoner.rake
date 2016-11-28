@@ -32,6 +32,7 @@ namespace :fetcher do
         summoner.update_attributes(profile_info)
         queue.shift
       end
+      
       create_update_summoner(queue)
     end
   end
