@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161128193403) do
+ActiveRecord::Schema.define(version: 20161128232606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,21 +57,16 @@ ActiveRecord::Schema.define(version: 20161128193403) do
   end
 
   create_table "summoners", force: :cascade do |t|
-    t.string   "name",          null: false
-    t.integer  "level",         null: false
-    t.bigint   "summoner_id",   null: false
-    t.integer  "profile_icon",  null: false
-    t.string   "tier",          null: false
-    t.integer  "wins",          null: false
-    t.integer  "league_points", null: false
-    t.string   "division",      null: false
-    t.string   "league_name",   null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "losses",        null: false
-    t.bigint   "last_viewed"
-    t.index ["name"], name: "index_summoners_on_name", unique: true, using: :btree
-    t.index ["summoner_id"], name: "index_summoners_on_summoner_id", unique: true, using: :btree
+    t.string   "name",                        null: false
+    t.integer  "level",                       null: false
+    t.integer  "summoner_id",                 null: false
+    t.integer  "profile_icon",                null: false
+    t.json     "solo_5x5",     default: "{}"
+    t.json     "flex_sr",      default: "{}"
+    t.json     "team_5x5",     default: "{}"
+    t.json     "team_3x3",     default: "{}"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
 end

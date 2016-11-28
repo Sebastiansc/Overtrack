@@ -1,6 +1,5 @@
 class Summoner < ApplicationRecord
-  validates :summoner_id, :tier, :wins, :league_points, :division,
-    :league_name, presence: true
+  validates :summoner_id, :profile_icon, :level, :name, presence: true
   validates :name, :summoner_id, uniqueness: true
 
   #Primary key must be set so Rails doesn't default to id
@@ -49,17 +48,36 @@ class Summoner < ApplicationRecord
     HTTParty.get(encoded_uri).to_h[id]
   end
 
-
+  #Fills summoner's information for each queue_type
   def self.solo_rank(summoner)
-    league_entries(summoner).each do |profile|
-      next unless profile["queue"] == "RANKED_SOLO_5x5"
-      summoner.tier = profile["tier"]
-      summoner.league_name = profile["name"]
-      summoner.wins = profile["entries"].first["wins"]
-      summoner.losses = profile["entries"].first["losses"]
-      summoner.division = profile["entries"].first["division"]
-      summoner.league_points = profile["entries"].first["leaguePoints"]
+    league_entries(summoner).each do |entry|
+      queue = queue_key(entry["queue"])
+
+      summoner[queue]["tier"] = entry["tier"]
+      summoner[queue]["league_name"] = entry["name"]
+      summoner[queue]["wins"] = entry["entries"].first["wins"]
+      summoner[queue]["losses"] = entry["entries"].first["losses"]
+      summoner[queue]["division"] = entry["entries"].first["division"]
+      summoner[queue]["league_points"] = entry["entries"].first["leaguePoints"]
     end
+  end
+
+  #Returns the appropiate model key for acccesing the queue row
+  def queue_key(queue_type)
+    if solo_rank(queue_type)
+      :solo_5x5
+    elsif queue_type == "RANKED_FLEX_SR"
+      :flex_sr
+    elsif queue_type == "RANKED_TEAM_5x5"
+      :team_5x5
+    else
+      :team_3x3
+    end
+  end
+
+  def solo_rank?(queue_type)
+    queue_type.include?("TEAM_BUILDER") ||
+    queue_type == "SOLO_RANK_5x5"
   end
 
   def win_ratio(win, loss)
