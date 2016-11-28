@@ -7,8 +7,7 @@ const Root = ({ store }) => {
   return (
     <Provider store={store}>
       <Router history={hashHistory}>
-        <Route path="/" component={App}>
-          <IndexRoute />
+        <Route path='/' component={App}>
         </Route>
       </Router>
     </Provider>

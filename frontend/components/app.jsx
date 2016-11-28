@@ -1,13 +1,12 @@
 import React from 'react';
-import FooterContainer from './shared/footer_container';
-import HeaderContainer from './shared/header_container';
-// import HomeContainer from './logged_in_home/home_container';
+import Footer from './shared/footer';
+import Header from './shared/header';
 
 const App = ({ children }) => (
   <div className="app">
-    <HeaderContainer />
+    <Header />
       {children}
-    <FooterContainer />
+    <Footer/>
   </div>
 );
 
