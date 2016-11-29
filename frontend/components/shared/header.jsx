@@ -24,6 +24,7 @@ class Header extends React.Component {
           <section className="nav">
             <ul>
               <Link to={'/ranking'} className="li">Leaderboard</Link>
+              <Link to={'/profile'} className="li">Profile</Link>
             </ul>
           </section>
           <section className="tools">
