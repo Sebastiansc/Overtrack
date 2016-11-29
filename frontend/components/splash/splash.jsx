@@ -25,14 +25,14 @@ class Splash extends React.Component {
               <h3>Instant look up for you and your fellow summoners profile and constant update on Leaderboards</h3>
             </div>
             <div className="item">
-              <div className="img">PIC 1</div>
+              <div className="img"></div>
               <div className="desc">
                 <div>What is &nbsp;
                   <fin>Overtrack.win</fin>
                 </div>
                 <ul>
-                  <li>Offers accurate ingame informations</li>
-                  <li className="li">Utilizes latest database technology to provide users with:</li>
+                  <li>Offer accurate ingame information</li>
+                  <li className="li">Utilize latest database technology to provide users with:</li>
                   <li>Match Histories</li>
                   <li>Match Results</li>
                   <li>Leaderboards</li>

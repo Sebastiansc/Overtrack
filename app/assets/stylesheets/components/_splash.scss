@@ -11,11 +11,12 @@
     right: 0;
     width: 100%;
     // background: linear-gradient(135deg, #8363a1 0%, #74a8c3 100%);
-    background: #74a8c3;
+    background: black;
 
     .logo {
       padding-top: 150px;
       margin-bottom: 50px;
+      color: white;
 
       h1 {
         font-size: 95px;
@@ -92,7 +93,9 @@
 
         .img {
           background: white !important;
-          // background-image: url("images/splash.png");
+          background-position: center;
+          background-image: url("assets/splash.png");
+          background-size: cover;
         }
 
         .desc {

@@ -4,6 +4,7 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import App from './app';
 import SplashContainer from './splash/splash_container';
 import LeaderboardContainer from './leaderboard/leaderboard_container';
+import ProfileContainer from './profile/profile_container';
 
 const Root = ({ store }) => {
   return (
@@ -12,6 +13,7 @@ const Root = ({ store }) => {
         <Route path='/' component={App}>
           <IndexRoute component={SplashContainer}/>
           <Route path='ranking' component={LeaderboardContainer}/>
+          <Route path='profile' component ={ProfileContainer}/>
         </Route>
       </Router>
     </Provider>
