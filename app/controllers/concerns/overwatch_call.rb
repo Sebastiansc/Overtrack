@@ -1,5 +1,4 @@
 require 'httparty'
-require 'byebug'
 
 #Class to modulize methods shared by Rake fetcher:update and Players Controller
 class OverwatchCall

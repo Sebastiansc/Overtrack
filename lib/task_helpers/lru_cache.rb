@@ -1,4 +1,3 @@
-require 'byebug'
 require_relative './link_list'
 class LRUCache
   attr_reader :cache, :list
