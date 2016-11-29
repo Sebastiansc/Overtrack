@@ -24,7 +24,6 @@ class Summoner < ApplicationRecord
 
     summoner = Summoner.new(profile_info)
     solo_rank(summoner)
-    summoner.save!
     summoner
   end
 
@@ -49,7 +48,7 @@ class Summoner < ApplicationRecord
     HTTParty.get(encoded_uri).to_h[id.to_s]
   end
 
-  #Fills summoner's information for each queue_type
+  #Fills summoner's information for each queue_type and saves to DB
   def self.solo_rank(summoner)
     league_entries(summoner).each do |entry|
       queue = queue_key(entry["queue"])
@@ -60,6 +59,7 @@ class Summoner < ApplicationRecord
       summoner[queue]["division"] = entry["entries"].first["division"]
       summoner[queue]["league_points"] = entry["entries"].first["leaguePoints"]
     end
+    summoner.save!
   end
 
   #Returns the appropiate model key for acccesing the queue row
