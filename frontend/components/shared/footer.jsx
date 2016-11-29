@@ -7,6 +7,14 @@ class Footer extends React.Component {
     window.open("https://github.com/Sebastiansc/Overtrack");
   }
 
+  linkedinLinkSeb() {
+    window.open("");
+  }
+
+  linkedinLinkSonik() {
+    window.open("www.linkedin.com/in/sonik-jhang");
+  }
+
   render () {
     return(
       <footer className="global-footer">
@@ -23,9 +31,14 @@ class Footer extends React.Component {
             </ul>
           </section>
           <section className="mid">
-            <div>
-              <small>Created and designed by Sebastian Cruz and Sonik Jhang</small>
-            </div>
+            <small> Created and designed by </small>
+            <small>
+              <a href="https://www.linkedin.com/in/sebastian-cruz-739a47101">Sebastian Cruz</a>
+            </small>
+            <small>and</small>
+            <small>
+              <a href="https://www.linkedin.com/in/sonik-jhang">Sonik Jhang</a>
+            </small>
           </section>
           <section className="bottom">
             <small><i className="fa fa-copyright fa-lg" aria-hidden="true"></i> 2016 Overtrack.win Data based on League of legends North America.</small>
