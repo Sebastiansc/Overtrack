@@ -1,22 +1,37 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router';
+import { Link } from 'react-router';
+import Searchbar from './searchbar';
 
 class Header extends React.Component {
 
-  render () {
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+
+  headerNav() {
+    if (window.location.hash !== "#/") {
+      return <Searchbar />;
+    }
+  }
+
+  render() {
     return(
       <header className="global-header">
-        <section className="logo">
-          <h1><Link to={'/'}>Overtrack</Link></h1>
-        </section>
-        <section className="nav">
-          <ul>
-            <li><Link to={'/'}>Leaderboard</Link></li>
-          </ul>
-        </section>
-        <section className="tool">
-          <h3>SearchBar</h3>
-        </section>
+        <div>
+          <section className="logo">
+            <h1><Link to={'/'}>Overtrack</Link></h1>
+          </section>
+          <section className="nav">
+            <ul>
+              <Link to={'/ranking'} className="li">Leaderboard</Link>
+            </ul>
+          </section>
+          <section className="tools">
+            {
+              this.headerNav()
+            }
+          </section>
+        </div>
       </header>
     );
   }
