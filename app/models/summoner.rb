@@ -17,12 +17,14 @@ class Summoner < ApplicationRecord
     profile_info = {
       summoner_id: profile["id"],
       level: profile["summonerLevel"],
+      region: region,
       name: profile["name"],
       profile_icon: profile["profileIconId"]
     }
 
     summoner = Summoner.new(profile_info)
     solo_rank(summoner)
+    byebug
     summoner.save!
     summoner
   end
@@ -45,14 +47,13 @@ class Summoner < ApplicationRecord
         "https://#{region}.api.pvp.net/api/lol/#{region}/v2.5/league/by-summoner/#{id}/entry?api_key=#{api_key}"
       )
     )
-    HTTParty.get(encoded_uri).to_h[id]
+    HTTParty.get(encoded_uri).to_h[id.to_s]
   end
 
   #Fills summoner's information for each queue_type
   def self.solo_rank(summoner)
     league_entries(summoner).each do |entry|
       queue = queue_key(entry["queue"])
-
       summoner[queue]["tier"] = entry["tier"]
       summoner[queue]["league_name"] = entry["name"]
       summoner[queue]["wins"] = entry["entries"].first["wins"]
@@ -63,8 +64,8 @@ class Summoner < ApplicationRecord
   end
 
   #Returns the appropiate model key for acccesing the queue row
-  def queue_key(queue_type)
-    if solo_rank(queue_type)
+  def self.queue_key(queue_type)
+    if solo_rank?(queue_type)
       :solo_5x5
     elsif queue_type == "RANKED_FLEX_SR"
       :flex_sr
@@ -75,9 +76,10 @@ class Summoner < ApplicationRecord
     end
   end
 
-  def solo_rank?(queue_type)
+  def self.solo_rank?(queue_type)
+    byebug
     queue_type.include?("TEAM_BUILDER") ||
-    queue_type == "SOLO_RANK_5x5"
+    queue_type == "RANKED_SOLO_5x5"
   end
 
   def win_ratio(win, loss)
