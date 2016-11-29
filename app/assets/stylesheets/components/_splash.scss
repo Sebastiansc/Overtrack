@@ -10,17 +10,18 @@
     left: 0;
     right: 0;
     width: 100%;
-    // background: linear-gradient(135deg, #8363a1 0%, #74a8c3 100%);
-    background: black;
+    // background-image: url("https://res.cloudinary.com/dsetpdsls/image/upload/v1480447110/Twisted-Fate-League-of-Legends-Backgrounds-620x349_vic9kh.jpg");
+    // background-position: center;
+    // background-size: center;
 
     .logo {
       padding-top: 150px;
       margin-bottom: 50px;
-      color: white;
+      color: black;
 
       h1 {
         font-size: 95px;
-        text-shadow: 2px 2px 3px rgba(42, 42, 42, 1);
+        // text-shadow: 2px 2px 3px rgba(42, 42, 42, 1);
 
         .main {
           text-decoration: none;
@@ -58,10 +59,17 @@
       .searchbar:focus {
       }
     }
+  }
+
+  .second-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
 
     .guide {
-      margin-top: 80px;
       height: 100%;
+      width: 80%;
 
       .title {
         background: white !important;
@@ -90,7 +98,8 @@
       .item {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 60px;
+        margin: 0 auto;
+        padding-bottom: 50px;
 
         .img {
           background-position: center;
@@ -98,6 +107,8 @@
           background-size: cover;
           display: block;
           box-sizing: content-box;
+          margin-right: 60px;
+          box-shadow: inset 0px -50px 30px 0px rgba(255,255,255,0.9);
         }
 
         .desc {
@@ -121,13 +132,15 @@
           }
 
           ul {
-            font-size: 15px;
-            list-style: square;
+            font-size: 11px;
+            list-style: circle !important;
 
             li:first-child {
+              font-size: 13px;
             }
 
-            .li {
+            li:nth-child(2) {
+              font-size: 15px;
               margin-bottom: 20px;
             }
 
@@ -137,6 +150,53 @@
           }
         }
       }
+      .item2 {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 50px;
+        height: 150px;
+
+        .img2 {
+          background-position: 50%;
+          background-image: url("https://res.cloudinary.com/dsetpdsls/image/upload/v1480447110/leaderboard_k4nphk.png");
+          background-size: cover;
+          overflow-x: hidden;
+          box-sizing: content-box;
+          margin-right: 60px;
+        }
+
+        .desc {
+          color: #5c5c5c;
+          background: white !important;
+          text-align: left;
+
+          div {
+            background: white !important;
+            text-align: left;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: lighter;
+            display: flex;
+
+            fin {
+              color: black;
+              font-size: 23px;
+              font-weight: bold;
+            }
+          }
+
+          ul {
+            font-size: 13px;
+            list-style: square;
+
+            li {
+              font-size: 13px;
+              margin-bottom: 4px;
+            }
+          }
+        }
+      }
     }
+
   }
 }

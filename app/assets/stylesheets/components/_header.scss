@@ -31,8 +31,8 @@
     .logo:hover {
       transform: scale(1.02);
       transition: border-width 0.1s ease-in-out;
-      // border-bottom: 5px solid #AADA4B;
-      border-bottom: 5px solid #74a8c3;
+      border-bottom: 5px solid #AADA4B;
+      // border-bottom: 5px solid #74a8c3;
     }
 
     .logo:active {
@@ -61,16 +61,13 @@
           transition: border-width 0.1s ease-in-out;
           border-bottom: 5px solid #AADA4B;
           // border-bottom: 5px solid #74a8c3;
+          color: #fff;
         }
       }
     }
 
     .nav a {
       text-decoration: none;
-    }
-
-    .nav:hover {
-      color: #fff;
     }
 
     .tools {
