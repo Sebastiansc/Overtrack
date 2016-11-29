@@ -29,7 +29,9 @@ end
 
 every 29.minutes  do
   rake 'summoner:league'
+  rake 'rankings:update'
 end
+
 
 every 6.months do
   rake 'items:update'
