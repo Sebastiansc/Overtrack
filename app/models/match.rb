@@ -41,7 +41,7 @@ class Match < ApplicationRecord
     if match_list.response.code == "429"
       sleep 1
       fetch_matches(summoner, options)
-    elsif match_list["totalGames"] == 0
+    elsif !match_list["matches"] == 0
       return
     end
 
