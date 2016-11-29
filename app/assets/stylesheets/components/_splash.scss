@@ -90,12 +90,14 @@
       .item {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 60px;
 
         .img {
-          background: white !important;
           background-position: center;
-          background-image: url("assets/splash.png");
+          background-image: url("http://res.cloudinary.com/dsetpdsls/image/upload/v1480447110/splash_rkkvmy.png");
           background-size: cover;
+          display: block;
+          box-sizing: content-box;
         }
 
         .desc {
