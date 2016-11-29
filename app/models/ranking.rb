@@ -19,7 +19,6 @@ class Ranking < ActiveRecord::Base
   end
 
   def self.fetch_rankings(queues, tier)
-    byebug
     return if queues.empty?
     ranking = HTTParty.get(
       "https://na.api.pvp.net/api/lol/na/v2.5/league/#{tier}?type=#{queues.first}&api_key=#{api_key}"
