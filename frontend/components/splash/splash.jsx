@@ -2,12 +2,34 @@ import React from 'react';
 import { Link } from 'react-router';
 
 class Splash extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { summoner: "" };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.checkValidation = this.checkValidation.bind(this);
+  }
+
   componentDidMount() {
     $(document).scrollTop(0);
   }
-  
-  handleSubmit() {
 
+  handleSubmit(e) {
+    e.preventDefault();
+    const summoner = this.state.summoner;
+    this.props.fetchSummoner(summoner.trim());
+  }
+
+  checkValidation(e) {
+    let pattern = /^[0-9\\a-zA-Z _\\.]+$/;
+    return pattern.test(e.target.value);
+  }
+
+  // checking validation for each input using Riot regex
+  update(e) {
+    if (this.checkValidation(e)) {
+      this.setState({["summoner"]: e.target.value});
+    }
   }
 
   render () {
@@ -21,7 +43,10 @@ class Splash extends React.Component {
           </section>
           <section className="searchbar-content">
             <form className="searchbar" onSubmit={this.handleSubmit}>
-              <input type="text" placeholder="summoner name"></input>
+              <input type="text"
+                placeholder="summoner name"
+                value={this.state.summoner}
+                onChange={e => this.update(e)}></input>
               <button>
                 <i className="fa fa-search fa-2x" aria-hidden="true" />
               </button>

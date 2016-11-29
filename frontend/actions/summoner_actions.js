@@ -1,8 +1,12 @@
 export const FETCH_SUMMONER = 'FETCH_SUMMONER';
+export const RECEIVE_SUMMONER = 'RECEIVE_SUMMONER';
 
-export const fetchSummoner = (region, platform, summoner) => ({
+export const fetchSummoner = (summoner) => ({
   type: FETCH_SUMMONER,
-  region,
-  platform,
+  summoner
+});
+
+export const receiveSummoner = (summoner) => ({
+  type: RECEIVE_SUMMONER,
   summoner
 });
