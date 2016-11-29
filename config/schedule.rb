@@ -21,3 +21,17 @@
 
 set :environment, "development"
 set :output, {:error => "log/cron_error_log.log", :standard => "log/cron_log.log"}
+
+every 1.day, :at => '5:30 am' do
+  rake 'match:clean'
+  rake 'summoner:static'
+end
+
+every 29.minutes  do
+  rake 'summoner:league'
+end
+
+every 6.months do
+  rake 'items:update'
+  rake 'spells:update'
+end

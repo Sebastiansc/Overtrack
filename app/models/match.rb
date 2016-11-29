@@ -33,7 +33,6 @@ class Match < ApplicationRecord
   #Arguments: options => hash. Sets look up and index offset and limits.
   def self.fetch_matches(summoner, options)
     @summoner_id = summoner.summoner_id
-
     match_list = HTTParty.get(
       "https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/#{@summoner_id}?rankedQueues=#{ranks}&seasons=SEASON2016&beginTime=#{begin_time}&endTime=#{end_time}&beginIndex=#{options[:offset]}&endIndex=#{options[:limit]}&api_key=#{api_key}"
     )
