@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129003057) do
+ActiveRecord::Schema.define(version: 20161129233404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 20161129003057) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["summoner_id", "match_id"], name: "index_matchings_on_summoner_id_and_match_id", unique: true, using: :btree
+  end
+
+  create_table "rankings", force: :cascade do |t|
+    t.json   "solo_5x5", default: {}
+    t.json   "flex_sr",  default: {}
+    t.json   "flex_tt",  default: {}
+    t.json   "team_3x3", default: {}
+    t.json   "team_5x5", default: {}
+    t.string "tier",                  null: false
   end
 
   create_table "spells", force: :cascade do |t|

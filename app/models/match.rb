@@ -1,7 +1,7 @@
 require 'date'
 
 class Match < ApplicationRecord
-  validates :region, :match_type, :match_id, :match_creation, :participants, presence: true
+  validates :region, :match_type, :match_id, :match_creation, :participants, :match_duration, presence: true
   store_accessor :participants
 
   #Primary key must be set so Rails doesn't default to id
