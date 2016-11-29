@@ -24,7 +24,6 @@ class Summoner < ApplicationRecord
 
     summoner = Summoner.new(profile_info)
     solo_rank(summoner)
-    byebug
     summoner.save!
     summoner
   end
@@ -77,7 +76,6 @@ class Summoner < ApplicationRecord
   end
 
   def self.solo_rank?(queue_type)
-    byebug
     queue_type.include?("TEAM_BUILDER") ||
     queue_type == "RANKED_SOLO_5x5"
   end
