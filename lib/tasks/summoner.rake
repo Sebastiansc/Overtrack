@@ -33,7 +33,7 @@ namespace :summoner do
 
   def encoded_uri(name)
     URI.encode(
-      "https://#{SummonerApiHelper.region}.api.pvp.net/api/lol/#{SummonerApiHelper.region}/v1.4/summoner/by-name/#{summoner_name}?api_key=#{SummonerApiHelper.api_key}"
+      "https://#{SummonerApiHelper.region}.api.pvp.net/api/lol/#{SummonerApiHelper.region}/v1.4/summoner/by-name/#{name}?api_key=#{SummonerApiHelper.api_key}"
     )
-  end  
+  end
 end
