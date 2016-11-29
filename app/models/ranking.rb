@@ -1,10 +1,12 @@
 class Ranking < ActiveRecord::Base
-
+  validates :tier, presence: true
   #This functions allows the ranking object to only be instantiated once while getting updated through the recursive calls of #fetch_rankings
   extend ApiHelper
 
-  def self.update_rankings
-    @ranking = Ranking.new
+  #Creates and updates rankings
+  def self.update_rankings(tier)
+    @ranking = Ranking.where(tier: tier).first_or_initialize
+    @ranking.tier = tier
     queues = [
       "RANKED_SOLO_5x5",
       "RANKED_FLEX_SR",
@@ -12,24 +14,23 @@ class Ranking < ActiveRecord::Base
       "RANKED_TEAM_3x3",
       "RANKED_FLEX_TT"
     ]
-    fetch_rankings(queues)
-    previos_rankings = Ranking.first
-    previos_rankings.destroy if previos_rankings
+    fetch_rankings(queues, tier)
     @ranking.save
   end
 
-  def self.fetch_rankings(queues)
+  def self.fetch_rankings(queues, tier)
+    byebug
     return if queues.empty?
     ranking = HTTParty.get(
-      "https://na.api.pvp.net/api/lol/na/v2.5/league/challenger?type=#{queues.first}&api_key=#{api_key}"
+      "https://na.api.pvp.net/api/lol/na/v2.5/league/#{tier}?type=#{queues.first}&api_key=#{api_key}"
     )
 
     if ranking.response.code == 429
       sleep 1
-      fetch_rankings(queues)
+      fetch_rankings(queues, tier)
     else
       create_entry(ranking)
-      fetch_rankings(queues[1..-1])
+      fetch_rankings(queues[1..-1], tier)
     end
   end
 
