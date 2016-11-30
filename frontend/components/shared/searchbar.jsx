@@ -3,8 +3,8 @@ import React from 'react';
 class Searchbar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { summoner: "" };
 
+    this.state = { summoner: "" };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
   }
@@ -14,7 +14,7 @@ class Searchbar extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.router.push(`/profile/${this.state.summoner.name}`);
+    this.props.router.push(`/profile/${this.state.summoner}`);
   }
 
 
