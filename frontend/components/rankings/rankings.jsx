@@ -76,7 +76,6 @@ export default class Rankings extends React.Component {
   }
 
   render(){
-    window.that = this;
     return(
       <Infinite elementHeight={55}
         containerHeight={2750}
