@@ -40,7 +40,6 @@ class Profile extends React.Component {
     if (this.props.summoner.name) {
       return Object.keys(this.props.queues).map( queueType => {
         if (values(that.props.queues[queueType]).length !== 0) {
-          debugger
           return (
             <LeagueBox
               key={that.props.queues[queueType].league_name}
