@@ -10,7 +10,6 @@ class Summoner < ApplicationRecord
   #Fetches and creates summoner from API.
   #Uses URI encoding to account for foreign characters in summoner names.
   def self.create_summoner(summoner_name)
-    byebug
     summoner_name = to_ascii(summoner_name)
     profile = static_data(summoner_name)
     return false if profile.response.code == "404"

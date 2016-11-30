@@ -5,10 +5,9 @@ class Api::SummonersController < ApplicationController
   def find_or_create
     @summoner = Summoner.find_by(name: params[:name])
     if !@summoner
-      byebug
       @summoner = Summoner.create_summoner(params[:name])
       if !@summoner
-        render json: ["#{params[:name]} does not exist in #{region} }"], status: 404
+        render json: ["#{params[:name]} does not exist in this region"], status: 404
         return true
       end
       MatchFetch.perform_async(@summoner)
