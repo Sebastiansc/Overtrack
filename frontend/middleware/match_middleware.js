@@ -3,10 +3,6 @@ import { shapeMatch } from '../reducers/selectors';
 import { fetchMatchList, fetchMatch } from '../util/match_api_util';
 
 export default ({getState, dispatch}) => next => action => {
-  // Iterates through matchList.
-  // Fetches each match details from API.
-  // Uses selectors to shape them in compliance with DB schema.
-  // Gathers all matches into a single array to reduce the overhead of dispatching one action for each match.
   let matchListSuccess = matches => dispatch(receiveMatches(matches));
 
   switch (action.type) {

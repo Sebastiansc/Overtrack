@@ -1,6 +1,7 @@
 class MatchFetch
   include SuckerPunch::Job
 
+  #Sets keys in cache to let model now that match fetching isn't done yet and to keep on trying
   def perform(summoner, offset = 0, limit = 20)
     $redis.set("matches_loaded", false)
     ActiveRecord::Base.connection_pool.with_connection do

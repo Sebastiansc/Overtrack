@@ -14,7 +14,6 @@ class Match < ApplicationRecord
   #Recommended: 20 at a time.
   def self.get(summoner_id, offset, limit)
     summoner = Summoner.find_by(summoner_id: summoner_id)
-    puts $redis.get("matches_loaded")
     if $redis.get("matches_loaded") == "false" || !$redis.get("matches_loaded")
       sleep 1.5
       get(summoner_id, offset, limit)
