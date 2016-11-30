@@ -7,9 +7,6 @@ import ErrorReducer from './error_reducer';
 export default combineReducers({
   summoner: PlayerReducer,
   matches: MatchReducer,
-<<<<<<< HEAD
-  rankings: RankingReducer
-=======
+  rankings: RankingReducer,
   error: ErrorReducer
->>>>>>> bc13d29c04a3e879273fa4b3f6c4255e4ebede67
 });
