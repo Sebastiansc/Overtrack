@@ -2,23 +2,22 @@ import React from 'react';
 import { parseQueue } from '../../reducers/selectors';
 
 const LeagueBox = ({summoner, queueType, queues, height}) => {
-  debugger;
   // finds league medals from local assets/tier-icons folder
   // need refactoring
   const leagueDivision = () => {
     if (queues[queueType].tier) {
-      if (queues[queueType].tier !== "CHALLENGER" ||
-      queues[queueType].tier !== "MASTER" ||
-      queues[queueType].tier !== "PROVISIONAL") {
+      if (queues[queueType].tier === "CHALLENGER" ||
+      queues[queueType].tier === "MASTER" ||
+      queues[queueType].tier === "PROVISIONAL") {
         if (!parseQueue(queues, queueType)) debugger;
         return (
           <div className="medal"
-            style={{backgroundImage: `url('assets/tier-icons/${parseQueue(queues, queueType)}.png')`}}></div>
+            style={{backgroundImage: `url('assets/tier-icons/${queues[queueType].tier.toLowerCase()}.png')`}}></div>
         );
       } else {
         return (
           <div className="medal"
-            style={{backgroundImage: `url('assets/${queues[queueType].tier.toLowerCase()}.png')`}}></div>
+            style={{backgroundImage: `url('assets/tier-icons/${parseQueue(queues, queueType)}.png')`}}></div>
         );
       }
     }
