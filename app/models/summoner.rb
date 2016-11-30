@@ -10,6 +10,7 @@ class Summoner < ApplicationRecord
   #Fetches and creates summoner from API.
   #Uses URI encoding to account for foreign characters in summoner names.
   def self.create_summoner(summoner_name)
+    byebug
     summoner_name = to_ascii(summoner_name)
     profile = static_data(summoner_name)
     return false if profile["statusCode"] == 404
@@ -38,6 +39,7 @@ class Summoner < ApplicationRecord
   end
 
   #Fetches league related info for player.
+  #Some summoners might exist but have no league_entries
   def self.league_entries(summoner)
     id = summoner.summoner_id
     encoded_uri = URI.parse(
@@ -50,7 +52,14 @@ class Summoner < ApplicationRecord
 
   #Fills summoner's information for each queue_type and saves to DB
   def self.solo_rank(summoner)
-    league_entries(summoner).each do |entry|
+    entries = league_entries(summoner)
+
+    unless entries
+      summoner.save
+      return true
+    end
+
+    entries.each do |entry|
       queue = queue_key(entry["queue"])
       summoner[queue]["tier"] = entry["tier"]
       summoner[queue]["league_name"] = entry["name"]
@@ -59,7 +68,6 @@ class Summoner < ApplicationRecord
       summoner[queue]["division"] = entry["entries"].first["division"]
       summoner[queue]["league_points"] = entry["entries"].first["leaguePoints"]
     end
-    summoner.save!
   end
 
   #Returns the appropiate model key for acccesing the queue row
