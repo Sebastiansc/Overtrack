@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const RankingItem = ({ entry, idx, tier }) => {
+  if(!entry) debugger;
   const winRatio =(wins, losses) => wins / (wins + losses) * 100;
   return(
     <div>

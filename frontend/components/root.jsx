@@ -12,12 +12,9 @@ import { fetchSummoner } from '../actions/summoner_actions';
 const Root = ({ store }) => {
 
   const getRankings = ({params}, replace) => {
-    // window.replace = replace;
     if(isEmpty(store.getState().rankings["solo_5x5"])){
       store.dispatch(fetchRankings("challenger"));
     }
-    // debugger;
-    // replace(`/rankings/solo_5x5`);
   };
 
   const _populateSummoner = (nextState, replace) => {
