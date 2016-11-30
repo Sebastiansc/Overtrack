@@ -14,12 +14,10 @@ class Match < ApplicationRecord
   #Recommended: 20 at a time.
   def self.get(summoner_id, offset, limit)
     summoner = Summoner.find_by(summoner_id: summoner_id)
-
-    if summoner.matches.length < limit
-      fetch_matches(summoner, {
-          offset: offset,
-          limit: limit
-        })
+    puts $redis.get("matches_loaded")
+    if $redis.get("matches_loaded") == "false" || !$redis.get("matches_loaded")
+      sleep 1.5
+      get(summoner_id, offset, limit)
     end
 
     Match.joins(:matchings).
@@ -29,13 +27,17 @@ class Match < ApplicationRecord
     limit(limit)
   end
 
+  def self.match_list(options)
+    match_list = HTTParty.get(
+      "https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/#{@summoner_id}?rankedQueues=#{ranks}&seasons=SEASON2016&beginTime=#{begin_time}&endTime=#{end_time}&beginIndex=#{options[:offset]}&endIndex=#{options[:limit]}&api_key=#{api_key}"
+    )
+  end
+
   #Fetches and creates matches, played within last month, in batches of 20 from API. **IGNORES matches already stored in DB.
   #Arguments: options => hash. Sets offset and limit.
   def self.fetch_matches(summoner, options)
     @summoner_id = summoner.summoner_id
-    match_list = HTTParty.get(
-      "https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/#{@summoner_id}?rankedQueues=#{ranks}&seasons=SEASON2016&beginTime=#{begin_time}&endTime=#{end_time}&beginIndex=#{options[:offset]}&endIndex=#{options[:limit]}&api_key=#{api_key}"
-    )
+    match_list = match_list(options)
 
     if match_list.response.code == "429"
       sleep 1
@@ -49,10 +51,16 @@ class Match < ApplicationRecord
   end
 
   #Reduces number of DB queries by computing all match ids that are not already stored. **MIGHT NEED FURTHER OPTIMIZATION
+  #Associates summoner to matches that are in DB and will not be fetched
   def self.not_stored_matches(match_list)
+    byebug if !match_list
     api_match_ids = match_list.map{ |match| match["matchId"] }
     db_match_ids = Match.where(match_id: api_match_ids).map(&:match_id)
     to_fetch_ids = api_match_ids - db_match_ids
+    db_match_ids.each do |match_id|
+      Matching.create({summoner_id: @summoner_id, match_id: match_id})
+    end
+    to_fetch_ids
   end
 
   #Iterates recursively through a queue of matches to only move forward once the response is succesfull

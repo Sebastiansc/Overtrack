@@ -5,6 +5,11 @@ class Api::MatchesController < ApplicationController
       params[:offset].to_i,
       params[:limit].to_i
     ) || []
+    summoner = Summoner.find_by(summoner_id: params[:summoner_id])
+    MatchFetch.perform_async(summoner,
+      params[:offset].to_i + params[:limit].to_i,
+      params[:limit].to_i + params[:limit].to_i
+    )
     render :index
   end
 end
