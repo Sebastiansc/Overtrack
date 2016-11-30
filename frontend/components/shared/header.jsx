@@ -23,7 +23,7 @@ class Header extends React.Component {
           </section>
           <section className="nav">
             <ul>
-              <Link to={'/ranking'} className="li">Leaderboard</Link>
+              <Link to={'/rankings'} className="li">Leaderboard</Link>
             </ul>
           </section>
           <section className="tools">
