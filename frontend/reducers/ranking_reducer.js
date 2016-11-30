@@ -19,6 +19,7 @@ export default (state = _defaultState, action) => {
   const newState = merge({}, state);
   switch (action.type) {
     case RECEIVE_RANKINGS:
+    debugger;
       return action.rankings;
     default:
       return state;

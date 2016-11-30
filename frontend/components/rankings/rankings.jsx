@@ -9,6 +9,7 @@ export default class Rankings extends React.Component {
     this.limit = 50;
     this.fetching = false;
     this.state = {summoners: [], over: false, isInfiniteLoading: false,};
+
   }
 
   componentDidMount(){
@@ -17,10 +18,7 @@ export default class Rankings extends React.Component {
 
   componentWillReceiveProps(newProps){
     this.fetching = false;
-    this.updateBatch(newProps.rank.entries);
-  }
-
-  updateBatch(entries){
+    const entries = newProps.rank.entries;
     const newEntries = this.state.summoners.concat(this.currentBatch(entries));
     this.setState({summoners: newEntries});
   }
