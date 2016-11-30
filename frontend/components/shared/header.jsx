@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Searchbar from './searchbar';
+import SearchbarContainer from './searchbar_container';
 
 class Header extends React.Component {
 
@@ -10,7 +10,7 @@ class Header extends React.Component {
 
   headerNav() {
     if (window.location.hash !== "#/") {
-      return <Searchbar />;
+      return <SearchbarContainer />;
     }
   }
 

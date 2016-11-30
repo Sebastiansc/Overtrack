@@ -3,7 +3,6 @@ import React from 'react';
 class Searchbar extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = { summoner: "" };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
@@ -22,7 +21,7 @@ class Searchbar extends React.Component {
 
   // checking validation for each input using Riot regex
   update(e) {
-    if (this.checkValidation(e)) {
+    if (this.checkValidation(e) || e.target.value === "") {
       this.setState({["summoner"]: e.target.value});
     }
   }
