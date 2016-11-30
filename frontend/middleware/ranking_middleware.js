@@ -1,13 +1,13 @@
-import { FETCH_RANKING, receiveRanking } from '../actions/match_actions';
-import { fetchRanking } from '../util/ranking_api_util';
+import { FETCH_RANKINGS, receiveRankings } from '../actions/ranking_actions';
+import { fetchRankings } from '../util/ranking_api_util';
 
 export default ({getState, dispatch}) => next => action => {
-  const success = matches => dispatch(receiveRanking(matches));
+  const success = matches => dispatch(receiveRankings(matches));
   const error = data => console.log(data);
 
   switch (action.type) {
-    case FETCH_RANKING:
-      fetchRanking(
+    case FETCH_RANKINGS:
+      fetchRankings(
         action.tier,
         success,
         error

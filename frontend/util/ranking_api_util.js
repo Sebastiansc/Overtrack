@@ -1,6 +1,6 @@
-export const fetchRanking = (tier, success, error) => {
+export const fetchRankings = (tier, success, error) => {
   $.ajax({
-    url: `/api/ranking/${tier}`,
+    url: `/api/rankings/${tier}`,
     success,
     error
   });

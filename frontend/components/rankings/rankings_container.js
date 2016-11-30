@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
-import Leaderboard from './leaderboard';
+import Rankings from './rankings';
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = ({rankings}) => ({
+  rankings: rankings
 });
 
 const mapDispatchToProps = dispatch => ({
-
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Leaderboard);
+)(Rankings);

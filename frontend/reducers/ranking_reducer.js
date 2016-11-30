@@ -14,7 +14,7 @@ export default (state = _defaultState, action) => {
   const newState = merge({}, state);
   switch (action.type) {
     case RECEIVE_RANKING:
-      return action.ranking;
+      return action.rankings;
     default:
       return state;
   }
