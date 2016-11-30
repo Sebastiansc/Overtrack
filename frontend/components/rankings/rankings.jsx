@@ -6,73 +6,92 @@ export default class Rankings extends React.Component {
   constructor(props){
     super(props);
     this.offset = 0;
-    this.limit = 20;
-    this.state = {summoners: [], over: false, isInfiniteLoading: false};
-    this.bindScroll();
-  }
-
-  bindScroll(){
-    $(window).scroll(() => {
-      console.log("scrolling");
-       if($(window).scrollTop() + $(window).height() === $(document).height())
-       {
-         this.updateBatch(this.props.rank.entries);
-       }
-   });
+    this.limit = 50;
+    this.fetching = false;
+    this.state = {summoners: [], over: false, isInfiniteLoading: false,};
   }
 
   componentDidMount(){
-    debugger;
     $(document).scrollTop(0);
   }
 
   componentWillReceiveProps(newProps){
+    this.fetching = false;
     this.updateBatch(newProps.rank.entries);
   }
 
   updateBatch(entries){
-    this.setState({summoners: this.currentBatch(entries)});
+    const newEntries = this.state.summoners.concat(this.currentBatch(entries));
+    this.setState({summoners: newEntries});
   }
 
+  elementInfiniteLoad(){
+    return (
+      <div className="infinite-list-item">
+        Loading...
+      </div>
+    );
+  }
   // Handles pagination. No need to hit DB for new summoners. All are retrieved
   // in initial call so pagination logic can be handled locally
   currentBatch(entries){
-    debugger;
-    if(this.limit > entries.length) {
-      if(this.tier() === "challenger") {
-        this.props.fetchRankings("master");
-      } else {
-        this.setState({over: true});
-        return [];
-      }
+    if (this.fetching) return [];
+    // Challenger ranking only holds up to 203 players
+    if(this.limit > 200 && this.props.rank.tier === "CHALLENGER") {
+      // Summoner slice of state will be replaced with new master rankings
+      // Must restart pagination for new array
+      this.offset = 0;
+      this.limit = 50;
+      this.fetching = true;
+      this.props.fetchRankings("master");
+      return [];
     } else {
       const offset = this.offset;
       const limit = this.limit;
-      this.offset = this.limit;
-      this.limit += 20;
+      this.offset += 50;
+      this.limit += 50;
       return entries.slice(offset, limit);
     }
   }
 
-  tier(){
-    return this.props.rank.tier.toLowerCase();
+  // Function is called when user has scroll to bottom of window.
+  // Infinite component is oddly calling function before this condition is
+  // satisfied. Added conditional early return to account for this case
+  handleInfiniteLoad(){
+    if(!this.state.summoners.length) return;
+    this.setState({isInfiniteLoading: true});
+    const newSummoners = this.currentBatch(this.props.rank.entries);
+    const newEntries = newSummoners.length ?
+      this.state.summoners.concat(newSummoners) :
+      this.state.summoners;
+    this.setState({
+        isInfiniteLoading: false,
+        summoners: newEntries
+    });
+  }
+
+  tier(idx){
+    return idx > 199 ? "master" : "challenger";
   }
 
   render(){
-I    return(
+    window.that = this;
+    return(
       <Infinite elementHeight={55}
-        containerHeight={2845}
-        infiniteLoadingBeginBottomOffset={200}
-        onInfiniteLoad={this.handleInfiniteLoad}
+        containerHeight={2750}
+        infiniteLoadBeginEdgeOffset={20}
+        useWindowAsScrollContainer
+        onInfiniteLoad={() => this.handleInfiniteLoad()}
         loadingSpinnerDelegate={this.elementInfiniteLoad()}
-        isInfiniteLoading={this.state.isInfiniteLoading}
-       >
-        {this.state.summoners.map((entry, idx) => (
-          <RankingItem key={idx}
-            entry={entry}
-            idx={idx + 1}
-            tier={this.tier()}/>
-        ))}
+        isInfiniteLoading={this.state.isInfiniteLoading}>
+        {this.state.summoners.map((entry, idx) => {
+          return (
+            <RankingItem key={idx}
+              entry={entry}
+              idx={idx + 1}
+              tier={this.tier(idx)}/>
+          );
+        })}
       </Infinite>
     );
   }
