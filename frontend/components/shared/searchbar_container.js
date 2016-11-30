@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Searchbar from './Searchbar';
+import Searchbar from './searchbar';
 import { fetchSummoner } from '../../actions/summoner_actions';
 
 const mapStateToProps = state => ({

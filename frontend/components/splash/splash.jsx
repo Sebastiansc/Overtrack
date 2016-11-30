@@ -27,7 +27,7 @@ class Splash extends React.Component {
 
   // checking validation for each input using Riot regex
   update(e) {
-    if (this.checkValidation(e)) {
+    if (this.checkValidation(e) || e.target.value === "") {
       this.setState({["summoner"]: e.target.value});
     }
   }
