@@ -27,6 +27,8 @@ class Ranking < ActiveRecord::Base
     if ranking.response.code == 429
       sleep 1
       fetch_rankings(queues, tier)
+    elsif !ranking["entries"]
+      fetch_rankings(queues[1..-1], tier)
     else
       create_entry(ranking)
       fetch_rankings(queues[1..-1], tier)

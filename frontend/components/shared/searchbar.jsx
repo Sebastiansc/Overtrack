@@ -19,7 +19,7 @@ class Searchbar extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const summoner = this.state.summoner;
-    this.props.fetchSummoner(summoner.trim());
+    this.props.fetchSummoner(summoner.trim())  ;
   }
 
 
