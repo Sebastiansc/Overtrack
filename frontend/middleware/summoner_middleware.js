@@ -7,11 +7,11 @@ import {
 import { getSummoner } from '../util/summoner_api_util';
 
 export default ({getState, dispatch}) => next => action => {
-  let fetchSummonerSuccess = (summoner) =>
+  let receiveSummonerSuccess = (summoner) =>
     dispatch(receiveSummoner(summoner));
   switch (action.type) {
     case FETCH_SUMMONER:
-      getSummoner(action.summoner, fetchSummonerSuccess);
+      getSummoner(action.summoner, receiveSummonerSuccess);
       return next(action);
     default:
       return next(action);

@@ -3,6 +3,6 @@ import PlayerReducer from './summoner_reducer';
 import MatchReducer from './match_reducer';
 
 export default combineReducers({
-  players: PlayerReducer,
+  summoner: PlayerReducer,
   matches: MatchReducer
 });

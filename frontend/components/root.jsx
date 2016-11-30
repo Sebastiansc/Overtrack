@@ -13,7 +13,7 @@ const Root = ({ store }) => {
         <Route path='/' component={App}>
           <IndexRoute component={SplashContainer}/>
           <Route path='ranking' component={LeaderboardContainer}/>
-          <Route path='profile' component={ProfileContainer}/>
+          <Route path='profile/:summonerName' component={ProfileContainer}/>
         </Route>
       </Router>
     </Provider>

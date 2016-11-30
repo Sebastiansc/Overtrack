@@ -82,6 +82,7 @@
           font-weight: 100;
           font-style: normal;
           color: #5c5c5c;
+          padding-bottom: 20px;
         }
 
         h3 {
@@ -92,14 +93,14 @@
           font-style: normal;
           color: #5c5c5c;
           font-size: 15px;
-          padding-bottom: 50px;
+          padding-bottom: 60px;
         }
       }
       .item {
         display: flex;
         justify-content: space-between;
         margin: 0 auto;
-        padding-bottom: 50px;
+        padding-bottom: 70px;
 
         .img {
           background-position: center;
@@ -152,6 +153,7 @@
       }
       .item2 {
         display: flex;
+        margin: 0 auto;
         justify-content: space-between;
         padding-bottom: 50px;
         height: 172px;
@@ -162,7 +164,7 @@
           background-size: cover;
           overflow-x: hidden;
           box-sizing: content-box;
-          margin-right: 60px;
+          margin-left: 60px;
         }
 
         .desc {

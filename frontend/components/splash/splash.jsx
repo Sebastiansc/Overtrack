@@ -14,6 +14,9 @@ class Splash extends React.Component {
     $(document).scrollTop(0);
   }
 
+  componentWillReceiveProps(nextProps) {
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     const summoner = this.state.summoner;
@@ -76,7 +79,6 @@ class Splash extends React.Component {
               </div>
             </div>
             <div className="item2">
-              <div className="img2"></div>
               <div className="desc">
                 <div>
                   <fin>Leaderboard</fin>
@@ -89,6 +91,7 @@ class Splash extends React.Component {
                   <li>Database optimized for smooth user experience</li>
                 </ul>
               </div>
+              <div className="img2"></div>
             </div>
           </section>
         </div>
