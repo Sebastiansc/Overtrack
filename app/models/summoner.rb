@@ -12,7 +12,7 @@ class Summoner < ApplicationRecord
   def self.create_summoner(summoner_name)
     summoner_name = to_ascii(summoner_name)
     profile = static_data(summoner_name)
-    return false if profile["statusCode"] == 404
+    return false if profile.response.code == "404"
     profile = profile.to_h[summoner_name]
     profile_info = {
       summoner_id: profile["id"],
@@ -67,6 +67,8 @@ class Summoner < ApplicationRecord
       summoner[queue]["division"] = entry["entries"].first["division"]
       summoner[queue]["league_points"] = entry["entries"].first["leaguePoints"]
     end
+
+    summoner.save
   end
 
   #Returns the appropiate model key for acccesing the queue row

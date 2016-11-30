@@ -7,7 +7,7 @@ class Api::SummonersController < ApplicationController
     if !@summoner
       @summoner = Summoner.create_summoner(params[:name])
       if !@summoner
-        render json: ["#{params[:name]} does not exist in #{region} }"], status: 404
+        render json: ["#{params[:name]} does not exist in this region"], status: 404
         return true
       end
       MatchFetch.perform_async(@summoner)
