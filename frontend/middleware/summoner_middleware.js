@@ -1,17 +1,17 @@
 import {
   FETCH_SUMMONER,
-  fetchSummoner,
   receiveSummoner
 } from '../actions/summoner_actions';
-
-import { getSummoner } from '../util/summoner_api_util';
+import { receiveErrors } from '../actions/error_actions';
+import { fetchSummoner } from '../util/summoner_api_util';
 
 export default ({getState, dispatch}) => next => action => {
   let receiveSummonerSuccess = (summoner) =>
     dispatch(receiveSummoner(summoner));
+  let failure = (error) => dispatch(receiveErrors(error));
   switch (action.type) {
     case FETCH_SUMMONER:
-      getSummoner(action.summoner, receiveSummonerSuccess);
+      fetchSummoner(action.summoner, receiveSummonerSuccess, failure);
       return next(action);
     default:
       return next(action);

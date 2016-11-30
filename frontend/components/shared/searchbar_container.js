@@ -3,6 +3,8 @@ import Searchbar from './searchbar';
 import { fetchSummoner } from '../../actions/summoner_actions';
 
 const mapStateToProps = state => ({
+  summoner: state.summoner,
+  error: state.error
 });
 
 const mapDispatchToProps = dispatch => ({

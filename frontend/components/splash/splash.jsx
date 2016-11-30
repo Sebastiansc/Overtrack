@@ -10,11 +10,15 @@ class Splash extends React.Component {
     this.checkValidation = this.checkValidation.bind(this);
   }
 
+  // Only gets called once when the page loads.
   componentDidMount() {
     $(document).scrollTop(0);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate() {
+    if (this.props.summoner.name) {
+      this.props.router.push(`/profile/${this.props.summoner.name}`);
+    }
   }
 
   handleSubmit(e) {

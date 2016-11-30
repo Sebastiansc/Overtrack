@@ -4,8 +4,16 @@ class Searchbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = { summoner: "" };
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
+    this.summonerName = this.props.summoner.name;
+  }
+
+  componentDidUpdate() {
+    if (this.summonerName) {
+      this.props.router.push(`/profile/${this.summonerName}`);
+    }
   }
 
   handleSubmit(e) {
@@ -13,6 +21,7 @@ class Searchbar extends React.Component {
     const summoner = this.state.summoner;
     this.props.fetchSummoner(summoner.trim());
   }
+
 
   checkValidation(e) {
     let pattern = /^[0-9\\a-zA-Z _\\.]+$/;

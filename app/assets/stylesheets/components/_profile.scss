@@ -2,23 +2,96 @@
   position: absolute;
   height: 100%;
   width: 100%;
+  margin: 0 auto;
+
 
   .header {
-    border-bottom: 1px solid black;
-    padding: 20px 0 0 0;
+    padding: 30px 0 0 0;
     position: relative;
-    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    height: 20%;
+    text-align: center;
 
     .profile-icon {
+      display: block;
+      background-position: center;
+      background-size: cover;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+    }
 
+    .profile-info {
+      font-size: 40px;
+      font-weight: bold;
+      color: black;
+      margin-bottom: 30px;
     }
   }
 
   .nav-bar {
+    border-bottom: 1px solid gray;
 
+    .navList {
+      height: 40px;
+      margin: 0 auto;
+      width: 80%;
+      padding: 0;
+      font-size: 0;
+      list-style: none;
+      display: block;
+
+      .listItem {
+        display:inline-block;
+        margin:0 -1px 0 0;
+        padding:0;
+
+        a {
+          display:block;
+          min-width:70px;
+          height:39px;
+          border:1px solid #c6cbcb;
+          padding-left:6px;
+          padding-right:6px;
+          background-color:#f2f2f2;
+          color:#555e5e;
+          font-size:13px;
+          line-height:40px;
+          text-decoration:none;
+          text-align:center;
+        }
+      }
+
+      .listItem:hover {
+        background:#e8eaea;
+        color:#242929;
+      }
+    }
   }
 
   .summoner-content {
+    background:#e5e9e9;
+    overflow:hidden;
 
+    .content {
+      width: 80%;
+      min-height: 500px;
+      margin: 0;
+      margin: 0 auto;
+      display: flex;
+
+      .sidebar {
+        width: 30%;
+
+        .league-info {
+          
+        }
+      }
+
+      .main {
+        width: 70%;
+      }
+    }
   }
 }
