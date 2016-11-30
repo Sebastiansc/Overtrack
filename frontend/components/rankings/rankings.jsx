@@ -4,40 +4,63 @@ import RankingItem from './ranking_item';
 export default class Rankings extends React.Component {
   constructor(props){
     super(props);
-    this.state = {offset: 0, limit: 50, over: false, tier: "challenger"};
+    this.offset = 0;
+    this.limit = 20;
+    this.state = {summoners: [], over: false};
+    this.bindScroll();
   }
 
-  // componentDidUpdate(){
-  //   this.length = this.length || this.props.entries.length;
-  // }
+  bindScroll(){
+    $(window).scroll(() => {
+      console.log("scrolling");
+       if($(window).scrollTop() + $(window).height() === $(document).height())
+       {
+         this.updateBatch(this.state.summoners);
+       }
+   });
+  }
 
-  // currentBatch(){
-  //   debugger;
-  //   if(this.state.limit > this.props.entries.length) {
-  //     if(this.state.tier === "challenger") {
-  //       this.props.fetchRankings("master");
-  //     } else {
-  //       this.setState({over: true, tier: "master"});
-  //       return [];
-  //     }
-  //   } else {
-  //     return this.props.entries.slice(this.state.offset, this.state.limit);
-  //   }
-  // }
+  componentWillMount(){
+    $(document).scrollTop(0);
+  }
+
+  componentWillReceiveProps(newProps){
+    this.updateBatch(newProps.rank.entries);
+  }
+
+  updateBatch(entries){
+    this.setState({summoners: this.currentBatch(entries)});
+  }
+
+  // Handles pagination. No need to hit DB for new summoners. All are retrieved
+  // in initial call so pagination logic can be handled locally
+  currentBatch(entries){
+    // debugger;
+    if(this.limit > entries.length) {
+      if(this.tier() === "challenger") {
+        this.props.fetchRankings("master");
+      } else {
+        this.setState({over: true});
+        return [];
+      }
+    } else {
+      const offset = this.offset;
+      const limit = this.limit;
+      this.offset = this.limit;
+      this.limit += 20;
+      return entries.slice(offset, limit);
+    }
+  }
 
   tier(){
     return this.props.rank.tier.toLowerCase();
-  }
-
-  entries(){
-    return this.props.rank.entries || [];
   }
 
   render(){
     // debugger;
     return(
       <main>
-        {this.entries().map((entry, idx) => (
+        {this.state.summoners.map((entry, idx) => (
           <RankingItem key={idx}
             entry={entry}
             idx={idx + 1}
