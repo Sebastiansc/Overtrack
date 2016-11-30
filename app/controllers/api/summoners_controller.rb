@@ -13,6 +13,7 @@ class Api::SummonersController < ApplicationController
       MatchFetch.perform_async(@summoner)
     end
     @summoner.last_viewed = DateTime.now.strftime("%Q").to_i
+    @summoner.save
     render :show
   end
 end
