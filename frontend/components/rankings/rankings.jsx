@@ -34,6 +34,7 @@ export default class Rankings extends React.Component {
   }
   // Handles pagination. No need to hit DB for new summoners. All are retrieved
   // in initial call so pagination logic can be handled locally
+  // this.fetching is utilized to signal if the ajax call is currently underway
   currentBatch(entries){
     if (this.fetching) return [];
     // Challenger ranking only holds up to 203 players
