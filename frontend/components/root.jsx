@@ -9,10 +9,13 @@ import RankingsContainer from './rankings/rankings_container';
 import ProfileContainer from './profile/profile_container';
 
 const Root = ({ store }) => {
-  const getRankings = ({params}) => {
-    if(isEmpty(store.getState().rankings[params.tier])){
-      store.dispatch(fetchRankings(params.tier));
+  const getRankings = ({params}, replace) => {
+    // window.replace = replace;
+    if(isEmpty(store.getState().rankings["solo_5x5"])){
+      store.dispatch(fetchRankings("challenger"));
     }
+    // debugger;
+    // replace(`/rankings/solo_5x5`);
   };
 
   return (
@@ -20,8 +23,14 @@ const Root = ({ store }) => {
       <Router history={hashHistory}>
         <Route path='/' component={App}>
           <IndexRoute component={SplashContainer}/>
-          <Route path='ranking/:tier' component={RankingsContainer}
-            onEnter={getRankings}/>
+          <Route path='rankings' component={RankingsContainer}
+            onEnter={getRankings}>
+            <IndexRoute component={RankingsContainer}/>
+            <Route path='team_5x5' component={RankingsContainer}/>
+            <Route path='team_3x3' component={RankingsContainer}/>
+            <Route path='flex_sr' component={RankingsContainer}/>
+            <Route path='flex_tt' component={RankingsContainer}/>
+          </Route>
           <Route path='profile/:summonerName' component={ProfileContainer}/>
         </Route>
       </Router>
