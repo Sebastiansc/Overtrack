@@ -1,9 +1,11 @@
 import React from 'react';
 import MatchList from './match_list';
+import { summonerSoloQueue } from '../../reducers/selectors';
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
+
   }
 
   componentDidMount() {
@@ -17,7 +19,9 @@ class Profile extends React.Component {
   loadProfile() {
     if (this.props.summoner.profile_icon) {
       return (
-        <div className="profile-icon" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/profileicon/${this.props.summoner.profile_icon}.png')`}}></div>
+        <div className="profile-icon" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/profileicon/${this.props.summoner.profile_icon}.png')`}}>
+        </div>
+
       );
     } else {
       return (
@@ -25,6 +29,29 @@ class Profile extends React.Component {
           <i className="fa fa-cog fa-spin fa-5x fa-fw"></i>
         </div>
       );
+    }
+  }
+
+  // finds league medals from local assets/tier-icons folder
+  // need refactoring
+  leagueDivision() {
+    if (this.props.summoner.solo_5x5) {
+      if (this.props.summoner.solo_5x5.tier !== "CHALLENGER" ||
+      this.props.summoner.solo_5x5.tier !== "MASTER" ||
+      this.props.summoner.solo_5x5.tier !== "PROVISIONAL") {
+        if (!summonerSoloQueue(this.props.summoner)) debugger;
+        return (
+          <div className="medal"
+            style={{backgroundImage: `url('assets/tier-icons/${summonerSoloQueue(this.props.summoner)}.png')`}}></div>
+        );
+      } else {
+        return (
+          <div className="medal"
+            style={{backgroundImage: `url('assets/${this.props.summoner.solo_5x5.tier.toLowerCase()}.png')`}}></div>
+        );
+      }
+
+
     }
   }
 
@@ -58,8 +85,12 @@ class Profile extends React.Component {
             <div className="sidebar">
               <div className="league-info">
                 <div className="solo-tier">
-                  <div className="medal" style={{backgroundImage: `url('')`}}></div>
-                  <div className="tier-info"></div>
+                  <div className="medal">
+                    {
+                      this.leagueDivision()
+                    }
+                  </div>
+                  <div className="tier-info">tier</div>
                 </div>
                 <div className="optional-tier"></div>
               </div>

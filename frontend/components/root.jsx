@@ -39,7 +39,6 @@ const Root = ({ store }) => {
             <Route path='flex_sr' component={RankingsContainer}/>
             <Route path='flex_tt' component={RankingsContainer}/>
           </Route>
-          <Route path='profile/:summonerName' component={ProfileContainer}/>
           <Route path='profile/:summonerName' component={ProfileContainer}
              onEnter={_populateSummoner}/>
         </Route>
