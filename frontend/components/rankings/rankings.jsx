@@ -1,12 +1,13 @@
 import React from 'react';
 import RankingItem from './ranking_item';
+import Infinite from 'react-infinite';
 
 export default class Rankings extends React.Component {
   constructor(props){
     super(props);
     this.offset = 0;
     this.limit = 20;
-    this.state = {summoners: [], over: false};
+    this.state = {summoners: [], over: false, isInfiniteLoading: false};
     this.bindScroll();
   }
 
@@ -15,12 +16,13 @@ export default class Rankings extends React.Component {
       console.log("scrolling");
        if($(window).scrollTop() + $(window).height() === $(document).height())
        {
-         this.updateBatch(this.state.summoners);
+         this.updateBatch(this.props.rank.entries);
        }
    });
   }
 
-  componentWillMount(){
+  componentDidMount(){
+    debugger;
     $(document).scrollTop(0);
   }
 
@@ -35,7 +37,7 @@ export default class Rankings extends React.Component {
   // Handles pagination. No need to hit DB for new summoners. All are retrieved
   // in initial call so pagination logic can be handled locally
   currentBatch(entries){
-    // debugger;
+    debugger;
     if(this.limit > entries.length) {
       if(this.tier() === "challenger") {
         this.props.fetchRankings("master");
@@ -57,16 +59,21 @@ export default class Rankings extends React.Component {
   }
 
   render(){
-    // debugger;
-    return(
-      <main>
+I    return(
+      <Infinite elementHeight={55}
+        containerHeight={2845}
+        infiniteLoadingBeginBottomOffset={200}
+        onInfiniteLoad={this.handleInfiniteLoad}
+        loadingSpinnerDelegate={this.elementInfiniteLoad()}
+        isInfiniteLoading={this.state.isInfiniteLoading}
+       >
         {this.state.summoners.map((entry, idx) => (
           <RankingItem key={idx}
             entry={entry}
             idx={idx + 1}
             tier={this.tier()}/>
         ))}
-      </main>
+      </Infinite>
     );
   }
 }
