@@ -10,9 +10,11 @@ import { fetchSummoner } from '../actions/summoner_actions';
 const Root = ({ store }) => {
   const _populateSummoner = (nextState, replace) => {
     if (!store.getState().summoner.name) {
-      store.dispatch(fetchSummoner(nextState.params.summonerName));
+      store.dispatch(fetchSummoner(nextState.params.summonerName.trim()));
     }
   };
+
+
 
   return (
     <Provider store={store}>

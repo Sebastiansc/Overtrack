@@ -16,15 +16,12 @@ class Splash extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.summoner.name) {
-      this.props.router.push(`/profile/${this.props.summoner.name}`);
-    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
     const summoner = this.state.summoner;
-    this.props.fetchSummoner(summoner.trim());
+    this.props.router.push(`/profile/${this.state.summoner}`);
   }
 
   checkValidation(e) {
@@ -45,7 +42,7 @@ class Splash extends React.Component {
         <div>
           <section className="logo">
             <h1>
-              <Link to={'/'} className="main">Overtrack</Link>
+              <Link to='/' className="main">Overtrack</Link>
             </h1>
           </section>
           <section className="searchbar-content">

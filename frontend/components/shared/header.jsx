@@ -19,12 +19,11 @@ class Header extends React.Component {
       <header className="global-header">
         <div>
           <section className="logo">
-            <h1><Link to={'/'}>Overtrack</Link></h1>
+            <h1><Link to='/'>Overtrack</Link></h1>
           </section>
           <section className="nav">
             <ul>
               <Link to={'/ranking'} className="li">Leaderboard</Link>
-              <Link to={`/profile/${"grigne"}`} className="li">Profile</Link>
             </ul>
           </section>
           <section className="tools">
