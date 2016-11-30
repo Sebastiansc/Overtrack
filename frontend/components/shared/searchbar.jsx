@@ -7,19 +7,14 @@ class Searchbar extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
-    this.summonerName = this.props.summoner.name;
   }
 
   componentDidUpdate() {
-    if (this.summonerName) {
-      this.props.router.push(`/profile/${this.summonerName}`);
-    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const summoner = this.state.summoner;
-    this.props.fetchSummoner(summoner.trim())  ;
+    this.props.router.push(`/profile/${this.state.summoner.name}`);
   }
 
 

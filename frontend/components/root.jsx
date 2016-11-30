@@ -21,9 +21,7 @@ const Root = ({ store }) => {
   };
 
   const _populateSummoner = (nextState, replace) => {
-    if (!store.getState().summoner.name) {
-      store.dispatch(fetchSummoner(nextState.params.summonerName.trim()));
-    }
+    store.dispatch(fetchSummoner(nextState.params.summonerName.trim()));
   };
 
   return (

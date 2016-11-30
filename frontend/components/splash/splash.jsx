@@ -20,7 +20,6 @@ class Splash extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const summoner = this.state.summoner;
     this.props.router.push(`/profile/${this.state.summoner}`);
   }
 

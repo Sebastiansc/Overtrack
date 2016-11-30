@@ -1,6 +1,8 @@
 import React from 'react';
 import MatchList from './match_list';
-import { summonerSoloQueue } from '../../reducers/selectors';
+import { summonerSoloQueue, summonerQueues } from '../../reducers/selectors';
+import LeagueBox from './league_box';
+import { values } from 'lodash';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -32,28 +34,27 @@ class Profile extends React.Component {
     }
   }
 
-  // finds league medals from local assets/tier-icons folder
-  // need refactoring
-  leagueDivision() {
-    if (this.props.summoner.solo_5x5) {
-      if (this.props.summoner.solo_5x5.tier !== "CHALLENGER" ||
-      this.props.summoner.solo_5x5.tier !== "MASTER" ||
-      this.props.summoner.solo_5x5.tier !== "PROVISIONAL") {
-        if (!summonerSoloQueue(this.props.summoner)) debugger;
-        return (
-          <div className="medal"
-            style={{backgroundImage: `url('assets/tier-icons/${summonerSoloQueue(this.props.summoner)}.png')`}}></div>
-        );
-      } else {
-        return (
-          <div className="medal"
-            style={{backgroundImage: `url('assets/${this.props.summoner.solo_5x5.tier.toLowerCase()}.png')`}}></div>
-        );
-      }
-
-
+  // map leaguebox according to different types of in-game leagues
+  renderAllQueueBoxes() {
+    let that = this;
+    if (this.props.summoner.name) {
+      return Object.keys(this.props.queues).map( queueType => {
+        if (values(that.props.queues[queueType]).length !== 0) {
+          debugger
+          return (
+            <LeagueBox
+              key={that.props.queues[queueType].league_name}
+              queueType={queueType}
+              queues={that.props.queues}
+              summoner={that.props.summoner}
+              length={100}>
+            </LeagueBox>
+          );
+        }
+      });
     }
   }
+
 
   render () {
     return (
@@ -82,19 +83,9 @@ class Profile extends React.Component {
         </div>
         <div className="summoner-content">
           <div className="content">
-            <div className="sidebar">
-              <div className="league-info">
-                <div className="solo-tier">
-                  <div className="medal">
-                    {
-                      this.leagueDivision()
-                    }
-                  </div>
-                  <div className="tier-info">tier</div>
-                </div>
-                <div className="optional-tier"></div>
-              </div>
-            </div>
+            {
+              this.renderAllQueueBoxes()
+            }
             <div className="main">
             <div className="gamelist">
               <div className="header"></div>
