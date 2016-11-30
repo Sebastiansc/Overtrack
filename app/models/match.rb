@@ -30,7 +30,7 @@ class Match < ApplicationRecord
   end
 
   #Fetches and creates matches, played within last month, in batches of 20 from API. **IGNORES matches already stored in DB.
-  #Arguments: options => hash. Sets look up and index offset and limits.
+  #Arguments: options => hash. Sets offset and limit.
   def self.fetch_matches(summoner, options)
     @summoner_id = summoner.summoner_id
     match_list = HTTParty.get(
@@ -40,8 +40,9 @@ class Match < ApplicationRecord
     if match_list.response.code == "429"
       sleep 1
       fetch_matches(summoner, options)
-    elsif !match_list["matches"] == 0
-      return
+    #Check if summoner has no match history. Must return tru to comply with SuckerPunch
+    elsif !match_list["matches"] || match_list["totalGames"] == 0
+      return true
     end
 
     create_matches(not_stored_matches(match_list["matches"]))
