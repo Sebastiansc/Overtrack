@@ -4,9 +4,9 @@ class Api::SummonersController < ApplicationController
   #Asynchronously creates most recent (< 20) matches for this player.
   def find_or_create
     @summoner = Summoner.find_by(name: params[:name])
-    if !@summoner
+    unless @summoner
       @summoner = Summoner.create_summoner(params[:name])
-      if !@summoner
+      unless @summoner
         render json: ["#{params[:name]} does not exist in this region"], status: 404
         return true
       end
