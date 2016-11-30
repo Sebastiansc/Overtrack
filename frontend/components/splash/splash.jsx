@@ -10,17 +10,18 @@ class Splash extends React.Component {
     this.checkValidation = this.checkValidation.bind(this);
   }
 
+  // Only gets called once when the page loads.
   componentDidMount() {
     $(document).scrollTop(0);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate() {
   }
 
   handleSubmit(e) {
     e.preventDefault();
     const summoner = this.state.summoner;
-    this.props.fetchSummoner(summoner.trim());
+    this.props.router.push(`/profile/${this.state.summoner}`);
   }
 
   checkValidation(e) {
@@ -41,7 +42,7 @@ class Splash extends React.Component {
         <div>
           <section className="logo">
             <h1>
-              <Link to={'/'} className="main">Overtrack</Link>
+              <Link to='/' className="main">Overtrack</Link>
             </h1>
           </section>
           <section className="searchbar-content">

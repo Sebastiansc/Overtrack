@@ -7,8 +7,10 @@ import App from './app';
 import SplashContainer from './splash/splash_container';
 import RankingsContainer from './rankings/rankings_container';
 import ProfileContainer from './profile/profile_container';
+import { fetchSummoner } from '../actions/summoner_actions';
 
 const Root = ({ store }) => {
+
   const getRankings = ({params}, replace) => {
     // window.replace = replace;
     if(isEmpty(store.getState().rankings["solo_5x5"])){
@@ -17,6 +19,14 @@ const Root = ({ store }) => {
     // debugger;
     // replace(`/rankings/solo_5x5`);
   };
+
+  const _populateSummoner = (nextState, replace) => {
+    if (!store.getState().summoner.name) {
+      store.dispatch(fetchSummoner(nextState.params.summonerName.trim()));
+    }
+  };
+
+
 
   return (
     <Provider store={store}>
@@ -32,6 +42,8 @@ const Root = ({ store }) => {
             <Route path='flex_tt' component={RankingsContainer}/>
           </Route>
           <Route path='profile/:summonerName' component={ProfileContainer}/>
+          <Route path='profile/:summonerName' component={ProfileContainer}
+             onEnter={_populateSummoner}/>
         </Route>
       </Router>
     </Provider>
