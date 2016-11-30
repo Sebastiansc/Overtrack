@@ -10,7 +10,6 @@ class Summoner < ApplicationRecord
   #Fetches and creates summoner from API.
   #Uses URI encoding to account for foreign characters in summoner names.
   def self.create_summoner(summoner_name)
-    byebug
     summoner_name = to_ascii(summoner_name)
     profile = static_data(summoner_name)
     return false if profile["statusCode"] == 404
@@ -68,6 +67,8 @@ class Summoner < ApplicationRecord
       summoner[queue]["division"] = entry["entries"].first["division"]
       summoner[queue]["league_points"] = entry["entries"].first["leaguePoints"]
     end
+
+    summoner.save
   end
 
   #Returns the appropiate model key for acccesing the queue row
