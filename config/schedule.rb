@@ -35,5 +35,6 @@ end
 
 every 6.months do
   rake 'items:update'
+  rake 'champions:update'
   rake 'spells:update'
 end
