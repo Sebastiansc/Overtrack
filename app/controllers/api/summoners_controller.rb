@@ -4,16 +4,11 @@ class Api::SummonersController < ApplicationController
   #Asynchronously creates most recent (< 20) matches for this player.
   def find_or_create
     @summoner = Summoner.where("LOWER(name) = LOWER(?)", params[:name]).first
+    @summoner = Summoner.create_summoner(params[:name]) unless @summoner
     unless @summoner
-      @summoner = Summoner.create_summoner(params[:name])
-      unless @summoner
-        render json: ["#{params[:name]} does not exist in this region"], status: 404
-        return true
-      end
-      MatchFetch.perform_async(@summoner)
+      render json: ["#{params[:name]} does not exist in this region"], status: 404
+      return true
     end
-    @summoner.last_viewed = DateTime.now.strftime("%Q").to_i
-    @summoner.save
     render :show
   end
 end
