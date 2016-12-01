@@ -56,7 +56,7 @@ const LeagueBox = ({summoner, queueType, queues, height}) => {
 
   const renderWinRatio = () => {
     if (queues[queueType].tier) {
-      return ( <h2>Win Ratio {calculateWinRatio} %</h2>);
+      return ( <h2>Win Ratio {calculateWinRatio()} %</h2>);
     }
   };
 

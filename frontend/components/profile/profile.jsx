@@ -23,7 +23,6 @@ class Profile extends React.Component {
       return (
         <div className="profile-icon" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/profileicon/${this.props.summoner.profile_icon}.png')`}}>
         </div>
-
       );
     } else {
       return (
@@ -58,13 +57,14 @@ class Profile extends React.Component {
   render () {
     return (
       <div className="content-wrapper">
-        <div></div>
         <div className="header">
           <div className="profile-info">
-            {this.props.summoner.name}
             {
               this.loadProfile()
             }
+            <div>
+              {this.props.summoner.name}
+            </div>
           </div>
           <div className="queueBoxes">
             {
@@ -87,18 +87,18 @@ class Profile extends React.Component {
         </div>
         <div className="summoner-content">
           <div className="content">
-            <div className="main">
-            <div className="gamelist">
-              <div className="header"></div>
-              <div className="content">
-                <div className="stats"></div>
-                <MatchList matches={this.props.matches}/>
-                <div className="nextButton">
-                  <button></button>
-                </div>
-              </div>
+            <div className="head">
+              <ul className="header-lists">
+                <li className="header-list-item">
+                </li>
+              </ul>
             </div>
-          </div>
+            <div className="body">
+              <MatchList matches={this.props.matches}/>
+            </div>
+            <div className="next-button">
+              <button>Show More</button>
+            </div>
           </div>
         </div>
       </div>
