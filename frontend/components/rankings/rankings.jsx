@@ -18,6 +18,10 @@ export default class Rankings extends React.Component {
     this.limit = 50;
   }
 
+  currentQueue(){
+    return window.location.hash.split('/')[2] || "solo_5x5";
+  }
+
   componentDidMount(){
     $(document).scrollTop(0);
   }
@@ -32,6 +36,11 @@ export default class Rankings extends React.Component {
       const entries = this.throttleEntries(this.props.rank.entries);
       this.updateSummoners(entries);
     }
+  }
+
+  componentDidUpdate(){
+    $('.queues > a').removeAttr('id', 'current-queue');
+    $(`.${this.currentQueue()}`).attr('id','current-queue');
   }
 
   // Ensures component updates state on page refresh or first enter(offset = 50)
@@ -117,12 +126,24 @@ export default class Rankings extends React.Component {
     return(
       <main className='rankings'>
         <div className='queues'>
-          <Link to='rankings'>RANKED_SOLO_5x5</Link>
-          <Link to='rankings/flex_sr'>RANKED_FLEX_SR</Link>
-          <Link to='rankings/flex_tt'>RANKED_FLEX_TT</Link>
-          <Link to='rankings/team_5x5'>RANKED_TEAM_5x5</Link>
-          <Link to='rankings/team_3x3'>RANKED_TEAM_3x3</Link>
+          <Link className='solo_5x5' to='rankings'>RANKED_SOLO_5x5</Link>
+          <Link className='flex_sr' to='rankings/flex_sr'>RANKED_FLEX_SR</Link>
+          <Link className='flex_tt' to='rankings/flex_tt'>RANKED_FLEX_TT</Link>
+          <Link className='team_5x5'
+              to='rankings/team_5x5'>
+              RANKED_TEAM_5x5
+          </Link>
+          <Link className='team_3x3'
+            to='rankings/team_3x3'>
+            RANKED_TEAM_3x3
+          </Link>
         </div>
+        <ul className='rankings-header'>
+          <li className='name'>Name</li>
+          <li>LP</li>
+          <li>Tier</li>
+          <li>Win Ratio</li>
+        </ul>
         <Infinite elementHeight={21}
           containerHeight={2750}
           infiniteLoadBeginEdgeOffset={100}
