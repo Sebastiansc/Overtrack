@@ -41,13 +41,9 @@ class Match < ApplicationRecord
       sleep 1
       fetch_matches(summoner, options)
     #Check if summoner has no match history. Must return tru to comply with SuckerPunch
-<<<<<<< HEAD
-    elsif !match_list["matches"] || match_list["totalGames"] == 0
-=======
     end
     if !match_list["matches"] || match_list["totalGames"] == 0
       byebug
->>>>>>> f640289b2f82a5d07e4087272dfaf2db89467313
       return true
     end
 

@@ -8,21 +8,22 @@ class MatchList extends React.Component {
 
   renderMatchListItems() {
     debugger
-    // this.props.matches.map( (match, idx) => {
-    //   return (<MatchListItem match={match} value={idx}/>);
-    // });
+    if (this.props.matches.match_id) {
+      // this.props.matches.map( (match, idx) => {
+      //   return (<MatchListItem match={match} value={idx}/>);
+      // });
+    }
   }
 
   render () {
     return (
       <div className="matchWrapper">
-        <MatchListItem/>
+        {
+          this.renderMatchListItems()
+        }
       </div>
     );
   }
 }
-// {
-//   this.renderMatchListItems()
-// }
 
 export default MatchList;
