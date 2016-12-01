@@ -8,7 +8,7 @@
     height: 100px;
     padding-top: 15px;
     width: 100%;
-    
+
     .detail-content {
 
     }
@@ -20,29 +20,41 @@
       justify-content: space-around;
 
       .stats {
-
+        width: 10%;
+        height: 100%;
       }
 
       .champ {
-
+        width: 25%;
+        height: 100%;
       }
+
       .kda {
-
+        width: 10%;
+        height: 100%;
       }
+
       .performance {
-
+        width: 10%;
+        height: 100%;
       }
+
       .items {
-
+        width: 30%;
+        height: 100%;
       }
+
       .trinkets {
-
+        width: 12%;
+        height: 100%;
       }
+
       .fellowSummoners {
 
       }
       .buton {
-
+        width: 3%;
+        height: 100%;
       }
     }
   }

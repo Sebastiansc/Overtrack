@@ -34,7 +34,7 @@ class Splash extends React.Component {
       this.setState({["summoner"]: e.target.value});
     }
   }
-
+  // https://res.cloudinary.com/dsetpdsls/image/upload/v1480616888/jax-league-of-legends_quecqe.jpg
   render () {
     return(
       <splash className="splash-page">
