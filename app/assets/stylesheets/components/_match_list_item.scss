@@ -6,15 +6,14 @@
 
   .game-match {
     height: 100px;
-    padding-top: 15px;
     width: 100%;
     background: white;
 
     .detail-content {
-
     }
 
     .content-match {
+      padding-top: 15px;
       display: flex;
       height: 100%;
       align-items: center;
@@ -40,6 +39,9 @@
         width: 25%;
         height: 100%;
         padding: 0 5px 0 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
         .champion-image {
           background-size: cover;
@@ -47,28 +49,79 @@
           height: 80px;
           width: 80px;
         }
+
+        .masteries {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .spell {
+            background-size: cover;
+            background-position: center;
+            height: 15px;
+            width: 15px;
+          }
+        }
       }
 
       .kda {
         width: 10%;
         height: 100%;
         padding: 0 5px 0 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+
+        .kda-ratio {
+          display: flex;
+          align-items: center;
+        }
+        .killdeaths {
+
+        }
       }
 
       .performance {
-        width: 10%;
+        width: 20%;
         height: 100%;
         padding: 0 5px 0 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+
+        .lvl {
+
+        }
+
+        .cs {
+
+        }
+
+        .ward {
+
+        }
       }
 
-      .items {
-        width: 30%;
+      .item-lists {
+        width: 25%;
         height: 100%;
         padding: 0 5px 0 5px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .items {
+          width: 45px;
+          height: 45px;
+          background-position: center;
+          background-size: cover;
+        }
       }
 
       .trinkets {
-        width: 12%;
+        width: 5%;
         height: 100%;
         padding: 0 5px 0 5px;
       }
@@ -76,11 +129,16 @@
       .fellowSummoners {
 
       }
-      .buton {
+      .extendbox-button {
         padding: 0 5px 0 5px;
-        width: 3%;
+        width: 5%;
         height: 100%;
+        display: flex;
+        margin-top: 0 auto;
       }
     }
+  }
+  .game-match:hover {
+    background: #ced1d1;
   }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import MatchListContainer from './match_list_container';
-import { summonerSoloQueue, summonerQueues } from '../../reducers/selectors';
 import LeagueBox from './league_box';
 import { values } from 'lodash';
 
