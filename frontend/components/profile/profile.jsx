@@ -1,5 +1,5 @@
 import React from 'react';
-import MatchList from './match_list';
+import MatchListContainer from './match_list_container';
 import { summonerSoloQueue, summonerQueues } from '../../reducers/selectors';
 import LeagueBox from './league_box';
 import { values } from 'lodash';
@@ -7,14 +7,10 @@ import { values } from 'lodash';
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-
   }
 
   componentDidMount() {
     $(document).scrollTop(0);
-  }
-
-  componentDidUpdate() {
   }
 
   // spinner because the initial re-rendering gives out errors
@@ -94,7 +90,7 @@ class Profile extends React.Component {
               </ul>
             </div>
             <div className="body">
-              <MatchList matches={this.props.matches}/>
+              <MatchListContainer />
             </div>
             <div className="next-button">
               <button>Show More</button>

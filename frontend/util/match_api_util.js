@@ -1,6 +1,6 @@
-export const fetchMatches = (summonerId, offset, limit, success, error) => {
+export const fetchMatches = (name, offset, limit, success, error) => {
   $.ajax({
-    url: `/api/matches/${summonerId}/${offset}/${limit}`,
+    url: `/api/matches/${name}/${offset}/${limit}`,
     success,
     error
   });

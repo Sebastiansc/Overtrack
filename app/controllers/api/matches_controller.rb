@@ -3,7 +3,7 @@ class Api::MatchesController < ApplicationController
   include ApiHelper
 
   def next_batch
-    summoner = Summoner.find_by(name: params[:name], region: region)
+    summoner = Summoner.by_name(params[:name])
     @matches = Match.get(summoner.summoner_id,
       params[:offset].to_i,
       params[:limit].to_i

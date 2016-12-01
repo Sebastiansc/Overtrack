@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Profile from './profile';
 import { fetchSummoner } from '../../actions/summoner_actions';
+import { fetchMatches } from '../../actions/match_actions';
 import { summonerSoloQueue, summonerQueues } from '../../reducers/selectors';
 
 const mapStateToProps = (state, {params}) => {
@@ -17,7 +18,9 @@ const mapStateToProps = (state, {params}) => {
 };};
 
 const mapDispatchToProps = dispatch => ({
-  fetchSummoner: summoner => dispatch(fetchSummoner(summoner))
+  fetchSummoner: summoner => dispatch(fetchSummoner(summoner)),
+  fetchMatches: (name, offset, limit) =>
+   dispatch(fetchMatches(name, offset, limit))
 });
 
 export default connect(
