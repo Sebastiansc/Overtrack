@@ -1,17 +1,17 @@
-import { FETCH_MATCHS, receiveMatches } from '../actions/match_actions';
+import { FETCH_MATCHES, receiveMatches } from '../actions/match_actions';
 import { fetchMatches } from '../util/match_api_util';
 
 export default ({getState, dispatch}) => next => action => {
-  let matchListSuccess = matches => dispatch(receiveMatches(matches));
+  let matchesSuccess = matches => dispatch(receiveMatches(matches));
 
   switch (action.type) {
-    case FETCH_MATCHS:
+    case FETCH_MATCHES:
       const error = data => console.log(data);
       fetchMatches(
-        action.summonerId,
+        action.name,
         action.offset,
         action.limit,
-        matchListSuccess,
+        matchesSuccess,
         error
       );
       return next(action);

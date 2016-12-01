@@ -7,6 +7,11 @@ class Summoner < ApplicationRecord
   has_many :matches, through: :matchings, source: :match
 
   extend ApiHelper
+
+  def self.by_name(name)
+    Summoner.where("LOWER(name) = LOWER(?)", name).
+      where(region: region).first
+  end
   #Fetches and creates summoner from API.
   #Uses URI encoding to account for foreign characters in summoner names.
   def self.create_summoner(summoner_name)

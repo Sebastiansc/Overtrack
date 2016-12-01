@@ -10,6 +10,7 @@ class MatchFetch
         limit: limit
       })
       $redis.set("matches_loaded", true)
-   end
+    end
+    $redis.set("matches_loaded", true)
   end
 end
