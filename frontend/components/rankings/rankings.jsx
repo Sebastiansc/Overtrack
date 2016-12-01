@@ -136,7 +136,8 @@ export default class Rankings extends React.Component {
               <RankingItem key={idx}
                 entry={entry}
                 idx={idx + 1}
-                tier={this.tier(idx)}/>
+                tier={this.tier(idx)}
+                queue={this.props.rank.queue}/>
             );
           })}
         </Infinite>
