@@ -9,6 +9,7 @@ class Api::MatchesController < ApplicationController
       params[:offset].to_i,
       params[:limit].to_i
     )
+    @champions = Champion.get(@matches)
     if summoner.matches.count < params[:limit].to_i * 2
       MatchFetch.perform_async(
         summoner,

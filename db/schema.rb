@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129233404) do
+ActiveRecord::Schema.define(version: 20161201155602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "champions", force: :cascade do |t|
+    t.string  "name"
+    t.integer "champion_id"
+    t.string  "title"
+    t.text    "blurb"
+    t.json    "info",        default: {}
+    t.string  "image"
+    t.json    "stats",       default: {}
+    t.index ["champion_id"], name: "index_champions_on_champion_id", unique: true, using: :btree
+  end
 
   create_table "items", force: :cascade do |t|
     t.integer  "item_id",     null: false
