@@ -11,6 +11,7 @@ export default ({getState, dispatch}) => next => action => {
     dispatch(fetchMatches(summoner.name, 0, 20));
     dispatch(receiveSummoner(summoner));
   };
+
   let failure = (error) => dispatch(receiveErrors(error));
   switch (action.type) {
     case FETCH_SUMMONER:

@@ -7,11 +7,12 @@ class MatchList extends React.Component {
   }
 
   renderMatchListItems() {
-    debugger
-    if (this.props.matches.match_id) {
-      // this.props.matches.map( (match, idx) => {
-      //   return (<MatchListItem match={match} value={idx}/>);
-      // });
+    if (!this.props.matches) {
+      return <div> spinner</div>;
+    } else {
+      return this.props.matches.map( (match, idx) => {
+        return (<MatchListItem key={idx} match={match} summoner={this.props.summoner}/>);
+      });
     }
   }
 

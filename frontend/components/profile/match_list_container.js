@@ -4,7 +4,6 @@ import { fetchMatches } from '../../actions/match_actions';
 import { values } from 'lodash';
 
 const mapStateToProps = (state, {params}) => {
-  debugger;
   return {
   summoner: state.summoner,
   matches: state.matches,

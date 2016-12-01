@@ -49,6 +49,9 @@ class Profile extends React.Component {
     }
   }
 
+  calculateKDA() {
+    return this.props.matches;
+  }
 
   render () {
     return (
@@ -73,21 +76,19 @@ class Profile extends React.Component {
             <dd className="listItem">
               <a>Summary</a>
             </dd>
-            <dd className="listItem">
-              <a>Leagues</a>
-            </dd>
-            <dd className="listItem">
-              <a>Matches</a>
-            </dd>
           </dl>
         </div>
         <div className="summoner-content">
           <div className="content">
             <div className="head">
-              <ul className="header-lists">
-                <li className="header-list-item">
-                </li>
-              </ul>
+              <div className="recent">Latest Rank Matches</div>
+              <div className="summary">
+                <div className="total-KDA">
+                </div>
+                <div className="win-ratio">
+
+                </div>
+              </div>
             </div>
             <div className="body">
               <div>hello</div>

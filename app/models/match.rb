@@ -12,12 +12,19 @@ class Match < ApplicationRecord
   #Fetches summoner matches from DB, ordered by most recently played.
   #Signals #fetch_matches to get more matches if requested limit surpasses # of stored matches in DB.
   #Recommended: 20 at a time.
-  def self.get(summoner_id, offset, limit)
-    if $redis.get("matches_loaded") == "false" || !$redis.get("matches_loaded")
+  def self.get(summoner, offset, limit)
+    if $redis.get("matches_loaded") == "false"
       sleep 1.5
-      get(summoner_id, offset, limit)
+      get(summoner, offset, limit)
     end
 
+    if limit > summoner.matches.count
+      fetch_matches(summoner, offset: offset, limit: limit)
+    end
+    by_summoner(summoner.summoner_id, offset, limit)
+  end
+
+  def self.by_summoner(summoner_id, offset, limit)
     Match.joins(:matchings).
     where('matchings.summoner_id = ?', summoner_id).
     order('matches.match_creation DESC').
@@ -43,7 +50,6 @@ class Match < ApplicationRecord
     #Check if summoner has no match history. Must return tru to comply with SuckerPunch
     end
     if !match_list["matches"] || match_list["totalGames"] == 0
-      byebug
       return true
     end
 

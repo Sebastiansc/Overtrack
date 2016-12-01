@@ -3,11 +3,12 @@ import { values } from 'lodash';
 
 const MatchListItem = ({match, summoner}) => {
   // need json
+  debugger
+  const currentSummoner = match.participants[summoner];
   const championName = currentSummoner.champion_id;
-  const currentSummoner = match.participants[summoner.summoner_id];
-
   const winner = () => {
-    return match.participants[summoner.summoner_id].stats.winner ? "Victory" : "Defeat";
+    debugger;
+    return match.participants[summonerId].stats.winner ? "Victory" : "Defeat";
   };
 
   const killParticipation = () => {
@@ -112,13 +113,13 @@ const MatchListItem = ({match, summoner}) => {
             <thead className="head">
               <tr className="row">
                 <th className="column"></th>
-                <th className="column"></th>
-                <th className="column"></th>
-                <th className="column"></th>
-                <th className="column"></th>
-                <th className="column"></th>
-                <th className="column"></th>
-                <th className="column"></th>
+                <th className="column">Item</th>
+                <th className="column">KDA</th>
+                <th className="column">Damage</th>
+                <th className="column">Wards</th>
+                <th className="column">CS</th>
+                <th className="column">Gold</th>
+                <th className="column">Tier</th>
               </tr>
             </thead>
             <tbody className="body">

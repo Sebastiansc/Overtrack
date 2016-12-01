@@ -4,14 +4,18 @@ class Api::MatchesController < ApplicationController
 
   def next_batch
     summoner = Summoner.by_name(params[:name])
-    @matches = Match.get(summoner.summoner_id,
+    @matches = Match.get(
+      summoner,
       params[:offset].to_i,
       params[:limit].to_i
-    ) || []
-    MatchFetch.perform_async(summoner,
-      params[:offset].to_i + params[:limit].to_i,
-      params[:limit].to_i + params[:limit].to_i
     )
+    if summoner.matches.count < params[:limit].to_i * 2
+      MatchFetch.perform_async(
+        summoner,
+        params[:offset].to_i + params[:limit].to_i,
+        params[:limit].to_i + params[:limit].to_i
+      )
+    end
     render :index
   end
 end
