@@ -8,6 +8,7 @@
     height: 100px;
     padding-top: 15px;
     width: 100%;
+    background: white;
 
     .detail-content {
 
@@ -22,37 +23,61 @@
       .stats {
         width: 10%;
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 5px 0 5px;
+
+        .queue-type {
+          font-size: 15px;
+          color: black;
+          font-weight: 300;
+        }
       }
 
       .champ {
         width: 25%;
         height: 100%;
+        padding: 0 5px 0 5px;
+
+        .champion-image {
+          background-size: cover;
+          background-position: center;
+          height: 80px;
+          width: 80px;
+        }
       }
 
       .kda {
         width: 10%;
         height: 100%;
+        padding: 0 5px 0 5px;
       }
 
       .performance {
         width: 10%;
         height: 100%;
+        padding: 0 5px 0 5px;
       }
 
       .items {
         width: 30%;
         height: 100%;
+        padding: 0 5px 0 5px;
       }
 
       .trinkets {
         width: 12%;
         height: 100%;
+        padding: 0 5px 0 5px;
       }
 
       .fellowSummoners {
 
       }
       .buton {
+        padding: 0 5px 0 5px;
         width: 3%;
         height: 100%;
       }
