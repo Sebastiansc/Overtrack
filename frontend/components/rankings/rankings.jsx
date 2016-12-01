@@ -7,12 +7,13 @@ export default class Rankings extends React.Component {
   constructor(props){
     super(props);
     this.fetching = false;
-    this.state = {summoners: [], over: false, isInfiniteLoading: false,};
+    this.state = {summoners: [], isInfiniteLoading: false,};
     this.paginationInit();
 
   }
 
   paginationInit(){
+    this.over = false;
     this.offset = 0;
     this.limit = 50;
   }
@@ -43,20 +44,26 @@ export default class Rankings extends React.Component {
     if (newProps.rank.queue !== this.props.rank.queue){
       this.paginationInit();
       this.setState({summoners: this.throttleEntries(newProps.rank.entries)});
-    } else if(this.offset === 50) {
+    } else if (this.offset === 50) {
         return;
-    } else {
+    } else if (newProps.rank.entries){
         const entries = this.throttleEntries(newProps.rank.entries);
         this.updateSummoners(entries);
     }
   }
 
   elementInfiniteLoad(){
-    return (
-      <div className="infinite-list-item">
-        Loading...
-      </div>
-    );
+    if (this.state.over){
+      return (
+        <div>Nothing more to show</div>
+      );
+    } else {
+      return (
+        <div className="infinite-list-item">
+          Loading...
+        </div>
+      );
+    }
   }
 
   // Handles pagination. No need to hit DB for new summoners. All are retrieved
@@ -74,11 +81,7 @@ export default class Rankings extends React.Component {
     if (this.fetching) return [];
     const numOfEntries = this.props.rank.entries.length;
     // Challenger ranking only holds up to 203 players
-    if(this.offset >= numOfEntries) {
-      if(numOfEntries > 200) {
-        this.setState({over: true});
-        return [];
-      }
+    if(this.offset >= numOfEntries && !this.over) {
       this.fetching = true;
       this.props.fetchRankings("master");
       return [];
@@ -91,17 +94,18 @@ export default class Rankings extends React.Component {
   // Infinite component is oddly calling function before this condition is
   // satisfied. Added conditional early return to account for this case
   handleInfiniteLoad(){
-    debugger;
     if(!this.state.summoners.length) return;
     this.setState({isInfiniteLoading: true});
     const newSummoners = this.currentBatch(this.props.rank.entries);
-    const newEntries = newSummoners.length ?
-      this.state.summoners.concat(newSummoners) :
-      this.state.summoners;
-    this.setState({
+    if (newSummoners.length){
+      this.setState({
         isInfiniteLoading: false,
-        summoners: this.state.summoners.concat(newEntries)
-    });
+        summoners: this.state.summoners.concat(newSummoners)
+      });
+    } else {
+      this.over = true;
+      this.setState({isInfiniteLoading: false});
+    }
   }
 
   tier(idx){

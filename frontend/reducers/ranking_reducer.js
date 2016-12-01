@@ -13,8 +13,10 @@ const _defaultState = {
 const mergeRankings = (oldRankings, newRankings) => {
   if(!oldRankings["solo_5x5"].entries) return newRankings;
   Object.keys(newRankings).forEach(key => {
-    oldRankings[key].entries =
-     oldRankings[key].entries.concat(newRankings[key].entries);
+    if(newRankings[key].entries){
+      let join = oldRankings[key].entries.concat(newRankings[key].entries);
+      oldRankings[key].entries = join;
+    }
   });
   return oldRankings;
 };
