@@ -1,9 +1,13 @@
 import React from 'react';
 
-const MatchItem = (props) => {
-  return (
-    <div className="matchList"></div>
-  );
-};
+class MatchList extends React.Component {
+  render () {
+    return (
+      <div>
+        <div></div>
+      </div>
+    );
+  }
+}
 
-export default MatchItem;
+export default MatchList;

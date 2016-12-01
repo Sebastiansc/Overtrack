@@ -1,20 +1,22 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router';
 
 class Searchbar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { summoner: "" };
 
+    this.state = { summoner: "" };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidation = this.checkValidation.bind(this);
   }
 
-  componentDidUpdate() {
+  componentWillMount() {
+
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.router.push(`/profile/${this.state.summoner.name}`);
+    this.props.router.push(`/profile/${this.state.summoner}`);
   }
 
 
@@ -47,4 +49,4 @@ class Searchbar extends React.Component {
   }
 }
 
-export default Searchbar;
+export default withRouter(Searchbar);
