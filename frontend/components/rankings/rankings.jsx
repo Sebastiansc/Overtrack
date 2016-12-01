@@ -9,20 +9,35 @@ export default class Rankings extends React.Component {
     this.limit = 50;
     this.fetching = false;
     this.state = {summoners: [], over: false, isInfiniteLoading: false,};
+
   }
 
   componentDidMount(){
     $(document).scrollTop(0);
   }
 
-  componentWillReceiveProps(newProps){
-    this.fetching = false;
-    this.updateBatch(newProps.rank.entries);
+  updateSummoners(entries){
+    this.setState({summoners: this.state.summoners.concat(entries)});
   }
 
-  updateBatch(entries){
-    const newEntries = this.state.summoners.concat(this.currentBatch(entries));
-    this.setState({summoners: newEntries});
+  // Ensures component updates state when revisiting
+  componentWillMount(){
+    if(this.props.rank.entries){
+      const entries = this.throttleEntries(this.props.rank.entries);
+      this.updateSummoners(entries);
+    }
+  }
+
+  // Ensures component updates state on page refresh or first enter(offset = 50)
+  componentWillReceiveProps(newProps){
+    if(this.offset === 50 || !newProps.rank.entries) return;
+    this.fetching = false;
+    if (newProps.rank.queue !== this.props.rank.queue){
+      this.setState({summoners: this.throttleEntries(newProps.rank.entries)});
+    } else {
+      const entries = this.throttleEntries(newProps.rank.entries);
+      this.updateSummoners(entries);
+    }
   }
 
   elementInfiniteLoad(){
@@ -32,26 +47,32 @@ export default class Rankings extends React.Component {
       </div>
     );
   }
+
   // Handles pagination. No need to hit DB for new summoners. All are retrieved
   // in initial call so pagination logic can be handled locally
+  throttleEntries(entries){
+    const offset = this.offset;
+    const limit = this.limit;
+    this.offset += 50;
+    this.limit += 50;
+    return entries.slice(offset, limit);
+  }
+
   // this.fetching is utilized to signal if the ajax call is currently underway
   currentBatch(entries){
     if (this.fetching) return [];
+    const numOfEntries = this.props.rank.entries.length;
     // Challenger ranking only holds up to 203 players
-    if(this.limit > 200 && this.props.rank.tier === "CHALLENGER") {
-      // Summoner slice of state will be replaced with new master rankings
-      // Must restart pagination for new array
-      this.offset = 0;
-      this.limit = 50;
+    if(this.offset >= numOfEntries) {
+      if(numOfEntries > 200) {
+        this.setState({over: true});
+        return [];
+      }
       this.fetching = true;
       this.props.fetchRankings("master");
       return [];
     } else {
-      const offset = this.offset;
-      const limit = this.limit;
-      this.offset += 50;
-      this.limit += 50;
-      return entries.slice(offset, limit);
+      return this.throttleEntries(entries);
     }
   }
 
@@ -67,7 +88,7 @@ export default class Rankings extends React.Component {
       this.state.summoners;
     this.setState({
         isInfiniteLoading: false,
-        summoners: newEntries
+        summoners: this.state.summoners.concat(newEntries)
     });
   }
 
@@ -76,14 +97,17 @@ export default class Rankings extends React.Component {
   }
 
   render(){
+    window.that = this;
     return(
-      <Infinite elementHeight={55}
+      <Infinite elementHeight={21}
         containerHeight={2750}
-        infiniteLoadBeginEdgeOffset={20}
+        infiniteLoadBeginEdgeOffset={100}
         useWindowAsScrollContainer
         onInfiniteLoad={() => this.handleInfiniteLoad()}
         loadingSpinnerDelegate={this.elementInfiniteLoad()}
-        isInfiniteLoading={this.state.isInfiniteLoading}>
+        isInfiniteLoading={this.state.isInfiniteLoading}
+        preloadAdditionalHeight={Infinite.containerHeightScaleFactor(2)}
+        className='rankings'>
         {this.state.summoners.map((entry, idx) => {
           return (
             <RankingItem key={idx}

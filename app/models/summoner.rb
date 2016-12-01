@@ -88,8 +88,4 @@ class Summoner < ApplicationRecord
     queue_type.include?("TEAM_BUILDER") ||
     queue_type == "RANKED_SOLO_5x5"
   end
-
-  def win_ratio(win, loss)
-    win / (win + loss)
-  end
 end
