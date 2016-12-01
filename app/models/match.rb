@@ -62,9 +62,6 @@ class Match < ApplicationRecord
     api_match_ids = match_list.map{ |match| match["matchId"] }
     db_match_ids = Match.where(match_id: api_match_ids).map(&:match_id)
     to_fetch_ids = api_match_ids - db_match_ids
-    db_match_ids.each do |match_id|
-      Matching.create({summoner_id: @summoner_id, match_id: match_id})
-    end
     to_fetch_ids
   end
 
@@ -81,8 +78,7 @@ class Match < ApplicationRecord
       create_matches(match_ids)
     else
       create_match(match_info)
-      match_ids.shift
-      create_matches(match_ids)
+      create_matches(match_ids[1..-1])
     end
   end
 
