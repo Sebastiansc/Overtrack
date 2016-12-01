@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router';
 
 class Searchbar extends React.Component {
   constructor(props) {
@@ -9,7 +10,8 @@ class Searchbar extends React.Component {
     this.checkValidation = this.checkValidation.bind(this);
   }
 
-  componentDidUpdate() {
+  componentWillMount() {
+
   }
 
   handleSubmit(e) {
@@ -47,4 +49,4 @@ class Searchbar extends React.Component {
   }
 }
 
-export default Searchbar;
+export default withRouter(Searchbar);

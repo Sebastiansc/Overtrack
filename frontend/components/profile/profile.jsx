@@ -62,10 +62,15 @@ class Profile extends React.Component {
         <div className="header">
           <div className="profile-info">
             {this.props.summoner.name}
+            {
+              this.loadProfile()
+            }
           </div>
-          {
-            this.loadProfile()
-          }
+          <div className="queueBoxes">
+            {
+              this.renderAllQueueBoxes()
+            }
+          </div>
         </div>
         <div className="nav-bar">
           <dl className="navList">
@@ -82,9 +87,6 @@ class Profile extends React.Component {
         </div>
         <div className="summoner-content">
           <div className="content">
-            {
-              this.renderAllQueueBoxes()
-            }
             <div className="main">
             <div className="gamelist">
               <div className="header"></div>

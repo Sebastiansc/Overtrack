@@ -63,6 +63,7 @@ const LeagueBox = ({summoner, queueType, queues, height}) => {
   return (
     <div className="sidebar">
       <div className="league-info">
+        <div className="league-title">{queueType}</div>
         <div className="solo-tier">
           <div className="medal">
             {
@@ -92,7 +93,6 @@ const LeagueBox = ({summoner, queueType, queues, height}) => {
             </div>
           </div>
         </div>
-        <div className="optional-tier"></div>
       </div>
     </div>
   );
