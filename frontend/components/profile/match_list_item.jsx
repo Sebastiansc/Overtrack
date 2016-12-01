@@ -3,7 +3,6 @@ import { values } from 'lodash';
 
 const MatchListItem = ({match, summoner}) => {
   // need json
-  debugger
   const currentSummoner = match.participants[summoner.summoner_id];
   const championName = currentSummoner.champion_id.name;
   const winner = () => {
@@ -27,18 +26,17 @@ const MatchListItem = ({match, summoner}) => {
 
   const timeStamp = () => {
     let now = new Date().getTime();
-    return new Date(now - match.match_creation);
+    let timeDiff = new Date(now - match.match_creation).toString();
   };
 
   return (
     <div className="game-match">
-      <div className="content">
+      <div className="content-match">
         <div className="stats">
           <div className="queue-type">
             Ranked Game
           </div>
           <div className="timestamp">
-            {timeStamp()}
           </div>
           <div className="bar"></div>
           <div className="game-result">
@@ -50,7 +48,7 @@ const MatchListItem = ({match, summoner}) => {
           </div>
         </div>
         <div className="champ">
-          <div className="champion-image" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/champion/${championName}.png')`}}>
+          <div className="champion-image" >
           </div>
           <div className="masteries">
             <div className="spell">
@@ -179,3 +177,4 @@ const MatchListItem = ({match, summoner}) => {
 };
 
 export default MatchListItem;
+// style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/champion/${championName}.png')`}}
