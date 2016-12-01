@@ -8,6 +8,7 @@ import SplashContainer from './splash/splash_container';
 import RankingsContainer from './rankings/rankings_container';
 import ProfileContainer from './profile/profile_container';
 import { fetchSummoner } from '../actions/summoner_actions';
+import { fetchMatches } from '../actions/match_actions';
 
 const Root = ({ store }) => {
 
@@ -20,6 +21,11 @@ const Root = ({ store }) => {
   const _populateSummoner = (nextState, replace) => {
     store.getState().summoner = {};
     store.dispatch(fetchSummoner(nextState.params.summonerName.trim()));
+  };
+
+  const _populateMatches = (nextState, replace) => {
+    store.getState().matches = {};
+    store.dispatch(fetchMatches(nextState.params.summonerName.trim(), 0, 20));
   };
 
   return (
@@ -36,7 +42,7 @@ const Root = ({ store }) => {
             <Route path='flex_tt' component={RankingsContainer}/>
           </Route>
           <Route path='profile/:summonerName' component={ProfileContainer}
-             onEnter={_populateSummoner}/>
+             onEnter={_populateSummoner, _populateMatches}/>
         </Route>
       </Router>
     </Provider>

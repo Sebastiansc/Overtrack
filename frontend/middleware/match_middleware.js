@@ -1,14 +1,13 @@
-import { FETCH_MATCH_LIST, receiveMatches } from '../actions/match_actions';
-import { shapeMatch } from '../reducers/selectors';
-import { fetchMatchList, fetchMatch } from '../util/match_api_util';
+import { FETCH_MATCHS, receiveMatches } from '../actions/match_actions';
+import { fetchMatches } from '../util/match_api_util';
 
 export default ({getState, dispatch}) => next => action => {
   let matchListSuccess = matches => dispatch(receiveMatches(matches));
 
   switch (action.type) {
-    case FETCH_MATCH_LIST:
+    case FETCH_MATCHS:
       const error = data => console.log(data);
-      fetchMatchList(
+      fetchMatches(
         action.summonerId,
         action.offset,
         action.limit,
