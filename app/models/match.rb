@@ -121,6 +121,7 @@ class Match < ApplicationRecord
   #Participant identities are passed in an array.
   #Changes it to a hash where each key is the participant id
   def self.shapeIdentities(match)
+    return {} if !match["participantIdentities"]
     hashIdentities = {};
     match["participantIdentities"].each do |identity|
       hashIdentities[identity["participantId"]] = identity["player"]
