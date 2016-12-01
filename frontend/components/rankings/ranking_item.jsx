@@ -26,6 +26,3 @@ export default RankingItem;
 
 // Yet to have access to profileIcon information. Changes to DB will be
 // necessary for this feature
-// <img
-//   src={`url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/profileicon/${entry.profileIcon}.png')`}>
-// </img>
