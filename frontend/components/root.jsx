@@ -12,15 +12,8 @@ import { fetchSummoner } from '../actions/summoner_actions';
 const Root = ({ store }) => {
 
   const getRankings = ({params}, replace) => {
-    shouldClear(store.getState().rankings);
     if(isEmpty(store.getState().rankings["solo_5x5"])){
       store.dispatch(fetchRankings("challenger"));
-    }
-  };
-
-  const shouldClear = rankings => {
-    if(rankings["solo_5x5"].tier === "MASTER"){
-      rankings = {};
     }
   };
 

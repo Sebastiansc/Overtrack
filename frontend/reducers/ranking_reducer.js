@@ -1,5 +1,6 @@
 import { RECEIVE_RANKINGS } from '../actions/ranking_actions';
 import merge from 'lodash/merge';
+import {values} from 'lodash';
 
 const _defaultState = {
   solo_5x5: {},
@@ -9,18 +10,23 @@ const _defaultState = {
   flex_tt: {}
 };
 
-// Current config removes all previos rankings from state. Ranking info will
-// persist on HTML. Edge cases where all ranks are required may arise.
-// Solution if they do: Push to the end of each queue type the new players
-// received for it. This might add some unnecessary computations so
-// implementation will wait until is absolutely necessary
+const mergeRankings = (oldRankings, newRankings) => {
+  if(!oldRankings["solo_5x5"].entries) return newRankings;
+  Object.keys(newRankings).forEach(key => {
+    oldRankings[key].entries =
+     oldRankings[key].entries.concat(newRankings[key].entries);
+  });
+  return oldRankings;
+};
+
 export default (state = _defaultState, action) => {
   Object.freeze(state);
-  const newState = merge({}, state);
+  let newState = merge({}, state);
   switch (action.type) {
     case RECEIVE_RANKINGS:
-    debugger;
-      return action.rankings;
+      newState = mergeRankings(newState, action.rankings);
+      window.newState = newState;
+      return newState;
     default:
       return state;
   }
