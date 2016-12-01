@@ -27,7 +27,7 @@ custom queries to provide players with relevant data.
 - Each row shows a name that links to the player's profile picture and it also computes the player's win ratio
 - Rankings are updated every 30 minutes
 
-![leaderboard.png]("https://res.cloudinary.com/dsetpdsls/image/upload/v1480611243/Screen_Shot_2016-12-01_at_7.21.54_AM_ov98k4.png")
+![leaderboard.png](https://res.cloudinary.com/dsetpdsls/image/upload/v1480611243/Screen_Shot_2016-12-01_at_7.21.54_AM_ov98k4.png)
 
 ### Profile Page
 
