@@ -53,6 +53,31 @@ class Profile extends React.Component {
     return this.props.matches;
   }
 
+  totalKDA() {
+    let kda = {
+      totalKill: 0,
+      totalDeath: 0,
+      totalAssists: 0,
+      counter: 0,
+      killDeathRatio: 0
+    };
+    if (this.props.matches) {
+      this.props.matches.each ( match => {
+        let summoner = match.participants[this.props.summoner.summoner_id];
+        kda.totalKill += summoner.stats.kills;
+        kda.totalDeath += summoner.stats.deaths;
+        kda.totalAssists += summoner.stats.assists;
+        kda.counter ++;
+      });
+    }
+
+    kda.killDeathRatio = (
+      Math.round(kda.totalDeath * 10000 / (kda.totalKill + kda.totalAssists)
+    ) / 100);
+
+    return kda;
+  }
+
   render () {
     return (
       <div className="content-wrapper">
@@ -84,6 +109,13 @@ class Profile extends React.Component {
               <div className="recent">Latest Rank Matches</div>
               <div className="summary">
                 <div className="total-KDA">
+                  <div>
+                    {Math.round(this.totalKDA().totalKill/this.totalKDA().counter * 10)/10}
+                    / {Math.round(this.totalKDA().totalDeath/this.totalKDA().counter * 10)/10}
+                    / {Math.round(this.totalKDA().totalAssists/this.totalKDA().counter * 10)/10}
+                  </div>
+                  <div>{this.totalKDA().killDeathRatio}</div>
+
                 </div>
                 <div className="win-ratio">
 

@@ -4,11 +4,11 @@ import { values } from 'lodash';
 const MatchListItem = ({match, summoner}) => {
   // need json
   debugger
-  const currentSummoner = match.participants[summoner];
-  const championName = currentSummoner.champion_id;
+  const currentSummoner = match.participants[summoner.summoner_id];
+  const championName = currentSummoner.champion_id.name;
   const winner = () => {
-    debugger;
-    return match.participants[summonerId].stats.winner ? "Victory" : "Defeat";
+    let winnerTeamId = match.participants[summoner.summoner_id].team_id;
+    return match.participants[summoner.summoner_id].stats.winner ? "Victory" : "Defeat";
   };
 
   const killParticipation = () => {
@@ -25,6 +25,11 @@ const MatchListItem = ({match, summoner}) => {
     });
   };
 
+  const timeStamp = () => {
+    let now = new Date().getTime();
+    return new Date(now - match.match_creation);
+  };
+
   return (
     <div className="game-match">
       <div className="content">
@@ -33,7 +38,7 @@ const MatchListItem = ({match, summoner}) => {
             Ranked Game
           </div>
           <div className="timestamp">
-            {match.match_creation}
+            {timeStamp()}
           </div>
           <div className="bar"></div>
           <div className="game-result">
@@ -45,7 +50,7 @@ const MatchListItem = ({match, summoner}) => {
           </div>
         </div>
         <div className="champ">
-          <div className="champion-image" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/champion/${currentSummoner.champion_id}.png')`}}>
+          <div className="champion-image" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/champion/${championName}.png')`}}>
           </div>
           <div className="masteries">
             <div className="spell">
