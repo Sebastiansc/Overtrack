@@ -94,7 +94,7 @@ class Profile extends React.Component {
               <MatchListContainer />
             </div>
             <div className="next-button">
-              <button>Show More</button>
+              <button onSubmit={this.handleShowMore}>Show More</button>
             </div>
           </div>
         </div>

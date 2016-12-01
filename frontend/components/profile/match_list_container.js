@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import MatchList from './match_list';
+import { fetchMatches } from '../../actions/match_actions';
 import { values } from 'lodash';
 
 const mapStateToProps = (state, {params}) => {
@@ -11,6 +12,8 @@ const mapStateToProps = (state, {params}) => {
 };};
 
 const mapDispatchToProps = dispatch => ({
+  fetchMatches: (name, offset, limit) =>
+   dispatch(fetchMatches(name, offset, limit))
 });
 
 export default connect(

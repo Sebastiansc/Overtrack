@@ -2,16 +2,26 @@ import React from 'react';
 import { values } from 'lodash';
 
 const MatchListItem = ({match, summoner}) => {
+  // need json
+  const championName = currentSummoner.champion_id;
+  const currentSummoner = match.participants[summoner.summoner_id];
+
   const winner = () => {
     return match.participants[summoner.summoner_id].stats.winner ? "Victory" : "Defeat";
   };
 
-  const currentSummoner = match.participants[summoner.summoner_id];
-
-  // need json 
-  const championName = currentSummoner.champion_id;
   const killParticipation = () => {
+  };
 
+  // hide and show match details using jQuery
+  const toggleExtendBox = () => {
+    let detailContent = $(".detail-content");
+    $(document).ready( () => {
+      detailContent.hide();
+      $(".extendbox-button").click(e => {
+        $(e.target).next(".detail-content").slideToggle(400);
+      });
+    });
   };
 
   return (
@@ -94,9 +104,70 @@ const MatchListItem = ({match, summoner}) => {
           <div className="team"></div>
           <div className="team"></div>
         </div>
-        <div className="button"></div>
+        <div className="extendbox-button" onClick={toggleExtendBox}>gg</div>
       </div>
-      <div className="detail-content"></div>
+      <div className="detail-content">
+        <div className="game-detail-wrapper">
+          <table className="detail-table">
+            <thead className="head">
+              <tr className="row">
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+              </tr>
+            </thead>
+            <tbody className="body">
+              <tr className="row">
+                <td className="champ-image"></td>
+                <td className="summoner-spells"></td>
+                <td className="mastery"></td>
+                <td className="summoner-name"></td>
+                <td className="items"></td>
+                <td className="KDA"></td>
+                <td className="damage"></td>
+                <td className="wards"></td>
+                <td className="gold"></td>
+                <td className="tier"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="summary"></div>
+          <table className="detail-table">
+            <thead className="head">
+              <tr className="row">
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+                <th className="column"></th>
+              </tr>
+            </thead>
+            <tbody className="body">
+              <tr className="row">
+                <td className="champ-image"></td>
+                <td className="summoner-spells"></td>
+                <td className="mastery"></td>
+                <td className="summoner-name"></td>
+                <td className="items"></td>
+                <td className="KDA"></td>
+                <td className="damage"></td>
+                <td className="wards"></td>
+                <td className="gold"></td>
+                <td className="tier"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
     </div>
   );
 };

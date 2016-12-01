@@ -3,6 +3,7 @@ class Item < ApplicationRecord
 
   extend ApiHelper
 
+  # fetch all items
   def self.all_items
     items = HTTParty.get("http://ddragon.leagueoflegends.com/cdn/6.23.1/data/en_US/item.json")
     item_ids = items.to_h["data"].keys
