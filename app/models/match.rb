@@ -41,18 +41,22 @@ class Match < ApplicationRecord
       sleep 1
       fetch_matches(summoner, options)
     #Check if summoner has no match history. Must return tru to comply with SuckerPunch
+<<<<<<< HEAD
     elsif !match_list["matches"] || match_list["totalGames"] == 0
+=======
+    end
+    if !match_list["matches"] || match_list["totalGames"] == 0
+      byebug
+>>>>>>> f640289b2f82a5d07e4087272dfaf2db89467313
       return true
     end
 
-    byebug if !match_list
     create_matches(not_stored_matches(match_list["matches"]))
   end
 
   #Reduces number of DB queries by computing all match ids that are not already stored. **MIGHT NEED FURTHER OPTIMIZATION
   #Associates summoner to matches that are in DB and will not be fetched
   def self.not_stored_matches(match_list)
-    byebug if !match_list
     api_match_ids = match_list.map{ |match| match["matchId"] }
     db_match_ids = Match.where(match_id: api_match_ids).map(&:match_id)
     to_fetch_ids = api_match_ids - db_match_ids
