@@ -1,14 +1,28 @@
 .matchWrapper {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .game-match {
+    height: 100px;
+    padding-top: 15px;
+    width: 100%;
+    
+    .detail-content {
 
-    .content {
-      height: 100px;
-      
+    }
+
+    .content-match {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: space-around;
+
       .stats {
 
       }
+
       .champ {
 
       }

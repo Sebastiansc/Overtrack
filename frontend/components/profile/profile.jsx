@@ -77,6 +77,13 @@ class Profile extends React.Component {
 
     return kda;
   }
+  // <div>
+  //   {Math.round(this.totalKDA().totalKill/this.totalKDA().counter * 10)/10}
+  //   / {Math.round(this.totalKDA().totalDeath/this.totalKDA().counter * 10)/10}
+  //   / {Math.round(this.totalKDA().totalAssists/this.totalKDA().counter * 10)/10}
+  // </div>
+  // <div>{this.totalKDA().killDeathRatio}</div>
+
 
   render () {
     return (
@@ -109,21 +116,12 @@ class Profile extends React.Component {
               <div className="recent">Latest Rank Matches</div>
               <div className="summary">
                 <div className="total-KDA">
-                  <div>
-                    {Math.round(this.totalKDA().totalKill/this.totalKDA().counter * 10)/10}
-                    / {Math.round(this.totalKDA().totalDeath/this.totalKDA().counter * 10)/10}
-                    / {Math.round(this.totalKDA().totalAssists/this.totalKDA().counter * 10)/10}
-                  </div>
-                  <div>{this.totalKDA().killDeathRatio}</div>
-
                 </div>
                 <div className="win-ratio">
-
                 </div>
               </div>
             </div>
             <div className="body">
-              <div>hello</div>
               <MatchListContainer />
             </div>
             <div className="next-button">
