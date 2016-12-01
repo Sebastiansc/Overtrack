@@ -7,4 +7,18 @@ json.array! @matches do |match|
       end
     end
   end
+  json.set! :spells do
+    @spells.each do |spell|
+      json.set! spell.spell_id do
+        json.extract! spell, :name, :spell_id, :image_name, :cool_down, :description
+      end
+    end
+  end
+  json.set! :items do
+    @items.each do |item|
+      json.set! item.item_id do
+        json.extract! item, :name, :item_id, :description
+      end
+    end
+  end
 end
