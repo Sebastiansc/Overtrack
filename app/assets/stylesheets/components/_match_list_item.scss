@@ -8,12 +8,14 @@
     height: 100px;
     width: 100%;
     background: white;
+    margin-top: 15px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16),0 3px 6px rgba(0,0,0,0.23);
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 
     .detail-content {
     }
 
     .content-match {
-      padding-top: 15px;
       display: flex;
       height: 100%;
       align-items: center;
