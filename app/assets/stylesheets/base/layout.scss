@@ -1,41 +1,28 @@
 html {
+	position: relative;
+	min-height: 80vh;
+}
+
+body {
+	font-family: $roboto-slab;
+	font-size: 12px;
+	display: block;
+	min-height: 80vh;
+	-webkit-font-smoothing: subpixel-antialiased;
+	background-image: url("https://res.cloudinary.com/dsetpdsls/image/upload/dn_102,e_saturation:80,o_20/v1481041301/white-background-pattern-tumblr_lwowa5.png");
+	background-position: center;
+	background-size: cover;
+	background-repeat: repeat;
+}
+
+main {
+	position: relative;
 	height: 100vh;
 	width: 100vw;
 }
 
-body {
-	font-family: 'Roboto', sans-serif;
-	font-size: 12px;
-	min-height: 100vh;
-	width: 100%;
-	position: relative;
-	-webkit-font-smoothing: subpixel-antialiased;
-	padding-top: 52px;
-	padding-bottom: 115px;
-}
-
-main {
-}
-
-button {
-	background-color: $light-gray;
-	border-color: $dark-gray;
-	color: black;
-	font-weight: bold;
-	padding: 7px 9px;
-	border-radius: 3px;
-	transition: background-color 0.3s;
-	font-family: $sans-serif;
-	text-transform: uppercase;
-	font-size: 11px;
-	text-align: center;
-}
-
-button:hover {
-	background-color: $gray;
-	border-color: $dark-gray;
-	transform: scale(1.1);
-	cursor: pointer;
+h1, h2, h3, h4, h5, h6 {
+	font-family: $roboto-slab;
 }
 
 a {
@@ -55,13 +42,11 @@ a:hover {
 
 h1 {
 	font-size: 24px;
-	font-weight: bold;
+	line-height: 10px;
 }
 
 h2 {
 	text-align: center;
-	margin-bottom: 10px;
-	font-weight: bold;
 }
 
 p {
@@ -77,4 +62,49 @@ small {
 	font-size: 9px;
 	color: $gray;
 	font-family: $sans-serif;
+}
+
+/*
+	Header Rules
+*/
+
+hr {
+	border: 0;
+	height: 1px;
+	background-color: $light-gray;
+}
+
+.hr-top, .hr-bottom {
+	width: 100%;
+	margin: 0;
+}
+
+.hr-top {
+	height: 2px;
+	margin-bottom: 1px;
+}
+
+/*
+	Images
+*/
+
+.thumbnail {
+	height: 100px;
+}
+
+.thumbnail img {
+	object-fit: cover;
+}
+
+/*
+	Inputs
+*/
+
+.input-wrapper {
+	display: flex;
+	margin: 5px 0;
+}
+
+input[type="search"] {
+	padding: 5px;
 }

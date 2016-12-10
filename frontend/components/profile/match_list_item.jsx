@@ -1,14 +1,17 @@
 import React from 'react';
 import { values } from 'lodash';
 import ItemsList from './items';
+import Stats from '../match/stats';
+import Champion from '../match/champion';
+import Kda from '../match/kda';
 
 const MatchListItem = ({match, summoner}) => {
   // need json
   const currentSummoner = match.participants[summoner.summoner_id];
-  // const championName = match.champions[currentSummoner.chamption_id];
-  const winner = () => {
+  // const championName = match.champions[currentSummoner.champion_id];
+  const isWinner = () => {
     let winnerTeamId = match.participants[summoner.summoner_id].team_id;
-    return match.participants[summoner.summoner_id].stats.winner ? "Victory" : "Defeat";
+    return match.participants[summoner.summoner_id].stats.winner ? "victory" : "defeat"
   };
 
   const killParticipation = () => {
@@ -54,59 +57,18 @@ const MatchListItem = ({match, summoner}) => {
     return `${greenWards} wards ${pinkWards} pinks`;
   };
 
-  const calculateKillDeathsRatio = () => {
-    let kda = 0;
-    if (currentSummoner.stats.deaths) {
-      return "Perfect Score";
-    } else {
-      kda = Math.round(
-        (currentSummoner.stats.kills
-          + currentSummoner.stats.assists) * 100
-          / currentSummoner.stats.deaths
-        ) / 100;
-    }
-    return kda;
-  };
-
   return (
-    <div className="game-match">
+    <div className={`game-match ${isWinner()}`}>
       <div className="content-match">
-        <div className="stats">
-          <div className="queue-type">
-            Ranked Game
-          </div>
-          <div className="timestamp"></div>
-          <div className="bar"></div>
-          <div className="game-result">
-            {winner()}
-          </div>
-          <div className="match-duration">
-            {Math.round(match.match_duration % 60)}m
-            {Math.round(match.match_duration / 60)}s ago
-          </div>
-        </div>
-        <div className="champ">
-          <div className="champion-image" >
-          </div>
-          <div className="masteries">
-            <div className="spell" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/spell/${match.spells[currentSummoner.spell1_id].image_name}')`}}>
-            </div>
-            <div className="spell" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/spell/${match.spells[currentSummoner.spell2_id].image_name}')`}}>
-            </div>
-          </div>
-          <div className="champion-name" >
-          </div>
-        </div>
-        <div className="kda">
-          <div className="killdeaths">
-            {currentSummoner.stats.kills}
-            {currentSummoner.stats.deaths}
-            {currentSummoner.stats.assists}
-          </div>
-          <div className="kda-ratio">
-            {calculateKillDeathsRatio()}
-          </div>
-        </div>
+        <Stats
+          currentSummoner={currentSummoner}
+          winner={isWinner}
+          match={match} />
+        <Champion
+          match={match}
+          currentSummoner={currentSummoner}/>
+        <Kda
+          currentSummoner={currentSummoner}/>
         <div className="performance">
           <div className="lvl">
             Champion Level: {currentSummoner.stats.champLevel}

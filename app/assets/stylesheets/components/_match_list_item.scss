@@ -1,89 +1,26 @@
-.matchWrapper {
+.match-wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   .game-match {
-    height: 100px;
     width: 100%;
-    background: white;
     margin-top: 15px;
+    transition: margin-top 1s ease;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16),0 3px 6px rgba(0,0,0,0.23);
     transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+
 
     .detail-content {
     }
 
     .content-match {
       display: flex;
-      height: 100%;
       align-items: center;
       justify-content: space-around;
-
-      .stats {
-        width: 10%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-        padding: 0 5px 0 5px;
-
-        .queue-type {
-          font-size: 15px;
-          color: black;
-          font-weight: 300;
-        }
-      }
-
-      .champ {
-        width: 25%;
-        height: 100%;
-        padding: 0 5px 0 5px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .champion-image {
-          background-size: cover;
-          background-position: center;
-          height: 80px;
-          width: 80px;
-        }
-
-        .masteries {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-
-          .spell {
-            background-size: cover;
-            background-position: center;
-            height: 15px;
-            width: 15px;
-          }
-        }
-      }
-
-      .kda {
-        width: 10%;
-        height: 100%;
-        padding: 0 5px 0 5px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-
-        .kda-ratio {
-          display: flex;
-          align-items: center;
-        }
-        .killdeaths {
-
-        }
-      }
+      padding: 5px;
+      height: 110px;
 
       .performance {
         width: 20%;
@@ -140,7 +77,15 @@
       }
     }
   }
-  .game-match:hover {
-    background: #ced1d1;
+}
+
+.victory {
+  background-color: #a3cfec;
+
+  &:hover, &:focus {
   }
+}
+
+.defeat {
+  background-color: #cd645f;
 }

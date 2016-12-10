@@ -18,8 +18,8 @@ class Header extends React.Component {
     return(
       <header className="global-header">
         <div>
-          <section className="logo">
-            <h1><Link to='/'>Overtrack</Link></h1>
+          <section className="title">
+            <Link to='/'>Overtrack</Link>
           </section>
           <section className="nav">
             <ul>

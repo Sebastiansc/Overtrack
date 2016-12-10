@@ -38,11 +38,9 @@ class Splash extends React.Component {
   render () {
     return(
       <splash className="splash-page">
-        <div>
+        <div className="first-div">
           <section className="logo">
-            <h1>
-              <Link to='/' className="main">Overtrack</Link>
-            </h1>
+            <Link to='/' className="main">Overtrack</Link>
           </section>
           <section className="searchbar-content">
             <form className="searchbar" onSubmit={this.handleSubmit}>
@@ -63,7 +61,8 @@ class Splash extends React.Component {
               <h3>Instant look up for you and your fellow summoners profile and constant update on Leaderboards</h3>
             </div>
             <div className="item">
-              <div className="img"></div>
+              <img
+                src='https://res.cloudinary.com/dsetpdsls/image/upload/v1480611243/Screen_Shot_2016-12-01_at_7.21.54_AM_ov98k4.png'/>
               <div className="desc">
                 <div>What is &nbsp;
                   <fin>Overtrack.win</fin>
@@ -91,7 +90,7 @@ class Splash extends React.Component {
                   <li>Database optimized for smooth user experience</li>
                 </ul>
               </div>
-              <div className="img2"></div>
+              <img src="https://res.cloudinary.com/dsetpdsls/image/upload/v1480447110/leaderboard_k4nphk.png"/>
             </div>
           </section>
         </div>
