@@ -1,74 +1,66 @@
-.matchWrapper {
+.match-wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   .game-match {
-    height: 100px;
-    padding-top: 15px;
     width: 100%;
-    background: white;
+    margin-top: 15px;
+    transition: margin-top 1s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16),0 3px 6px rgba(0,0,0,0.23);
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+
 
     .detail-content {
-
     }
 
     .content-match {
       display: flex;
-      height: 100%;
       align-items: center;
       justify-content: space-around;
+      padding: 5px;
+      height: 110px;
 
-      .stats {
-        width: 10%;
+      .performance {
+        width: 20%;
         height: 100%;
+        padding: 0 5px 0 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
-        padding: 0 5px 0 5px;
 
-        .queue-type {
-          font-size: 15px;
-          color: black;
-          font-weight: 300;
+        .lvl {
+
+        }
+
+        .cs {
+
+        }
+
+        .ward {
+
         }
       }
 
-      .champ {
+      .item-lists {
         width: 25%;
         height: 100%;
         padding: 0 5px 0 5px;
+        display: flex;
+        flex-wrap: wrap;
 
-        .champion-image {
-          background-size: cover;
+        .items {
+          width: 45px;
+          height: 45px;
           background-position: center;
-          height: 80px;
-          width: 80px;
+          background-size: cover;
         }
       }
 
-      .kda {
-        width: 10%;
-        height: 100%;
-        padding: 0 5px 0 5px;
-      }
-
-      .performance {
-        width: 10%;
-        height: 100%;
-        padding: 0 5px 0 5px;
-      }
-
-      .items {
-        width: 30%;
-        height: 100%;
-        padding: 0 5px 0 5px;
-      }
-
       .trinkets {
-        width: 12%;
+        width: 5%;
         height: 100%;
         padding: 0 5px 0 5px;
       }
@@ -76,11 +68,24 @@
       .fellowSummoners {
 
       }
-      .buton {
+      .extendbox-button {
         padding: 0 5px 0 5px;
-        width: 3%;
+        width: 5%;
         height: 100%;
+        display: flex;
+        margin-top: 0 auto;
       }
     }
   }
+}
+
+.victory {
+  background-color: #a3cfec;
+
+  &:hover, &:focus {
+  }
+}
+
+.defeat {
+  background-color: #cd645f;
 }

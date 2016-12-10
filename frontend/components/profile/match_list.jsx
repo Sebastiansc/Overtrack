@@ -18,7 +18,7 @@ class MatchList extends React.Component {
 
   render () {
     return (
-      <div className="matchWrapper">
+      <div className="match-wrapper">
         {
           this.renderMatchListItems()
         }

@@ -16,19 +16,20 @@
     align-items: center;
     height: 52px;
 
-    .logo {
+    .title {
       height: 100%;
       display: flex;
       align-items: center;
       text-align: center;
       color: #fff;
+      font-size: 22px;
     }
 
-    .logo a {
+    .title a {
       text-decoration: none;
     }
 
-    .logo:hover {
+    .title:hover {
       transform: scale(1.02);
       transition: border-width 0.1s ease-in-out;
       border-bottom: 5px solid #AADA4B;

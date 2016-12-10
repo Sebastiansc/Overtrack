@@ -1,0 +1,18 @@
+$button-opacity-on-hover: 1;
+
+button {
+    margin: 10px;
+    background: $light-gray;
+    color: black;
+  }
+
+  button:hover, button:focus {
+    color: white;
+    background: $dark-gray;
+    transition: color 0.5s ease;
+    transition: background 0.5s ease;
+
+    &:before {
+      opacity: $button-opacity-on-hover;
+    }
+  }

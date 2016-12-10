@@ -1,0 +1,37 @@
+.champ {
+  width: 25%;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+
+  .champion-info {
+    display: flex;
+    margin-bottom: 5px;
+    justify-content: center;
+  }
+
+  .champion-name {
+    text-align: center;
+    padding: 5px;
+  }
+}
+
+.champion-image {
+  height: 80px;
+  width: 80px;
+  margin-right: 10px;
+}
+
+.masteries {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .spell {
+    background-size: cover;
+    background-position: center;
+    height: 30px;
+    width: 30px;
+  }
+}

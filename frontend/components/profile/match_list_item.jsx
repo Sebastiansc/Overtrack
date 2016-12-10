@@ -1,13 +1,17 @@
 import React from 'react';
 import { values } from 'lodash';
+import ItemsList from './items';
+import Stats from '../match/stats';
+import Champion from '../match/champion';
+import Kda from '../match/kda';
 
 const MatchListItem = ({match, summoner}) => {
   // need json
   const currentSummoner = match.participants[summoner.summoner_id];
-  const championName = currentSummoner.champtions[currentSummoner.champion_id];
-  const winner = () => {
+  // const championName = match.champions[currentSummoner.champion_id];
+  const isWinner = () => {
     let winnerTeamId = match.participants[summoner.summoner_id].team_id;
-    return match.participants[summoner.summoner_id].stats.winner ? "Victory" : "Defeat";
+    return match.participants[summoner.summoner_id].stats.winner ? "victory" : "defeat"
   };
 
   const killParticipation = () => {
@@ -29,76 +33,56 @@ const MatchListItem = ({match, summoner}) => {
     let timeDiff = new Date(now - match.match_creation).toString();
   };
 
+  const creepKills = () => {
+    let minionKills = 0;
+    let jungleKills = 0;
+    if (currentSummoner.stats.minionsKilled) {
+      minionKills += currentSummoner.stats.minionsKilled;
+    }
+    if (currentSummoner.stats.neuturalMinionsKilled) {
+      jungleKills += currentSummoner.stats.neuturalMinionsKilled;
+    }
+    return minionKills + jungleKills;
+  };
+
+  const wardCounts = () => {
+    let greenWards = 0;
+    let pinkWards = 0;
+    if (currentSummoner.stats.visionWardsBoughtInGame) {
+      pinkWards += currentSummoner.stats.visionWardsBoughtInGame;
+    }
+    if (currentSummoner.stats.wardsPlaced) {
+      greenWards += currentSummoner.stats.wardsPlaced;
+    }
+    return `${greenWards} wards ${pinkWards} pinks`;
+  };
+
   return (
-    <div className="game-match">
+    <div className={`game-match ${isWinner()}`}>
       <div className="content-match">
-        <div className="stats">
-          <div className="queue-type">
-            Ranked Game
-          </div>
-          <div className="timestamp"></div>
-          <div className="bar"></div>
-          <div className="game-result">
-            {winner()}
-          </div>
-          <div className="match-duration">
-            {Math.round(match.match_duration % 60)}m
-            {Math.round(match.match_duration / 60)}s ago
-          </div>
-        </div>
-        <div className="champ">
-          <div className="champion-image" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/champion/${championName}.png')`}}>
-          </div>
-          <div className="masteries">
-            <div className="spell">
-              {currentSummoner.spell1_id}
-            </div>
-            <div className="spell">
-              {currentSummoner.spell2_id}
-            </div>
-          </div>
-          <div className="champion-name">
-            {currentSummoner.champion_id}
-          </div>
-        </div>
-        <div className="kda">
-          <div className="kda">
-            {currentSummoner.stats.kills}
-            / {currentSummoner.stats.deaths}
-            / {currentSummoner.stats.assists}
-          </div>
-          <div className="kda-ratio">
-            { Math.round(
-              (parseInt(currentSummoner.stats.kills)
-              + parseInt(currentSummoner.stats.assists)) * 10000
-              / parseInt(currentSummoner.stats.deaths)
-            ) / 100 }:1 KDA
-          </div>
-        </div>
+        <Stats
+          currentSummoner={currentSummoner}
+          winner={isWinner}
+          match={match} />
+        <Champion
+          match={match}
+          currentSummoner={currentSummoner}/>
+        <Kda
+          currentSummoner={currentSummoner}/>
         <div className="performance">
           <div className="lvl">
-            {currentSummoner.stats.champLevel}
+            Champion Level: {currentSummoner.stats.champLevel}
           </div>
           <div className="cs">
-            {currentSummoner.stats.minionsKilled
-              + currentSummoner.stats.neuturalMinionsKilled} CS
+            {creepKills()} CS
           </div>
           <div className="ward">
-            {currentSummoner.stats.visionWardsBoughtInGame} Pink wards +
-            {currentSummoner.stats.wardsPlaced} wards
+            {wardCounts()}
           </div>
           <div className="kill-participation">
           </div>
         </div>
-        <div className="items">
-          <div className="item-lists">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
+        <ItemsList match={match} summoner={currentSummoner}/>
         <div className="trinkets">
           <div className="item"></div>
         </div>
@@ -106,7 +90,7 @@ const MatchListItem = ({match, summoner}) => {
           <div className="team"></div>
           <div className="team"></div>
         </div>
-        <div className="extendbox-button" onClick={toggleExtendBox}>gg</div>
+        <div className="extendbox-button" onClick={toggleExtendBox}><i className="fa fa-caret-square-o-down fa-2x" aria-hidden="true"></i></div>
       </div>
 
     </div>
@@ -114,7 +98,7 @@ const MatchListItem = ({match, summoner}) => {
 };
 
 export default MatchListItem;
-
+// style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/champion/${championName}.png')`}}
 // <div className="detail-content">
 //   <div className="game-detail-wrapper">
 //     <table className="detail-table">
