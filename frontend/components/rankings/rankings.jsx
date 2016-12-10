@@ -38,6 +38,7 @@ export default class Rankings extends React.Component {
     }
   }
 
+  // Styling for queue headers
   componentDidUpdate(){
     $('.queues > a').removeAttr('id', 'current-queue');
     $(`.${this.currentQueue()}`).attr('id','current-queue');
@@ -103,6 +104,7 @@ export default class Rankings extends React.Component {
   // Infinite component is oddly calling function before this condition is
   // satisfied. Added conditional early return to account for this case
   handleInfiniteLoad(){
+    console.log("loading");
     if(!this.state.summoners.length) return;
     this.setState({isInfiniteLoading: true});
     const newSummoners = this.currentBatch(this.props.rank.entries);
@@ -145,13 +147,11 @@ export default class Rankings extends React.Component {
           <li>Win Ratio</li>
         </ul>
         <Infinite elementHeight={21}
-          containerHeight={2750}
-          infiniteLoadBeginEdgeOffset={100}
           useWindowAsScrollContainer
+          infiniteLoadBeginEdgeOffset={200}
           onInfiniteLoad={() => this.handleInfiniteLoad()}
           loadingSpinnerDelegate={this.elementInfiniteLoad()}
-          isInfiniteLoading={this.state.isInfiniteLoading}
-          preloadAdditionalHeight={Infinite.containerHeightScaleFactor(2)}>
+          isInfiniteLoading={this.state.isInfiniteLoading}>
           {this.state.summoners.map((entry, idx) => {
             return (
               <RankingItem key={idx}
