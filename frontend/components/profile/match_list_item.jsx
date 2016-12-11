@@ -5,11 +5,11 @@ import Stats from '../match/stats';
 import Champion from '../match/champion';
 import Kda from '../match/kda';
 import Performance from '../match/performance';
+import Summoners from '../match/summoners';
 
 const MatchListItem = ({match, summoner}) => {
   // need json
   const currentSummoner = match.participants[summoner.summoner_id];
-
   const isWinner = () => {
     let winnerTeamId = currentSummoner.team_id;
     return currentSummoner.stats.winner ? "victory" : "defeat";
@@ -48,15 +48,17 @@ const MatchListItem = ({match, summoner}) => {
           currentSummoner={currentSummoner}/>
         <ItemsList
           match={match}
-          summoner={currentSummoner}/>
+          currentSummoner={currentSummoner}/>
         <div className="trinkets">
           <div className="item"></div>
         </div>
-        <div className="fellowSummoners">
-          <div className="team"></div>
-          <div className="team"></div>
+        <Summoners
+          match={match}
+          currentSummoner={currentSummoner}/>
+        <div className="extendbox-button" onClick={toggleExtendBox}>
+          <i className="fa fa-caret-square-o-down fa-2x" aria-hidden="true">
+          </i>
         </div>
-        <div className="extendbox-button" onClick={toggleExtendBox}><i className="fa fa-caret-square-o-down fa-2x" aria-hidden="true"></i></div>
       </div>
 
     </div>
