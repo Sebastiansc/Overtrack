@@ -39,6 +39,9 @@ const Stats = ({currentSummoner, winner, match}) => {
         matchHappenedAgo = `${Math.round(timeDifference / hours)} hours ago`;
       } else {
         matchHappenedAgo = `${Math.round(timeDifference / days)} days ago`;
+        if (matchHappenedAgo === 1) {
+          matchHappenedAgo = 'a day ago';
+        }
       }
     } else {
       matchHappenedAgo = `${Math.round(timeDifference / months)} months ago`;

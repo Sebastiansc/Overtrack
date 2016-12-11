@@ -18,49 +18,11 @@
     .content-match {
       display: flex;
       align-items: center;
-      justify-content: space-around;
+      justify-content: space-between;
       padding: 5px;
       height: 110px;
 
-      .performance {
-        width: 20%;
-        height: 100%;
-        padding: 0 5px 0 5px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-
-        .lvl {
-
-        }
-
-        .cs {
-
-        }
-
-        .ward {
-
-        }
-      }
-
-      .item-lists {
-        width: 25%;
-        height: 100%;
-        padding: 0 5px 0 5px;
-        display: flex;
-        flex-wrap: wrap;
-
-        .items {
-          width: 45px;
-          height: 45px;
-          background-position: center;
-          background-size: cover;
-        }
-      }
-
       .trinkets {
-        width: 5%;
         height: 100%;
         padding: 0 5px 0 5px;
       }
@@ -70,7 +32,6 @@
       }
       .extendbox-button {
         padding: 0 5px 0 5px;
-        width: 5%;
         height: 100%;
         display: flex;
         margin-top: 0 auto;
@@ -87,5 +48,5 @@
 }
 
 .defeat {
-  background-color: #cd645f;
+  background-color: #e2b6b3;
 }

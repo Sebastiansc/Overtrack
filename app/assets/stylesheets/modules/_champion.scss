@@ -1,5 +1,4 @@
 .champ {
-  width: 25%;
   padding: 5px;
   display: flex;
   flex-direction: column;
@@ -20,6 +19,7 @@
   height: 80px;
   width: 80px;
   margin-right: 10px;
+  border-radius: 50%;
 }
 
 .masteries {
@@ -29,6 +29,7 @@
   align-items: center;
 
   .spell {
+    border-radius: 2px;
     background-size: cover;
     background-position: center;
     height: 30px;
