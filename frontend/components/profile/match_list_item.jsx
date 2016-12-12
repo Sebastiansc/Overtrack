@@ -8,9 +8,9 @@ import Performance from '../match/performance';
 import Summoners from '../match/summoners';
 
 const MatchListItem = ({match, summoner}) => {
-  // need json
   const currentSummoner = match.participants[summoner.summoner_id];
   const trinket = currentSummoner.stats.item6;
+  debugger;
   const isWinner = () => {
     let winnerTeamId = currentSummoner.team_id;
     return currentSummoner.stats.winner ? "victory" : "defeat";

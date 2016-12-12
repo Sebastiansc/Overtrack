@@ -11,20 +11,19 @@ const MatchProfileHeader = ({matches, currentSummoner}) => {
     lossCount: 0
   };
   debugger;
-  if (matches) {
-    matches.forEach(match => {
-      if (match !== undefined) {
-        let summoner = match.participants[currentSummoner.summoner_id];
-        kda.totalKill += summoner.stats.kills;
-        kda.totalDeath += summoner.stats.deaths;
-        kda.totalAssists += summoner.stats.assists;
-        kda.counter ++;
-        if (summoner.stats.winner) {
-          kda.winCount ++;
-        }
+  matches.forEach(match => {
+    debugger;
+    if (match !== undefined) {
+      let summoner = match.participants[currentSummoner.summoner_id];
+      kda.totalKill += summoner.stats.kills;
+      kda.totalDeath += summoner.stats.deaths;
+      kda.totalAssists += summoner.stats.assists;
+      kda.counter ++;
+      if (summoner.stats.winner) {
+        kda.winCount ++;
       }
-    });
-  }
+    }
+  });
 
   const totalKDA = () => {
     let kills = Math.round((kda.totalKill * 10) / kda.counter) / 10;
@@ -33,8 +32,6 @@ const MatchProfileHeader = ({matches, currentSummoner}) => {
 
     return `${kills} / ${deaths} / ${assists}`;
   };
-
-
 
   const totalKDARatio = () => {
     kda.killDeathRatio = (
@@ -51,6 +48,7 @@ const MatchProfileHeader = ({matches, currentSummoner}) => {
   };
 
   return (
+
     <div className="head">
       <div className="recent">Latest Rank Matches</div>
       <div className="head-content">

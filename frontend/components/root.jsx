@@ -23,16 +23,14 @@ const Root = ({ store }) => {
     store.dispatch(fetchSummoner(nextState.params.summonerName.trim()));
   };
 
+  // .trim() for trimming empty spaces in front and end of the summonerName
   const _populateMatches = (nextState, replace) => {
-    if (location.hash.split('/')[2] !== store.getState().summoner.name) {
-      store.getState().matches = {};
+    debugger;
+    if (nextState.params.summonerName !== store.getState().summoner.name) {
+      store.getState().matches = [];
       store.dispatch(fetchMatches(nextState.params.summonerName.trim(), 0, 20));
     }
   };
-
-  // const _dropMatchState = (nextState, replace) => {
-  //   store.getState().matches = {};
-  // };
 
   return (
     <Provider store={store}>
@@ -50,7 +48,7 @@ const Root = ({ store }) => {
           <Route
             path='profile/:summonerName'
             component={ProfileContainer}
-            onEnter={_populateSummoner}/>
+            onEnter={_populateSummoner, _populateMatches}/>
         </Route>
       </Router>
     </Provider>

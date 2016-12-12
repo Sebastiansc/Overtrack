@@ -28,20 +28,7 @@ class Profile extends React.Component {
       );
     }
   }
-
-  //spinner
-  loadMatchLists() {
-    if (this.props.matches === null) {
-      return (
-        <div className="profile-icon">
-          <i className="fa fa-cog fa-spin fa-5x fa-fw"></i>
-        </div>
-      );
-    } else {
-      return <MatchListContainer />;
-    }
-  }
-
+  
   // map leaguebox according to different types of in-game leagues
   renderAllQueueBoxes() {
     let that = this;
@@ -97,9 +84,7 @@ class Profile extends React.Component {
               matches={this.props.matches}
               currentSummoner={this.props.summoner}/>
             <div className="body">
-              {
-                this.loadMatchLists()
-              }
+              <MatchListContainer />
             </div>
             <div className="next-button">
               <button onSubmit={this.handleShowMore}>Show More</button>
