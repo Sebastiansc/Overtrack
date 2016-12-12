@@ -1,11 +1,12 @@
 .stats {
-  width: 10%;
   padding: 5px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   font-family: $roboto;
   height: 100px;
+  min-width: 85px;
+  max-width: 85px;
 
   div {
     text-align: center;
@@ -33,7 +34,8 @@
     display: block;
     position: absolute;
     padding: 5px;
-    bottom: 33px;
+    top: -30px;
+    left: 10px;
   }
 
   p {
@@ -47,6 +49,28 @@
   }
 }
 
+.timestamp {
+  cursor: help;
+  position: relative;
+  
+  &:hover p, &:focus p {
+    display: block;
+    position: absolute;
+    padding: 5px;
+    top: -30px;
+    left: 10px;
+  }
+
+  p {
+    font-family: $roboto-slab;
+    font-size: 9px;
+    display: none;
+    background: $dark-gray;
+    opacity: 0.9;
+    color: white;
+    border-radius: 3px;
+  }
+}
 .match-duration {
   position: relative;
   cursor: help;

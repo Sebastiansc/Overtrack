@@ -23,6 +23,7 @@ const Stats = ({currentSummoner, winner, match}) => {
     let currentDate = new Date();
     let currentEpoch = currentDate.getTime();
     let matchCreatedAt = match.match_creation;
+    let epochToUTC = new Date(matchCreatedAt);
     let timeDifference = currentEpoch - matchCreatedAt;
     let minutes = 1000 * 60;
     let hours = minutes * 60;
@@ -39,13 +40,19 @@ const Stats = ({currentSummoner, winner, match}) => {
         matchHappenedAgo = `${Math.round(timeDifference / hours)} hours ago`;
       } else {
         matchHappenedAgo = `${Math.round(timeDifference / days)} days ago`;
+        if (matchHappenedAgo === 1) {
+          matchHappenedAgo = 'a day ago';
+        }
       }
     } else {
       matchHappenedAgo = `${Math.round(timeDifference / months)} months ago`;
     }
 
     return (
-      <div className="timestamp">{matchHappenedAgo}</div>
+      <div className="timestamp">
+        {matchHappenedAgo}
+        <p>{epochToUTC.toDateString()} {epochToUTC.toLocaleTimeString()}</p>
+      </div>
     );
   };
 

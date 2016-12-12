@@ -1,0 +1,76 @@
+.champ {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  min-width: 130px;
+  max-width: 130px;
+
+  .champion-info {
+    display: flex;
+    margin-bottom: 5px;
+    justify-content: center;
+  }
+
+  .champion-name {
+    text-align: center;
+    padding: 5px;
+  }
+}
+
+.champion-image {
+  height: 80px;
+  width: 80px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.masteries {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .spell {
+    border-radius: 4px;
+    height: 30px;
+    width: 30px;
+    margin: 1px;
+    position: relative;
+
+    &:hover .desc, &:focus .desc {
+      display: block;
+      position: absolute;
+      padding: 5px;
+      top: -30px;
+      left: 10px;
+    }
+
+    .desc {
+      font-family: $roboto;
+      font-size: 9px;
+      display: none;
+      background: $dark-gray;
+      opacity: 0.9;
+      color: white;
+      border-radius: 3px;
+    }
+  }
+}
+
+.spell {
+  .desc {
+    width: 130px;
+    display: flex;
+
+
+    h1 {
+      font-size: 14px;
+      color: black;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 10px;
+    }
+  }
+}

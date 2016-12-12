@@ -1,0 +1,22 @@
+.items {
+  font-size: 0;
+  min-width: 102px;
+  max-width: 102px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px;
+}
+
+
+.item-lists {
+  .item {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 3px;
+    margin-top: 2px;
+    margin-left: 2px;
+    overflow: hidden;
+    background-color: #99b9cf;
+  }
+}

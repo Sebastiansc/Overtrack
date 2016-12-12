@@ -1,20 +1,19 @@
 import React from 'react';
 import { values } from 'lodash';
-import ItemsList from './items';
+import ItemsList from '../match/items';
 import Stats from '../match/stats';
 import Champion from '../match/champion';
 import Kda from '../match/kda';
+import Performance from '../match/performance';
+import Summoners from '../match/summoners';
 
 const MatchListItem = ({match, summoner}) => {
   // need json
   const currentSummoner = match.participants[summoner.summoner_id];
-  // const championName = match.champions[currentSummoner.champion_id];
+  const trinket = currentSummoner.stats.item6;
   const isWinner = () => {
-    let winnerTeamId = match.participants[summoner.summoner_id].team_id;
-    return match.participants[summoner.summoner_id].stats.winner ? "victory" : "defeat"
-  };
-
-  const killParticipation = () => {
+    let winnerTeamId = currentSummoner.team_id;
+    return currentSummoner.stats.winner ? "victory" : "defeat";
   };
 
   // hide and show match details using jQuery
@@ -33,30 +32,6 @@ const MatchListItem = ({match, summoner}) => {
     let timeDiff = new Date(now - match.match_creation).toString();
   };
 
-  const creepKills = () => {
-    let minionKills = 0;
-    let jungleKills = 0;
-    if (currentSummoner.stats.minionsKilled) {
-      minionKills += currentSummoner.stats.minionsKilled;
-    }
-    if (currentSummoner.stats.neuturalMinionsKilled) {
-      jungleKills += currentSummoner.stats.neuturalMinionsKilled;
-    }
-    return minionKills + jungleKills;
-  };
-
-  const wardCounts = () => {
-    let greenWards = 0;
-    let pinkWards = 0;
-    if (currentSummoner.stats.visionWardsBoughtInGame) {
-      pinkWards += currentSummoner.stats.visionWardsBoughtInGame;
-    }
-    if (currentSummoner.stats.wardsPlaced) {
-      greenWards += currentSummoner.stats.wardsPlaced;
-    }
-    return `${greenWards} wards ${pinkWards} pinks`;
-  };
-
   return (
     <div className={`game-match ${isWinner()}`}>
       <div className="content-match">
@@ -69,28 +44,26 @@ const MatchListItem = ({match, summoner}) => {
           currentSummoner={currentSummoner}/>
         <Kda
           currentSummoner={currentSummoner}/>
-        <div className="performance">
-          <div className="lvl">
-            Champion Level: {currentSummoner.stats.champLevel}
-          </div>
-          <div className="cs">
-            {creepKills()} CS
-          </div>
-          <div className="ward">
-            {wardCounts()}
-          </div>
-          <div className="kill-participation">
-          </div>
-        </div>
-        <ItemsList match={match} summoner={currentSummoner}/>
+        <Performance
+          match={match}
+          currentSummoner={currentSummoner}/>
+        <ItemsList
+          match={match}
+          currentSummoner={currentSummoner}/>
         <div className="trinkets">
-          <div className="item"></div>
+          <span
+            className="item">
+            <img
+              alt="trinket"
+              src={`http://ddragon.leagueoflegends.com/cdn/6.23.1/img/item/${trinket}.png`}/>
+          </span>
         </div>
-        <div className="fellowSummoners">
-          <div className="team"></div>
-          <div className="team"></div>
+        <Summoners
+          match={match}
+          currentSummoner={currentSummoner}/>
+        <div className="extendbox-button" onClick={toggleExtendBox}>
+          <i className="fa fa-caret-square-o-down fa-2x" aria-hidden="true"></i>
         </div>
-        <div className="extendbox-button" onClick={toggleExtendBox}><i className="fa fa-caret-square-o-down fa-2x" aria-hidden="true"></i></div>
       </div>
 
     </div>
