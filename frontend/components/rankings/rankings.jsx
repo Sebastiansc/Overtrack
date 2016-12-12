@@ -61,7 +61,7 @@ export default class Rankings extends React.Component {
         this.updateSummoners(entries);
     }
   }
-
+  
   elementInfiniteLoad(){
     if (this.state.over){
       return (

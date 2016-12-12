@@ -13,11 +13,6 @@ class Match < ApplicationRecord
   #Signals #fetch_matches to get more matches if requested limit surpasses # of stored matches in DB.
   #Recommended: 20 at a time.
   def self.get(summoner, offset, limit)
-    if $redis.get("matches_loaded") == "false"
-      sleep 1.5
-      get(summoner, offset, limit)
-    end
-
     if limit > summoner.matches.count
       fetch_matches(summoner, offset: offset, limit: limit)
     end
