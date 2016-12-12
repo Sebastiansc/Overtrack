@@ -3,6 +3,24 @@ import React from 'react';
 const Champion = ({match, currentSummoner}) => {
   const championName = match.champions[currentSummoner.champion_id].name;
   const championPng = match.champions[currentSummoner.champion_id].image;
+
+  const renderSpell = (spellName) => {
+    let spellDesc = match.spells[currentSummoner.spell1_id];
+    debugger;
+    return (
+      <div className="spell">
+        <img
+          className="spell"
+          alt="spell image"
+          src={`http://ddragon.leagueoflegends.com/cdn/6.23.1/img/spell/${spellName}`}></img>
+        <div className="desc">
+          <h1>{spellDesc.name}</h1>
+          <p>{spellDesc.description}</p>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="champ">
       <div className="champion-info">
@@ -12,10 +30,8 @@ const Champion = ({match, currentSummoner}) => {
           src={`http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/${championPng}`}>
         </img>
         <div className="masteries">
-          <div className="spell" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/spell/${match.spells[currentSummoner.spell1_id].image_name}')`}}>
-          </div>
-          <div className="spell" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/spell/${match.spells[currentSummoner.spell2_id].image_name}')`}}>
-          </div>
+          {renderSpell(match.spells[currentSummoner.spell1_id].image_name)}
+          {renderSpell(match.spells[currentSummoner.spell2_id].image_name)}
         </div>
       </div>
       <div className="champion-name" >

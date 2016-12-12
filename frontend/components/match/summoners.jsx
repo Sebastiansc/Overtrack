@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const Summoners = ({match, currentSummoner}) => {
   const allies = [];
@@ -19,21 +20,21 @@ const Summoners = ({match, currentSummoner}) => {
     const championName = match.champions[champId].name;
 
     return (
-      <span>
+      <Link
+        key={champId}
+        to={`/profile/${playerName}`}>
         <img
-        className="fellowSummonersChampion"
-        alt="fellow summoners champion image"
-        src={`http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/${championPng}`}>
+          className="fellowSummonersChampion"
+          alt="fellow summoners champion image"
+          src={`http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/${championPng}`}>
         </img>
-        <Link
-          to={`/profile/${playerName}`}>{playerName}
-        </Link>
-      </span>
+        <h4>{playerName}</h4>
+      </Link>
     );
   };
 
   const renderSummoners = (summonersList) => (
-    summonersList.forEach(player =>
+    summonersList.map(player =>
       renderChampionImage(player.champion_id, player.summoner.summonerName)
     )
   );
@@ -45,14 +46,6 @@ const Summoners = ({match, currentSummoner}) => {
       </div>
       <div className="team">
         {renderSummoners(enemies)}
-        <span>
-          <img
-            className="fellowSummonersChampion"
-            alt="fellow summoners champion image"
-            src={`http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Ahri.png`}>
-          </img>
-          &nbsp; Ahri
-        </span>
       </div>
     </div>
   );

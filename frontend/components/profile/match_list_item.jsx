@@ -10,6 +10,7 @@ import Summoners from '../match/summoners';
 const MatchListItem = ({match, summoner}) => {
   // need json
   const currentSummoner = match.participants[summoner.summoner_id];
+  const trinket = currentSummoner.stats.item6;
   const isWinner = () => {
     let winnerTeamId = currentSummoner.team_id;
     return currentSummoner.stats.winner ? "victory" : "defeat";
@@ -50,14 +51,18 @@ const MatchListItem = ({match, summoner}) => {
           match={match}
           currentSummoner={currentSummoner}/>
         <div className="trinkets">
-          <div className="item"></div>
+          <span
+            className="item">
+            <img
+              alt="trinket"
+              src={`http://ddragon.leagueoflegends.com/cdn/6.23.1/img/item/${trinket}.png`}/>
+          </span>
         </div>
         <Summoners
           match={match}
           currentSummoner={currentSummoner}/>
         <div className="extendbox-button" onClick={toggleExtendBox}>
-          <i className="fa fa-caret-square-o-down fa-2x" aria-hidden="true">
-          </i>
+          <i className="fa fa-caret-square-o-down fa-2x" aria-hidden="true"></i>
         </div>
       </div>
 

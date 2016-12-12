@@ -9,14 +9,16 @@ const ItemsList = ({match, currentSummoner}) => {
 
   const itemPics = () => {
     if (items !== []) {
-      return items.forEach(item => {
+      return items.map(item => {
         if (item !== 0) {
           return (
-            <span>
-              <img
-              alt="ingame items"
+            <span
               key={item}
-              src={`http://ddragon.leagueoflegends.com/cdn/6.23.1/img/item/${item}.png`}/>
+              className="item">
+              <img
+                alt="ingame items"
+                key={item}
+                src={`http://ddragon.leagueoflegends.com/cdn/6.23.1/img/item/${item}.png`}/>
             </span>
           );
         }
@@ -25,8 +27,8 @@ const ItemsList = ({match, currentSummoner}) => {
   };
 
   return (
-    <div className="item-lists">
-      <div className="items">
+    <div className="items">
+      <div className="item-lists">
         {itemPics()}
       </div>
     </div>

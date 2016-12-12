@@ -7,6 +7,8 @@
   justify-content: space-around;
   font-family: $roboto;
   font-size: 12px;
+  min-width: 110px;
+  max-width: 110px;
 
   .lvl {
     display: flex;
