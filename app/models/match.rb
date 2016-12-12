@@ -55,7 +55,7 @@ class Match < ApplicationRecord
   #Associates summoner to matches that are in DB and will not be fetched
   def self.not_stored_matches(match_list)
     api_match_ids = match_list.map{ |match| match["matchId"] }
-    db_match_ids = Match.where(match_id: api_match_ids).map(&:match_id)
+    db_match_ids = Matching.select(:match_id).map(&:match_id)
     to_fetch_ids = api_match_ids - db_match_ids
     to_fetch_ids
   end
