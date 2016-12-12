@@ -10,9 +10,7 @@ const MatchProfileHeader = ({matches, currentSummoner}) => {
     winCount: 0,
     lossCount: 0
   };
-  debugger;
   matches.forEach(match => {
-    debugger;
     if (match !== undefined) {
       let summoner = match.participants[currentSummoner.summoner_id];
       kda.totalKill += summoner.stats.kills;

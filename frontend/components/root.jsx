@@ -26,7 +26,6 @@ const Root = ({ store }) => {
 
   // .trim() for trimming empty spaces in front and end of the summonerName
   const _populateMatches = (nextState, replace) => {
-    debugger;
     if (nextState.params.summonerName !== store.getState().summoner.name) {
       store.getState().matches = [];
       store.dispatch(fetchMatches(nextState.params.summonerName.trim(), 0, 20));
