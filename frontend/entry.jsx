@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './components/root';
+import * as d3 from "d3";
 import configureStore from './store/store.js';
 import { summonerSoloQueue, summonerQueues } from './reducers/selectors';
 

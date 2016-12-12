@@ -3,12 +3,11 @@ import MatchList from './match_list';
 import { fetchMatches } from '../../actions/match_actions';
 import { values } from 'lodash';
 
-const mapStateToProps = (state, {params}) => {
-  return {
+const mapStateToProps = (state, {params}) => ({
   summoner: state.summoner,
-  matches: state.matches,
+  matches: state.matches
+});
 
-};};
 
 const mapDispatchToProps = dispatch => ({
   fetchMatches: (name, offset, limit) =>

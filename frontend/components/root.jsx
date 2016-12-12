@@ -24,9 +24,15 @@ const Root = ({ store }) => {
   };
 
   const _populateMatches = (nextState, replace) => {
-    store.getState().matches = {};
-    store.dispatch(fetchMatches(nextState.params.summonerName.trim(), 0, 20));
+    if (location.hash.split('/')[2] !== store.getState().summoner.name) {
+      store.getState().matches = {};
+      store.dispatch(fetchMatches(nextState.params.summonerName.trim(), 0, 20));
+    }
   };
+
+  // const _dropMatchState = (nextState, replace) => {
+  //   store.getState().matches = {};
+  // };
 
   return (
     <Provider store={store}>
@@ -41,8 +47,10 @@ const Root = ({ store }) => {
             <Route path='flex_sr' component={RankingsContainer}/>
             <Route path='flex_tt' component={RankingsContainer}/>
           </Route>
-          <Route path='profile/:summonerName' component={ProfileContainer}
-             onEnter={_populateSummoner}/>
+          <Route
+            path='profile/:summonerName'
+            component={ProfileContainer}
+            onEnter={_populateSummoner}/>
         </Route>
       </Router>
     </Provider>
