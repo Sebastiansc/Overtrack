@@ -6,14 +6,15 @@ const Champion = ({match, currentSummoner}) => {
 
   const renderSpell = (spellName) => {
     let spellDesc = match.spells[currentSummoner.spell1_id];
-    debugger;
     return (
       <div className="spell">
         <img
-          className="spell"
-          alt="spell image"
+          alt={spellName}
+          title={spellName}
           src={`http://ddragon.leagueoflegends.com/cdn/6.23.1/img/spell/${spellName}`}></img>
-        <div className="desc">
+        <div
+          className="desc"
+          title={spellName}>
           <h1>{spellDesc.name}</h1>
           <p>{spellDesc.description}</p>
         </div>
@@ -26,7 +27,7 @@ const Champion = ({match, currentSummoner}) => {
       <div className="champion-info">
         <img
           className="champion-image"
-          alt="champion image"
+          alt={championName}
           src={`http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/${championPng}`}>
         </img>
         <div className="masteries">

@@ -9,15 +9,15 @@ const ItemsList = ({match, currentSummoner}) => {
 
   const itemPics = () => {
     if (items !== []) {
-      return items.map(item => {
+      return items.map((item, idx) => {
         if (item !== 0) {
           return (
             <span
-              key={item}
+              key={idx}
               className="item">
               <img
                 alt="ingame items"
-                key={item}
+                key={idx}
                 src={`http://ddragon.leagueoflegends.com/cdn/6.23.1/img/item/${item}.png`}/>
             </span>
           );

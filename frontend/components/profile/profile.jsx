@@ -1,6 +1,7 @@
 import React from 'react';
 import MatchListContainer from './match_list_container';
 import LeagueBox from './league_box';
+import MatchProfileHeader from '../match/match_profile_header';
 import { values } from 'lodash';
 
 class Profile extends React.Component {
@@ -28,6 +29,19 @@ class Profile extends React.Component {
     }
   }
 
+  //spinner
+  loadMatchLists() {
+    if (this.props.matches === null) {
+      return (
+        <div className="profile-icon">
+          <i className="fa fa-cog fa-spin fa-5x fa-fw"></i>
+        </div>
+      );
+    } else {
+      return <MatchListContainer />;
+    }
+  }
+
   // map leaguebox according to different types of in-game leagues
   renderAllQueueBoxes() {
     let that = this;
@@ -51,38 +65,6 @@ class Profile extends React.Component {
   calculateKDA() {
     return this.props.matches;
   }
-
-  totalKDA() {
-    let kda = {
-      totalKill: 0,
-      totalDeath: 0,
-      totalAssists: 0,
-      counter: 0,
-      killDeathRatio: 0
-    };
-    if (this.props.matches) {
-      this.props.matches.each ( match => {
-        let summoner = match.participants[this.props.summoner.summoner_id];
-        kda.totalKill += summoner.stats.kills;
-        kda.totalDeath += summoner.stats.deaths;
-        kda.totalAssists += summoner.stats.assists;
-        kda.counter ++;
-      });
-    }
-
-    kda.killDeathRatio = (
-      Math.round(kda.totalDeath * 10000 / (kda.totalKill + kda.totalAssists)
-    ) / 100);
-
-    return kda;
-  }
-  // <div>
-  //   {Math.round(this.totalKDA().totalKill/this.totalKDA().counter * 10)/10}
-  //   / {Math.round(this.totalKDA().totalDeath/this.totalKDA().counter * 10)/10}
-  //   / {Math.round(this.totalKDA().totalAssists/this.totalKDA().counter * 10)/10}
-  // </div>
-  // <div>{this.totalKDA().killDeathRatio}</div>
-
 
   render () {
     return (
@@ -111,17 +93,13 @@ class Profile extends React.Component {
         </div>
         <div className="summoner-content">
           <div className="content">
-            <div className="head">
-              <div className="recent">Latest Rank Matches</div>
-              <div className="summary">
-                <div className="total-KDA">
-                </div>
-                <div className="win-ratio">
-                </div>
-              </div>
-            </div>
+            <MatchProfileHeader
+              matches={this.props.matches}
+              currentSummoner={this.props.summoner}/>
             <div className="body">
-              <MatchListContainer />
+              {
+                this.loadMatchLists()
+              }
             </div>
             <div className="next-button">
               <button onSubmit={this.handleShowMore}>Show More</button>
