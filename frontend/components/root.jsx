@@ -21,6 +21,7 @@ const Root = ({ store }) => {
   const _populateSummoner = (nextState, replace) => {
     store.getState().summoner = {};
     store.dispatch(fetchSummoner(nextState.params.summonerName.trim()));
+    _populateMatches(nextState, replace);
   };
 
   // .trim() for trimming empty spaces in front and end of the summonerName
@@ -48,7 +49,7 @@ const Root = ({ store }) => {
           <Route
             path='profile/:summonerName'
             component={ProfileContainer}
-            onEnter={_populateSummoner, _populateMatches}/>
+            onEnter={_populateSummoner}/>
         </Route>
       </Router>
     </Provider>
