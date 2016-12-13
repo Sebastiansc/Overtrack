@@ -1,14 +1,22 @@
 class Api::MatchesController < ApplicationController
-  #Request matches in batches. Conditionally checks for players who have no match history
+  # Request matches in batches. Conditionally checks for players who have no match history
   include ApiHelper
 
+  # Tries to find matches in cache otherwise fetches from DB or API
   def next_batch
     summoner = Summoner.by_name(params[:name])
-    @matches = Match.get(
-      summoner,
-      params[:offset].to_i,
-      params[:limit].to_i
-    )
+    matches = $redis.get("#{summoner.id}#{params[:limit]}")
+
+    unless matches
+      matches = Match.get(
+        summoner,
+        params[:offset].to_i,
+        params[:limit].to_i
+      ).to_json
+      $redis.set("#{summoner.id}#{params[:limit]}", matches)
+    end
+    @matches = JSON.parse matches
+
     data_ids = get_ids
     @champions = Champion.in_match(data_ids[:champions])
     @spells = Spell.in_match(data_ids[:spells])
@@ -33,15 +41,4 @@ class Api::MatchesController < ApplicationController
     end
     data_ids
   end
-
-  def preload(summoner)
-    if summoner.matches.count < params[:limit].to_i * 2
-      MatchFetch.perform_async(
-        summoner,
-        params[:offset].to_i + params[:limit].to_i,
-        params[:limit].to_i + params[:limit].to_i
-      )
-    end
-  end
-
 end
