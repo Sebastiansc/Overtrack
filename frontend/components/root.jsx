@@ -21,11 +21,15 @@ const Root = ({ store }) => {
   const _populateSummoner = (nextState, replace) => {
     store.getState().summoner = {};
     store.dispatch(fetchSummoner(nextState.params.summonerName.trim()));
+    _populateMatches(nextState, replace);
   };
 
+  // .trim() for trimming empty spaces in front and end of the summonerName
   const _populateMatches = (nextState, replace) => {
-    store.getState().matches = {};
-    store.dispatch(fetchMatches(nextState.params.summonerName.trim(), 0, 20));
+    if (nextState.params.summonerName !== store.getState().summoner.name) {
+      store.getState().matches = [];
+      store.dispatch(fetchMatches(nextState.params.summonerName.trim(), 0, 20));
+    }
   };
 
   return (
@@ -41,8 +45,10 @@ const Root = ({ store }) => {
             <Route path='flex_sr' component={RankingsContainer}/>
             <Route path='flex_tt' component={RankingsContainer}/>
           </Route>
-          <Route path='profile/:summonerName' component={ProfileContainer}
-             onEnter={_populateSummoner}/>
+          <Route
+            path='profile/:summonerName'
+            component={ProfileContainer}
+            onEnter={_populateSummoner}/>
         </Route>
       </Router>
     </Provider>

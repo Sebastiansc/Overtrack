@@ -12,6 +12,11 @@
       padding: 0;
       margin: 0;
       background: white;
+      border: none;
+
+      &:hover {
+        color: inherit;
+      }
     }
   }
 }

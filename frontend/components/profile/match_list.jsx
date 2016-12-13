@@ -11,7 +11,13 @@ class MatchList extends React.Component {
       return <div> spinner</div>;
     } else {
       return this.props.matches.map( (match, idx) => {
-        return (<MatchListItem key={idx} match={match} summoner={this.props.summoner}/>);
+        const currentSummoner = match.participants[this.props.summoner.summoner_id];
+        return (
+          <MatchListItem
+            key={idx}
+            match={match}
+            summoner={this.props.summoner}/>
+        );
       });
     }
   }
