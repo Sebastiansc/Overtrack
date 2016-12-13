@@ -10,6 +10,7 @@ import Summoners from '../match/summoners';
 const MatchListItem = ({match, summoner}) => {
   let currentSummoner;
   let trinket;
+
   const findSummoner = () => {
     currentSummoner = match.participants[summoner.summoner_id];
   };

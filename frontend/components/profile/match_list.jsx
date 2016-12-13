@@ -7,7 +7,6 @@ class MatchList extends React.Component {
   }
 
   renderMatchListItems() {
-    debugger;
     if (!this.props.matches) {
       return <div> spinner</div>;
     } else {
