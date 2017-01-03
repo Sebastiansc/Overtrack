@@ -13,6 +13,12 @@ class Profile extends React.Component {
     $(document).scrollTop(0);
   }
 
+  componentDidUpdate() {
+  }
+
+  componentWillReceiveProps(newProps) {
+  }
+
   // spinner because the initial re-rendering gives out errors
   loadProfile() {
     if (this.props.summoner.profile_icon) {
@@ -28,7 +34,7 @@ class Profile extends React.Component {
       );
     }
   }
-  
+
   // map leaguebox according to different types of in-game leagues
   renderAllQueueBoxes() {
     let that = this;
@@ -85,9 +91,6 @@ class Profile extends React.Component {
               currentSummoner={this.props.summoner}/>
             <div className="body">
               <MatchListContainer />
-            </div>
-            <div className="next-button">
-              <button onSubmit={this.handleShowMore}>Show More</button>
             </div>
           </div>
         </div>

@@ -16,6 +16,8 @@ const Summoners = ({match, currentSummoner}) => {
   }
 
   const renderChampionImage = (champId, playerName) => {
+    if (match.champions[champId] === undefined) debugger;
+
     const championPng = match.champions[champId].image;
     const championName = match.champions[champId].name;
 

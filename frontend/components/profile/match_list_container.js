@@ -9,6 +9,7 @@ const mapStateToProps = (state, {params}) => ({
 });
 
 
+
 const mapDispatchToProps = dispatch => ({
   fetchMatches: (name, offset, limit) =>
    dispatch(fetchMatches(name, offset, limit))
