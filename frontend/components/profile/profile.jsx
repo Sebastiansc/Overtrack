@@ -23,7 +23,7 @@ class Profile extends React.Component {
   loadProfile() {
     if (this.props.summoner.profile_icon) {
       return (
-        <div className="profile-icon" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.23.1/img/profileicon/${this.props.summoner.profile_icon}.png')`}}>
+        <div className="profile-icon" style={{backgroundImage: `url('http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/${this.props.summoner.profile_icon}.png')`}}>
         </div>
       );
     } else {
