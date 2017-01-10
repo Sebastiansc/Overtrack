@@ -2,7 +2,7 @@ import React from 'react';
 
 const Details = (props) => {
   return (
-    <div className="detail-content">
+    <div className="detail-content hidden">
       <div className="game-detail-wrapper">
         <table className="detail-table">
           <thead className="head">
